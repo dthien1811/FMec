@@ -73,12 +73,9 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
        String email = request.getParameter("email");
        String password = request.getParameter("password");
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
        //Logic
         AccountLogic accountLogic = new AccountLogic();
         Account accountFound = accountLogic.findByUsernamePassword(email,password);
-        System.out.println(accountFound);
         if (accountFound == null) {
             request.setAttribute("eror","Gmail or PassWord incorrect!");
             request.getRequestDispatcher("Main Template/login.jsp").forward(request, response);

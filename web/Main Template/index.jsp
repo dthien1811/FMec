@@ -43,7 +43,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/responsive.css">
 		
 		<!-- Color CSS -->
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color1.css">
+		<link rel="stylesheet" href="css/color/color1.css">
 		<!--<link rel="stylesheet" href="css/color/color2.css">-->
 		<!--<link rel="stylesheet" href="css/color/color3.css">-->
 		<!--<link rel="stylesheet" href="css/color/color4.css">-->
@@ -1340,7 +1340,7 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-12">
 							<div class="copyright-content">
-								<p>© Copyright 2018  |  All Rights Reserved by <a href="${pageContext.request.contextPath}/Main Template/https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
+								<p>? Copyright 2018  |  All Rights Reserved by <a href="${pageContext.request.contextPath}/Main Template/https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
 							</div>
 						</div>
 					</div>

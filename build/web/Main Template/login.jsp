@@ -228,32 +228,35 @@
                     <div class="row"> 
                         <div class="col-lg-6">
                             <div class="login-left">
-                              <img src="${pageContext.request.contextPath}/Main Template/img/login.png" alt="">
+                                <img src="${pageContext.request.contextPath}/Main Template/img/login.png" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="login-form">
                                 <h2>Login Here</h2>
-                                <p>Didn't you account yet ? <a href="register.jsp">Register Here</a></p>
+                                <p>Didn't you account yet ? <a href="${pageContext.request.contextPath}/Main Template/register.jsp">Register Here</a></p>
                                 <!-- Form -->
-                                
-                                    <form class="form" method="post" action="${pageContext.request.contextPath}/LoginServlet">
+
+                                <form class="form" method="post" action="${pageContext.request.contextPath}/LoginServlet">
 
                                     <div class="row">
 
                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="email" name="email" placeholder="Your Email">
+                                            <div style="background-color: black;border: 3px solid black; border-radius: 10px;">
+                                                <input type="email" name="email" placeholder="Your Email" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
                                             </div>
+
 
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="password" name="password" placeholder="Password">
+                                            <div style="background-color: black;border: 3px solid black; border-radius: 10px;">
+                                                <input type="password" name="password" placeholder="Password" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
                                             </div>
-                                        </div>
-                                        <div style="color: red; margin-left: 20px"> ${eror}</div>
 
+                                        </div>
+                                        <br>
+                                        <div style="color: red; margin-left: 20px"> ${eror}</div>
+                                        <br>
 
                                         <div class="col-12">
                                             <div class="form-group login-btn">
@@ -406,4 +409,4 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
     </body>
 </html>
-  
+

@@ -268,6 +268,14 @@
                                             </div>
                                             <a href="#" class="lost-pass" style="color: #1A76D1;" >Lost your password ?</a>
                                         </div>
+                                        <div style="border: 2px solid black; border-radius: 10px; height: 60px; width: 200px; box-sizing: border-box; padding: 10px;">
+                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:9999/SWP391_/LoginGoogleHandler&response_type=code
+                                               &client_id=1073304818230-a4am8uj87r2prl8sgi5seddqmnfn2vjm.apps.googleusercontent.com&approval_prompt=force"
+                                               style="text-decoration: none; color: black; font-weight: bold;">
+                                                <img style="width: 40px; height: 40px; vertical-align: middle;" src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo"> Login With Google
+                                            </a>
+                                        </div>
+
                                     </div>
                                 </form>
                                 <!--/ End Form -->

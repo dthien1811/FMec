@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name='copyright' content=''>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
         <!-- Title -->
         <title>Mediplus - Medical and Doctor Directory HTML Template.</title>
 
@@ -415,6 +415,7 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
+   
     </body>
 </html>
 

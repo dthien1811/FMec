@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name='copyright' content=''>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
         <!-- Title -->
         <title>Mediplus - Medical and Doctor Directory HTML Template.</title>
 
@@ -236,51 +236,85 @@
                                 <h2>Register Here</h2>
                                 <p>Already have an account ? <a href="login.jsp">Login Here</a></p>
                                 <!-- Form -->
-                                <form class="form" method="post" action="${pageContext.request.contextPath}/RegisterServlet">
+                                <form id="emailForm" class="form" method="post" action="${pageContext.request.contextPath}/RegisterServlet">
                                     <div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                <input type="text" name="name" placeholder="Full Name" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
+                                                    <input type="text" name="name" placeholder="Full Name" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                </div>
+                                            </div>                                                                       
+                                            <div class="col-lg-6">
+                                                <div  style = "background-color: black;border: 3px solid black; border-radius: 10px;">
+                                                    <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9]+" title="Please enter only numbers" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                </div>
+                                            </div>                                                                  
+                                            <div class="col-lg-6">
+                                                <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
+                                                    <input type="email" id="to" name="email" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                </div>
+                                            </div>                                   
+                                            <div class="col-lg-6">
+                                                <div style="background-color: black;border: 3px solid black; border-radius: 10px;">
+                                                    <input type="password" id="password" name="password" placeholder="Password" required style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                </div>
+                                            </div>                                      
+                                            <div class="col-lg-6">
+                                                <div style = "background-color: #1A76D1;border: 3px solid black; border-radius: 10px;">
+                                                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required oninput="checkPasswordMatch()" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                    <span id="passwordMatchMessage"></span>
+                                                </div>
                                             </div>
-                                        </div>                                                                       
-                                        <div class="col-lg-6">
-                                            <div  style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9]+" title="Please enter only numbers" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                            </div>
-                                        </div>                                                                  
-                                        <div class="col-lg-6">
-                                            <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                <input type="email" name="email" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                            </div>
-                                        </div>                                   
-                                        <div class="col-lg-6">
-                                            <div style="background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                <input type="password" id="password" name="password" placeholder="Password" required style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                            </div>
-                                        </div>                                      
-                                        <div class="col-lg-6">
-                                            <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required oninput="checkPasswordMatch()" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                <span id="passwordMatchMessage"></span>
-                                            </div>
+                                            <input type="hidden" id="tokenInput" name="token" value="">
                                         </div>
-                                              </div>
                                         <br/>
                                         <div class="col-12">
-                                            <div class="form-group login-btn">
-                                                <button class="btn" type="submit" onclick="validateForm()">Sign Up</button>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label class="checkbox-inline" for="2">
-                                                    <input name="news" id="2" type="checkbox" required>
-                                                    I agree with all <a href="#" class="terms">Terms & Conditions</a>
-                                                </label>
-                                            </div>
-                                            <div id="termsMessage"></div>
+                                            <!--                                            <div class="form-group login-btn">
+                                                                                            <button class="btn" type="submit" onclick="validateForm()">Sign Up</button>
+                                                                                        </div>-->
+
+                                            <!--                                                                                        <div class="checkbox">
+                                                                                                                                        <label class="checkbox-inline" for="2">
+                                                                                                                                            <input name="news" id="2" type="checkbox" required>
+                                                                                                                                            I agree with all <a href="#" class="terms">Terms & Conditions</a>
+                                                                                                                                        </label>
+                                                                                                                                    </div>-->
+                                            <!--<div id="termsMessage"></div>-->
                                         </div>
                                     </div>
                                 </form>
+                                <!--                                <button  style="display: inline-block;
+                                                                         padding: 10px 20px;
+                                                                         font-size: 16px;
+                                                                         cursor: pointer;
+                                                                         text-align: center;
+                                                                         text-decoration: none;
+                                                                         outline: none;
+                                                                         border: none;
+                                                                         border-radius: 5px;
+                                                                         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                                                         background-color: #1A76D1;
+                                                                         color: white;
+                                                                         transition: background-color 0.3s;"
+                                                                         onmouseover="this.style.backgroundColor = '#2C2D3F';"
+                                                                         onmouseout="this.style.backgroundColor = '#1A76D1';" onclick="sendMail()"; onclick="validateForm()">Sign Up</button>-->
+                                <input style="display: inline-block;
+                                       padding: 10px 20px;
+                                       font-size: 16px;
+                                       cursor: pointer;
+                                       text-align: center;
+                                       text-decoration: none;
+                                       outline: none;
+                                       border: none;
+                                       border-radius: 5px;
+                                       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                       background-color: #1A76D1;
+                                       color: white;
+                                       transition: background-color 0.3s;"
+                                       onmouseover="this.style.backgroundColor = '#2C2D3F';"
+                                       onmouseout="this.style.backgroundColor = '#1A76D1';" onclick="sendMail()"; onclick="validateForm()" type="submit" value="Sign Up">
+
+
                                 <!--/ End Form -->
                             </div>
                         </div>
@@ -448,6 +482,91 @@
                     return true;
                 }
             }
+        </script>
+
+        <!--        <script>
+                    function sendMail() {
+                        (function () {
+                            emailjs.init("7Qhsfv2qBZKUnVVaG"); // Account Public Key
+                        })();
+                        var params = {
+                            // sendername: document.querySelector("#sendername").value,
+                            to: document.querySelector("#to").value,
+                            // subject: document.querySelector("#subject").value,
+                            // replyto: document.querySelector("#replyto").value,
+                            // message: document.querySelector("#message").value,
+                        };
+                        var serviceID = "service_5upst68"; // Email Serv
+                        var templateID = "template_qah0i6l"; // Email Te
+                        emailjs.send(serviceID, templateID, params)
+                                .then(res => {
+                                    alert("Email Sent Successfully! Please check your email to activate your account ");
+                                })
+                                .catch(error => {
+                                    console.error("Error sending email:", error);
+                                });
+                    }
+        
+        
+                </script>-->
+        <script>
+            function sendMail() {
+                (function () {
+                    emailjs.init("7Qhsfv2qBZKUnVVaG"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
+                })();
+
+                var toEmail = document.querySelector("#to").value;
+
+                // T?o m?t mã token ng?u nhiên (ví d?: s? d?ng UUID)
+                var token = generateToken();
+                document.getElementById("tokenInput").value = token;
+
+// Submit form
+                document.getElementById("emailForm").submit();
+
+                var params = {
+                    to: toEmail,
+                    token: token // Truy?n mã token vào tham s?
+                };
+
+                var serviceID = "service_5upst68"; // Email ServFd
+                var templateID = "template_qah0i6l"; // Email Te
+
+                // G?i email
+                emailjs.send(serviceID, templateID, params)
+                        .then(res => {
+                            alert("Email Sent Successfully! Please check your email to activate your account ");
+                        })
+                        .catch(error => {
+                            console.error("Error sending email:", error);
+                        });
+            }
+
+            // Bi?n l?u tr? các mã token ?ã ???c t?o ra
+            var generatedTokens = new Set();
+
+            function generateToken() {
+                // Hàm t?o UUID ng?u nhiên
+                function uuidv4() {
+                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                        var r = Math.random() * 16 | 0,
+                                v = c == 'x' ? r : (r & 0x3 | 0x8);
+                        return v.toString(16);
+                    });
+                }
+
+                // T?o mã token m?i
+                var token;
+                do {
+                    token = uuidv4();
+                } while (generatedTokens.has(token)); // Ki?m tra xem mã token ?ã t?n t?i ch?a
+
+                // Thêm mã token m?i vào danh sách
+                generatedTokens.add(token);
+
+                return token;
+            }
+
         </script>
     </body>
 </html>

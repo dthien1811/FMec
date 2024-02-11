@@ -36,7 +36,8 @@ public class UserDAO extends DBContext {
             statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                String majorId = resultSet.getString("majorId");
+                int userId = resultSet.getInt("userId");
+                int majorId = resultSet.getInt("majorId");
                 String role = resultSet.getString("role");
                 String address = resultSet.getString("address");
                 String avatar = resultSet.getString("avatar");
@@ -44,7 +45,7 @@ public class UserDAO extends DBContext {
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                User user = new User(majorId, role, address, avatar, name, phone, email, password);
+                User user = new User(userId, majorId, role, address, avatar, name, phone, email, password);
                 list.add(user);
             }
         } catch (SQLException ex) {
@@ -103,7 +104,8 @@ public class UserDAO extends DBContext {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String majorId = resultSet.getString("majorId");
+                int userId = resultSet.getInt("userId");
+                int majorId = resultSet.getInt("majorId");
                 String role = resultSet.getString("role");
                 String address = resultSet.getString("address");
                 String avatar = resultSet.getString("avatar");
@@ -111,7 +113,7 @@ public class UserDAO extends DBContext {
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                User userFound = new User(majorId, role, address, avatar, name, phone, email, password);
+                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password);
                 return userFound;
             }
 
@@ -147,7 +149,7 @@ public class UserDAO extends DBContext {
                 + "     VALUES\n"
                 + "           (\n"
                 + "           ?,?,?,?)";
-         try {
+        try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             //Dua vao user va lay ra de sql
@@ -161,7 +163,7 @@ public class UserDAO extends DBContext {
 
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

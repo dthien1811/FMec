@@ -13,37 +13,37 @@
         <title>Mediplus - Medical and Doctor Directory HTML Template.</title>
 
         <!-- Favicon -->
-        <link rel="icon" href="${pageContext.request.contextPath}/Main Template/img/favicon.png">
+        <link rel="icon" href="img/favicon.png">
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <!-- Nice Select CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/nice-select.css">
+        <link rel="stylesheet" href="css/nice-select.css">
         <!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
         <!-- icofont CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/icofont.css">
+        <link rel="stylesheet" href="css/icofont.css">
         <!-- Slicknav -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/slicknav.min.css">
+        <link rel="stylesheet" href="css/slicknav.min.css">
         <!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/owl-carousel.css">
+        <link rel="stylesheet" href="css/owl-carousel.css">
         <!-- Datepicker CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/datepicker.css">
+        <link rel="stylesheet" href="css/datepicker.css">
         <!-- Animate CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/animate.min.css">
+        <link rel="stylesheet" href="css/animate.min.css">
         <!-- Magnific Popup CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/magnific-popup.css">
+        <link rel="stylesheet" href="css/magnific-popup.css">
 
         <!-- Medipro CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/normalize.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/style.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/responsive.css">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="css/responsive.css">
 
         <!-- Color CSS -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color1.css">
+        <link rel="stylesheet" href="css/color/color1.css">
         <!--<link rel="stylesheet" href="css/color/color2.css">-->
         <!--<link rel="stylesheet" href="css/color/color3.css">-->
         <!--<link rel="stylesheet" href="css/color/color4.css">-->
@@ -133,7 +133,7 @@
                             <div class="col-lg-3 col-md-3 col-12">
                                 <!-- Start Logo -->
                                 <div class="logo">
-                                    <a href="${pageContext.request.contextPath}/Main Template/index.jsp"><img src="${pageContext.request.contextPath}/Main Template/img/logo.png" alt="#"></a>
+                                    <a href="index.jsp"><img src="img/logo.png" alt="#"></a>
                                 </div>
                                 <!-- End Logo -->
                                 <!-- Mobile Nav -->
@@ -147,43 +147,43 @@
                                         <ul class="nav menu">
                                             <li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/index.html">Home Page 1</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/index2.html">Home Page 2</a></li>
+                                                    <li><a href="index.html">Home Page 1</a></li>
+                                                    <li><a href="index2.html">Home Page 2</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Doctos <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/doctors.html">Doctor</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">Doctor Details</a></li>
+                                                    <li><a href="doctors.html">Doctor</a></li>
+                                                    <li><a href="doctor-details.html">Doctor Details</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Services <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/service.html">Service</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/service-details.html">Service Details</a></li>
+                                                    <li><a href="service.html">Service</a></li>
+                                                    <li><a href="service-details.html">Service Details</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/about.html">About Us</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/appointment.html">Appointment</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/time-table.html">Time Table</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/testimonials.html">Testimonials</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/pricing.html">Our Pricing</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/register.html">Sign Up</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/login.html">Login</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/faq.html">Faq</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/mail-success.html">Mail Success</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/404.html">404 Error</a></li>
+                                                    <li><a href="about.html">About Us</a></li>
+                                                    <li><a href="appointment.html">Appointment</a></li>
+                                                    <li><a href="time-table.html">Time Table</a></li>
+                                                    <li><a href="testimonials.html">Testimonials</a></li>
+                                                    <li><a href="pricing.html">Our Pricing</a></li>
+                                                    <li><a href="register.html">Sign Up</a></li>
+                                                    <li><a href="login.html">Login</a></li>
+                                                    <li><a href="faq.html">Faq</a></li>
+                                                    <li><a href="mail-success.html">Mail Success</a></li>
+                                                    <li><a href="404.html">404 Error</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Blogs <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/blog-grid.html">Blog Grid</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/blog-single.html">Blog Details</a></li>
+                                                    <li><a href="blog-grid.html">Blog Grid</a></li>
+                                                    <li><a href="blog-single.html">Blog Details</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="${pageContext.request.contextPath}/Main Template/contact.html">Contact Us</a></li>
+                                            <li><a href="contact.html">Contact Us</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -191,7 +191,7 @@
                             </div>
                             <div class="col-lg-2 col-12">
                                 <div class="get-quote">
-                                    <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Book Appointment</a>
+                                    <a href="appointment.html" class="btn">Book Appointment</a>
                                 </div>
                             </div>
                         </div>
@@ -210,7 +210,7 @@
                         <div class="col-12">
                             <h2>Register</h2>
                             <ul class="bread-list">
-                                <li><a href="${pageContext.request.contextPath}/Main Template/index.html">Home</a></li>
+                                <li><a href="index.html">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
                                 <li class="active">Register</li>
                             </ul>
@@ -228,81 +228,46 @@
                     <div class="row"> 
                         <div class="col-lg-6">
                             <div class="register-left">
-                                <img  src="${pageContext.request.contextPath}/Main Template/img/register.png" alt="">
+                                <img  src="img/register.png" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="register-form">
                                 <h2>Register Here</h2>
-                                <p>Already have an account ? <a href="${pageContext.request.contextPath}/Main Template/login.jsp">Login Here</a></p>
-                                <!-- Form -->
-                                <form id="emailForm" class="form" method="post" action="${pageContext.request.contextPath}/RegisterServlet">
+                                <p>Already have an account ? <a href="login.jsp">Login Here</a></p>
+                                <!--                                 Form -->
+                                <form id="emailForm" class="form" method="" action="register.jsp">
                                     <div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="text" name="name" placeholder="Full Name" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                </div>
-                                            </div>                                                                       
-                                            <div class="col-lg-6">
-                                                <div  style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9]+" title="Please enter only numbers" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                </div>
-                                            </div>                                                                  
+                                        <div class="row">                                  
                                             <div class="col-lg-6">
                                                 <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
                                                     <input type="email" id="to" name="email" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
                                                 </div>
                                             </div>                                   
-                                            <div class="col-lg-6">
-                                                <div style="background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="password" id="password" name="password" placeholder="Password" required style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                </div>
-                                            </div>                                      
-                                            <div class="col-lg-6">
-                                                <div style = "background-color: #1A76D1;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required oninput="checkPasswordMatch()" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                    <span id="passwordMatchMessage"></span>
-                                                </div>
+                                            <div>
+                                                <input type="hidden" id="tokenInput" name="token" value="">
                                             </div>
-                                            <input type="hidden" id="tokenInput" name="token" value="">
-                                        </div>
-                                        <br/>
-                                        <div style="color: red; margin-left: 20px"> ${errorRegis}</div>
-                                        <br/>
-                                        <div class="col-12">
-                                            <div class="form-group login-btn">
-                                                <button class="btn" type="submit" onclick="validateForm()">Sign Up</button>
-                                            </div>
+                                           
 
-                                            <!--                                                                                        <div class="checkbox">
-                                                                                                                                        <label class="checkbox-inline" for="2">
-                                                                                                                                            <input name="news" id="2" type="checkbox" required>
-                                                                                                                                            I agree with all <a href="#" class="terms">Terms & Conditions</a>
-                                                                                                                                        </label>
-                                                                                                                                    </div>-->
-                                            <!--<div id="termsMessage"></div>-->
                                         </div>
-                                    </div>
                                 </form>
+                                <br/>
 
-                                <!--                                <input style="display: inline-block;
-                                                                       padding: 10px 20px;
-                                                                       font-size: 16px;
-                                                                       cursor: pointer;
-                                                                       text-align: center;
-                                                                       text-decoration: none;
-                                                                       outline: none;
-                                                                       border: none;
-                                                                       border-radius: 5px;
-                                                                       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                                                                       background-color: #1A76D1;
-                                                                       color: white;
-                                                                       transition: background-color 0.3s;"
-                                                                       onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                                                       onmouseout="this.style.backgroundColor = '#1A76D1';" onclick="sendMail()"; onclick="validateForm()" type="submit" value="Sign Up">-->
-
-
+                                <input style="display: inline-block;
+                                       padding: 10px 20px;
+                                       font-size: 16px;
+                                       cursor: pointer;
+                                       text-align: center;
+                                       text-decoration: none;
+                                       outline: none;
+                                       border: none;
+                                       border-radius: 5px;
+                                       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                       background-color: #1A76D1;
+                                       color: white;
+                                       transition: background-color 0.3s;"
+                                       onmouseover="this.style.backgroundColor = '#2C2D3F';"
+                                       onmouseout="this.style.backgroundColor = '#1A76D1';" onclick="sendMail()";  type="submit" value="Send Verification Code">
                                 <!--/ End Form -->
                             </div>
                         </div>
@@ -373,7 +338,7 @@
                             <div class="single-footer">
                                 <h2>Newsletter</h2>
                                 <p>subscribe to our newsletter to get allour news in your inbox.. Lorem ipsum dolor sit amet, consectetur adipisicing elit,</p>
-                                <form action="${pageContext.request.contextPath}/Main Template/mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
                                     <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
                                            onblur="this.placeholder = 'Your email address'" required="" type="email">
                                     <button class="button"><i class="icofont icofont-paper-plane"></i></button>
@@ -401,76 +366,48 @@
         <!--/ End Footer Area -->
 
         <!-- jquery Min JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.min.js"></script>
+        <script src="js/jquery.min.js"></script>
         <!-- jquery Migrate JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-migrate-3.0.0.js"></script>
+        <script src="js/jquery-migrate-3.0.0.js"></script>
         <!-- jquery Ui JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-ui.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
         <!-- Easing JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/easing.js"></script>
+        <script src="js/easing.js"></script>
         <!-- Color JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/colors.js"></script>
+        <script src="js/colors.js"></script>
         <!-- Popper JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/popper.min.js"></script>
+        <script src="js/popper.min.js"></script>
         <!-- Bootstrap Datepicker JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap-datepicker.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
         <!-- Jquery Nav JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.nav.js"></script>
+        <script src="js/jquery.nav.js"></script>
         <!-- Slicknav JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/slicknav.min.js"></script>
+        <script src="js/slicknav.min.js"></script>
         <!-- ScrollUp JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.scrollUp.min.js"></script>
+        <script src="js/jquery.scrollUp.min.js"></script>
         <!-- Niceselect JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/niceselect.js"></script>
+        <script src="js/niceselect.js"></script>
         <!-- Tilt Jquery JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/tilt.jquery.min.js"></script>
+        <script src="js/tilt.jquery.min.js"></script>
         <!-- Owl Carousel JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/owl-carousel.js"></script>
+        <script src="js/owl-carousel.js"></script>
         <!-- counterup JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.counterup.min.js"></script>
+        <script src="js/jquery.counterup.min.js"></script>
         <!-- Steller JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/steller.js"></script>
+        <script src="js/steller.js"></script>
         <!-- Wow JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/wow.min.js"></script>
+        <script src="js/wow.min.js"></script>
         <!-- Magnific Popup JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.magnific-popup.min.js"></script>
+        <script src="js/jquery.magnific-popup.min.js"></script>
         <!-- Counter Up CDN JS -->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
         <!-- Bootstrap JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <!-- Main JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
-        <script>
-                                               function checkPasswordMatch() {
-                                                   var password = document.getElementById("password").value;
-                                                   var confirmPassword = document.getElementById("confirmPassword").value;
-                                                   var message = document.getElementById("passwordMatchMessage");
+        <script src="js/main.js"></script>
 
-                                                   if (password === confirmPassword) {
-                                                       message.style.color = "green";
-                                                       message.innerHTML = "Password matched!";
-                                                   } else {
-                                                       message.style.color = "red";
-                                                       message.innerHTML = "Password does not match!";
-                                                   }
-                                               }
-        </script>
 
-        <script>
-            function validateForm() {
-                var checkBox = document.getElementById("2");
-                var termsMessage = document.getElementById("termsMessage");
 
-                if (!checkBox.checked) {
-                    termsMessage.style.color = "red";
-                    termsMessage.innerHTML = "Please agree to the terms before signing up!";
-                    return false;
-                } else {
-                    termsMessage.innerHTML = ""; // Clear any previous error messages
-                    return true;
-                }
-            }
-        </script>
 
         <!--        <script>
                     function sendMail() {
@@ -498,62 +435,62 @@
         
                 </script>-->
         <script>
-            function sendMail() {
-                (function () {
-                    emailjs.init("7Qhsfv2qBZKUnVVaG"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
-                })();
+                                               function sendMail() {
+                                                   (function () {
+                                                       emailjs.init("7Qhsfv2qBZKUnVVaG"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
+                                                   })();
 
-                var toEmail = document.querySelector("#to").value;
+                                                   var toEmail = document.querySelector("#to").value;
 
-                // T?o m?t mã token ng?u nhiên (ví d?: s? d?ng UUID)
-                var token = generateToken();
-                document.getElementById("tokenInput").value = token;
+                                                   // T?o m?t mã token ng?u nhiên (ví d?: s? d?ng UUID)
+                                                   var token = generateToken();
+                                                   document.getElementById("tokenInput").value = token;
 
 // Submit form
-                document.getElementById("emailForm").submit();
+                                                   document.getElementById("emailForm").submit();
 
-                var params = {
-                    to: toEmail,
-                    token: token // Truy?n mã token vào tham s?
-                };
+                                                   var params = {
+                                                       to: toEmail,
+                                                       token: token // Truy?n mã token vào tham s?
+                                                   };
 
-                var serviceID = "service_5upst68"; // Email ServFd
-                var templateID = "template_qah0i6l"; // Email Te
+                                                   var serviceID = "service_5upst68"; // Email ServFd
+                                                   var templateID = "template_qah0i6l"; // Email Te
 
-                // G?i email
-                emailjs.send(serviceID, templateID, params)
-                        .then(res => {
-                            alert("Email Sent Successfully! Please check your email to activate your account ");
-                        })
-                        .catch(error => {
-                            console.error("Error sending email:", error);
-                        });
-            }
+                                                   // G?i email
+                                                   emailjs.send(serviceID, templateID, params)
+                                                           .then(res => {
+                                                               alert("Email Sent Successfully! Please check your email to activate your account ");
+                                                           })
+                                                           .catch(error => {
+                                                               console.error("Error sending email:", error);
+                                                           });
+                                               }
 
-            // Bi?n l?u tr? các mã token ?ã ???c t?o ra
-            var generatedTokens = new Set();
+                                               // Bi?n l?u tr? các mã token ?ã ???c t?o ra
+                                               var generatedTokens = new Set();
 
-            function generateToken() {
-                // Hàm t?o UUID ng?u nhiên
-                function uuidv4() {
-                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                        var r = Math.random() * 16 | 0,
-                                v = c == 'x' ? r : (r & 0x3 | 0x8);
-                        return v.toString(16);
-                    });
-                }
+                                               function generateToken() {
+                                                   // Hàm t?o UUID ng?u nhiên
+                                                   function uuidv4() {
+                                                       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                                                           var r = Math.random() * 16 | 0,
+                                                                   v = c == 'x' ? r : (r & 0x3 | 0x8);
+                                                           return v.toString(16);
+                                                       });
+                                                   }
 
-                // T?o mã token m?i
-                var token;
-                do {
-                    token = uuidv4();
-                } while (generatedTokens.has(token)); // Ki?m tra xem mã token ?ã t?n t?i ch?a
+                                                   // T?o mã token m?i
+                                                   var token;
+                                                   do {
+                                                       token = uuidv4();
+                                                   } while (generatedTokens.has(token)); // Ki?m tra xem mã token ?ã t?n t?i ch?a
 
-                // Thêm mã token m?i vào danh sách
-                generatedTokens.add(token);
+                                                   // Thêm mã token m?i vào danh sách
+                                                   generatedTokens.add(token);
 
-                return token;
-            }
+                                                   return token;
+                                               }
 
         </script>
     </body>

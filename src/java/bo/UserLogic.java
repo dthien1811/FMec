@@ -23,16 +23,21 @@ public class UserLogic {
         return userFound;
     }
 
-    public boolean createUser(String name, String phone, String email, String password) {
-        User userRegister = new User();
+
+    public void createUser(String name, String phone, String email, String password) {
+       User userRegister = new User();
         UserDAO userDAO = new UserDAO();
         userRegister.setName(name);
         userRegister.setPhone(phone);
         userRegister.setEmail(email);
         userRegister.setPassword(password);
-    boolean isSuccessRegister =userDAO.createUser(userRegister);
-        return isSuccessRegister;
+        //check exist email
+        if (userDAO.findbyEmail(userRegister) != null) {
+            throw new IllegalArgumentException("Email Existed.!");
+        } else {
+           userDAO.createUser(userRegister);
 
+        }
     }
 
 

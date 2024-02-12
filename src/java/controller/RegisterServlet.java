@@ -56,7 +56,8 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                request.getRequestDispatcher("Main Template/register.jsp").forward(request, response);
+
     }
 
     /**
@@ -76,13 +77,14 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         UserLogic userLogic = new UserLogic();
-        boolean isSuccessRegister = userLogic.createUser(name,phone,email,password);
-        if (isSuccessRegister) {
-            response.sendRedirect("HomeServlet");
-        } else {
-            request.setAttribute("error","Error");
-        }
-    }
+        try {
+            userLogic.createUser(name,phone,email,password);
+              request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("errorRegis","Email Existed.!");
+        request.getRequestDispatcher("Main Template/register.jsp").forward(request, response);
+        
+    }}
 
     /**
      * Returns a short description of the servlet.

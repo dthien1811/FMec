@@ -139,7 +139,7 @@ public class UserDAO extends DBContext {
         return null;
     }
 
-    public boolean createUser(User userRegister) {
+    public void createUser(User userRegister) {
         String sql = "INSERT INTO [dbo].[User]\n"
                 + "           (    \n"
                 + "           [name]\n"
@@ -159,7 +159,6 @@ public class UserDAO extends DBContext {
             statement.setString(4, userRegister.getPassword());
 
             statement.executeUpdate();
-            return true;
 
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -181,7 +180,60 @@ public class UserDAO extends DBContext {
                 throw new RuntimeException(e);
             }
         }
-        return false;
+
     }
 
+    public User findbyEmail(User userRegister) {
+        List<User> list = new ArrayList<>();
+        String sql = "SELECT [userId]\n"
+                + "      ,[majorId]\n"
+                + "      ,[role]\n"
+                + "      ,[address]\n"
+                + "      ,[avatar]\n"
+                + "      ,[name]\n"
+                + "      ,[phone]\n"
+                + "      ,[email]\n"
+                + "      ,[password]\n"
+                + "  FROM [dbo].[User] where [email] = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            //Dua vao user va lay ra de sql
+            statement.setString(1, userRegister.getEmail());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
+                int majorId = resultSet.getInt("majorId");
+                String role = resultSet.getString("role");
+                String address = resultSet.getString("address");
+                String avatar = resultSet.getString("avatar");
+                String name = resultSet.getString("name");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password);
+                list.add(userFound);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return list.isEmpty() ? null : list.get(0);
+    }
 }

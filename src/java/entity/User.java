@@ -19,11 +19,12 @@ public class User {
     private String phone;
     private String email;
     private String password;
+    private String token;
 
     public User() {
     }
 
-    public User(int userId, int majorId, String role, String address, String avatar, String name, String phone, String email, String password) {
+    public User(int userId, int majorId, String role, String address, String avatar, String name, String phone, String email, String password, String token) {
         this.userId = userId;
         this.majorId = majorId;
         this.role = role;
@@ -33,6 +34,7 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.token = token;
     }
 
     public int getUserId() {
@@ -107,9 +109,19 @@ public class User {
         this.password = password;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", majorId=" + majorId + ", role=" + role + ", address=" + address + ", avatar=" + avatar + ", name=" + name + ", phone=" + phone + ", email=" + email + ", password=" + password + '}';
+        return "User{" + "userId=" + userId + ", majorId=" + majorId + ", role=" + role + ", address=" + address + ", avatar=" + avatar + ", name=" + name + ", phone=" + phone + ", email=" + email + ", password=" + password + ", token=" + token + '}';
     }
+
+  
 
 }

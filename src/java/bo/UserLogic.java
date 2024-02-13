@@ -24,13 +24,14 @@ public class UserLogic {
     }
 
 
-    public void createUser(String name, String phone, String email, String password) {
+    public void createUser(String name, String phone, String email, String password,String token) {
        User userRegister = new User();
         UserDAO userDAO = new UserDAO();
         userRegister.setName(name);
         userRegister.setPhone(phone);
         userRegister.setEmail(email);
         userRegister.setPassword(password);
+        userRegister.setToken(token);
         //check exist email
         if (userDAO.findbyEmail(userRegister) != null) {
             throw new IllegalArgumentException("Email Existed.!");

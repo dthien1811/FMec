@@ -15,7 +15,7 @@
         <link rel="icon" href="img/favicon.png">
 
         <!-- Google Fonts -->
-       <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/bootstrap.min.css">
@@ -250,7 +250,7 @@
                                             </div>                                                                  
                                             <div class="col-lg-6">
                                                 <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="email" id="to" name="email" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                    <input type="email" id="to" name="emailCheck" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
                                                 </div>
                                             </div>                                   
                                             <div class="col-lg-6">
@@ -264,11 +264,15 @@
                                                     <span id="passwordMatchMessage"></span>
                                                 </div>
                                             </div>
+                                            <br/>
                                             <input type="hidden" id="tokenInput" name="token" value="">
                                             <br/>
                                             <div class="col-lg-12">
                                                 <div style = "background-color: #1A76D1;border: 3px solid black; border-radius: 10px;">
-                                                    <b style="color: white">Key:</b>    <input type="text" name="token" placeholder="Activate Your Account" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                    <b style="color: white">Key:</b>   
+                                                    <input id="tokenMatchResult" type="text" name="tokenCheck" placeholder="Activate Your Account" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+
+
                                                 </div>
                                             </div>  
                                         </div>
@@ -279,16 +283,45 @@
                                             <div class="form-group login-btn">
                                                 <button class="btn" type="submit" onclick="validateForm()">Sign Up</button>
                                             </div>
+                                            <%
+                                                // L?y giá tr? c?a tham s? 'token' t? URL
+                                                String token = request.getParameter("token");
 
+                                                // Ki?m tra xem token có t?n t?i không
+                                                if (token != null && !token.isEmpty()) {
+                                                    // Token ???c tìm th?y trong URL
+                                                    out.println("Token t? URL: " + token);
+                                                } else {
+                                                    // Không tìm th?y token trong URL
+                                                    out.println("Không có Token trong URL");
+                                                }
+                                            %>
+                                            <%
+                                                // L?y giá tr? c?a tham s? 'email' t? URL
+                                                String email = request.getParameter("email");
+
+                                                // Ki?m tra xem email có t?n t?i không
+                                                if (email != null && !email.isEmpty()) {
+                                                    // Email ???c tìm th?y trong URL
+                                                    out.println("Email t? URL: " + email);
+                                                } else {
+                                                    // Không tìm th?y email trong URL
+                                                    out.println("Không có Email trong URL");
+                                                }
+                                            %>
+
+
+                                            <div id="tokenMatchResult"></div>
+                                            <div id="emailMatchResult"></div>
 
 
                                         </div>
-                                       
+
                                     </div>
                                 </form>
-                               
 
-                            
+
+
                                 <!--/ End Form -->
                             </div>
                         </div>
@@ -385,6 +418,21 @@
             <!--/ End Copyright -->
         </footer>
         <!--/ End Footer Area -->
+        <script>
+            function checkPasswordMatch() {
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("confirmPassword").value;
+                var message = document.getElementById("passwordMatchMessage");
+                if (password === confirmPassword) {
+                    message.style.color = "green";
+                    message.innerHTML = "Password matched!";
+                } else {
+                    message.style.color = "red";
+                    message.innerHTML = "Password does not match!";
+                }
+            }
+        </script>
+
 
         <!-- jquery Min JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/jquery.min.js"></script>
@@ -427,7 +475,57 @@
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
 
+        <script>
+            window.onload = function () {
+                // L?y token và email t? URL
+                var urlParams = new URLSearchParams(window.location.search);
+                var urlToken = urlParams.get('token');
+                var urlEmail = urlParams.get('email');
 
-     
+                // L?y ph?n t? input cho token và email
+                var inputToken = document.getElementsByName("tokenCheck")[0];
+                var inputEmail = document.getElementsByName("emailCheck")[0];
+
+                // L?y ph?n t? nút Sign Up
+                var signUpBtn = document.querySelector('.login-btn button');
+
+                // Thêm s? ki?n oninput cho c? inputToken và inputEmail
+                inputToken.oninput = function () {
+                    validateForm();
+                };
+
+                inputEmail.oninput = function () {
+                    validateForm();
+                };
+
+                function validateForm() {
+                    // L?y giá tr? c?a input khi ng??i dùng nh?p
+                    var inputtedToken = inputToken.value;
+                    var inputtedEmail = inputEmail.value;
+
+                    // So sánh token và email và hi?n th? k?t qu?
+                    var tokenResultDiv = document.getElementById("tokenMatchResult");
+                    var emailResultDiv = document.getElementById("emailMatchResult");
+                    if (urlToken === inputtedToken && urlEmail === inputtedEmail) {
+                        tokenResultDiv.style.color = "green";
+                        tokenResultDiv.innerHTML = "Token matched!";
+                        emailResultDiv.style.color = "green";
+                        emailResultDiv.innerHTML = "Email matched!";
+                        signUpBtn.disabled = false; // Kích ho?t nút Sign Up
+                    } else {
+                        tokenResultDiv.style.color = "red";
+                        tokenResultDiv.innerHTML = "Token does not match!";
+                        emailResultDiv.style.color = "red";
+                        emailResultDiv.innerHTML = "Email does not match!";
+                        signUpBtn.disabled = true; // Vô hi?u hóa nút Sign Up
+                    }
+                }
+            };
+        </script>
+
+
+
+
+
     </body>
 </html>

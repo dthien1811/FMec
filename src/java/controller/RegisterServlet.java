@@ -56,8 +56,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                       processRequest(request, response);
-
+        processRequest(request, response);
 
     }
 
@@ -70,30 +69,28 @@ public class RegisterServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
- 
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    
-    String name = request.getParameter("name");
-    String token = request.getParameter("token");
-    String phone = request.getParameter("phone");
-    String email = request.getParameter("email");
-    String password = request.getParameter("password");
-    UserLogic userLogic = new UserLogic();
-    try {
-        
-        
-        // Tạo người dùng sau đó
-        userLogic.createUser(name,phone,email,password);
-        
-        // Chuyển hướng đến trang index.jsp sau khi tạo người dùng thành công
-        request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
-    } catch (IllegalArgumentException e) {
-        request.setAttribute("errorRegis2","Email Existed.!");
-        request.getRequestDispatcher("Main Template/register2.jsp").forward(request, response);
-    }
-}
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("emailCheck");
+        String password = request.getParameter("password");
+        String token = request.getParameter("tokenCheck");
+        UserLogic userLogic = new UserLogic();
+        try {
+
+            // Tạo người dùng sau đó
+            userLogic.createUser(name, phone, email, password, token);
+
+            // Chuyển hướng đến trang index.jsp sau khi tạo người dùng thành công
+            request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("errorRegis2", "Email Existed.!");
+            request.getRequestDispatcher("Main Template/register2.jsp").forward(request, response);
+        }
+    }
 
     /**
      * Returns a short description of the servlet.

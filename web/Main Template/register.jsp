@@ -247,7 +247,69 @@
                                             <div>
                                                 <input type="hidden" id="tokenInput" name="token" value="">
                                             </div>
-                                           
+
+                                            <%
+                                                // L?y giá tr? c?a tham s? 'token' t? URL
+                                                String token = request.getParameter("token");
+
+                                                // Ki?m tra xem token có t?n t?i không
+                                                if (token != null && !token.isEmpty()) {
+                                                    // Token ???c tìm th?y trong URL
+                                                    out.println("Token From URL: " + token);
+                                                } else {
+                                                    // Không tìm th?y token trong URL
+                                                    out.println("No Token in URL");
+
+                                                    if (token != null && !token.isEmpty()) {
+                                                        // ??t token vào session
+                                                        session.setAttribute("token", token);
+                                                    }
+
+                                                }
+
+                                            %>
+                                            <%                                                // L?y giá tr? c?a tham s? 'email' t? URL
+                                                String email = request.getParameter("email");
+
+                                                // Ki?m tra xem email có t?n t?i không
+                                                if (email != null && !email.isEmpty()) {
+                                                    // Email ???c tìm th?y trong URL
+                                                    out.println("    Email : " + email);
+                                                } else {
+                                                    // Không tìm th?y email trong URL
+                                                    out.println("No Email");
+                                                }
+                                            %>
+
+                                            <%    if (token != null && !token.isEmpty()) {
+                                            %>
+                                            <div style="position: relative; left:   300px">      <a href="register2.jsp?token=<%=token%>&email=<%=email%>"
+                                               style="display: inline-block;
+                                               padding: 10px 20px;
+                                               font-size: 16px;
+                                               cursor: pointer;
+                                               text-align: center;
+                                               text-decoration: none;
+                                               outline: none;
+                                               border: none;
+                                               border-radius: 5px;
+                                               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                               background-color: #1A76D1;
+                                               color: white;
+                                               transition: background-color 0.3s;
+                                               margin-top: 10px; /* Optional: Add margin top for spacing */"
+                                               onmouseover="this.style.backgroundColor = '#2C2D3F';"
+                                               onmouseout="this.style.backgroundColor = '#1A76D1';">
+                                                Move Register 2
+                                            </a>
+</div> 
+
+                                            <%
+                                                }
+                                            %>
+
+
+
 
                                         </div>
                                 </form>
@@ -267,7 +329,7 @@
                                        color: white;
                                        transition: background-color 0.3s;"
                                        onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                       onmouseout="this.style.backgroundColor = '#1A76D1';" onclick="sendMail()";  type="submit" value="Send Verification Code">
+                                       onmouseout="this.style.backgroundColor = '#1A76D1'" onclick="sendMail()";  type="submit" value="Send Verification Code">
                                 <!--/ End Form -->
                             </div>
                         </div>
@@ -490,8 +552,11 @@
                                                    generatedTokens.add(token);
 
                                                    return token;
+
+                                                   window.location.href = "register2.jsp";
                                                }
 
         </script>
+
     </body>
 </html>

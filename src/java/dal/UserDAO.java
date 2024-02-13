@@ -30,6 +30,7 @@ public class UserDAO extends DBContext {
                 + "      ,[phone]\n"
                 + "      ,[email]\n"
                 + "      ,[password]\n"
+                + "      ,[token]\n"
                 + "  FROM [dbo].[User]";
         try {
             connection = getConnection();
@@ -45,7 +46,8 @@ public class UserDAO extends DBContext {
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                User user = new User(userId, majorId, role, address, avatar, name, phone, email, password);
+                String token = resultSet.getString("token");
+                User user = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);
                 list.add(user);
             }
         } catch (SQLException ex) {
@@ -93,7 +95,8 @@ public class UserDAO extends DBContext {
                 + "      ,[phone]\n"
                 + "      ,[email]\n"
                 + "      ,[password]\n"
-                + "  FROM [dbo].[User]\n"
+                + "      ,[token]\n"
+                + "  FROM [dbo].[User]"
                 + "where email = ? and password = ?";
         try {
             connection = getConnection();
@@ -113,7 +116,8 @@ public class UserDAO extends DBContext {
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password);
+                String token = resultSet.getString("token");
+                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);
                 return userFound;
             }
 
@@ -140,15 +144,15 @@ public class UserDAO extends DBContext {
     }
 
     public void createUser(User userRegister) {
-        String sql = "INSERT INTO [dbo].[User]\n"
-                + "           (    \n"
-                + "           [name]\n"
-                + "           ,[phone]\n"
-                + "           ,[email]\n"
-                + "           ,[password])\n"
-                + "     VALUES\n"
-                + "           (\n"
-                + "           ?,?,?,?)";
+        String sql = "INSERT INTO [dbo].[User]\n" +
+"           ( " +
+"           [name]\n" +
+"           ,[phone]\n" +
+"           ,[email]\n" +
+"           ,[password]\n" +
+"           ,[token])\n" +
+"     VALUES\n" +
+"           (?,?,?,?,?)";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
@@ -157,7 +161,7 @@ public class UserDAO extends DBContext {
             statement.setString(2, userRegister.getPhone());
             statement.setString(3, userRegister.getEmail());
             statement.setString(4, userRegister.getPassword());
-
+            statement.setString(5, userRegister.getToken());
             statement.executeUpdate();
 
         } catch (SQLException ex) {
@@ -194,6 +198,7 @@ public class UserDAO extends DBContext {
                 + "      ,[phone]\n"
                 + "      ,[email]\n"
                 + "      ,[password]\n"
+                + "      ,[token]\n"
                 + "  FROM [dbo].[User] where [email] = ?";
         try {
             connection = getConnection();
@@ -211,7 +216,8 @@ public class UserDAO extends DBContext {
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password);
+                String token = resultSet.getString("token");
+                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);
                 list.add(userFound);
             }
 

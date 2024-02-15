@@ -510,13 +510,13 @@
                         tokenResultDiv.style.color = "green";
                         tokenResultDiv.innerHTML = "Token matched!";
                         emailResultDiv.style.color = "green";
-                        emailResultDiv.innerHTML = "Email matched!";
+                        emailResultDiv.innerHTML = "Email and Token matched!";
                         signUpBtn.disabled = false; // Kích ho?t nút Sign Up
                     } else {
                         tokenResultDiv.style.color = "red";
                         tokenResultDiv.innerHTML = "Token does not match!";
                         emailResultDiv.style.color = "red";
-                        emailResultDiv.innerHTML = "Email does not match!";
+                        emailResultDiv.innerHTML = "Email and Token does not match!";
                         signUpBtn.disabled = true; // Vô hi?u hóa nút Sign Up
                     }
                 }

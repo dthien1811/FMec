@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name='copyright' content=''>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
         <!-- Title -->
         <title>Mediplus - Medical and Doctor Directory HTML Template.</title>
 
@@ -262,30 +262,48 @@
                                             <div class="form-group login-btn">
                                                 <input class="btn" type="submit" value="Login">
                                                 <!--<button class="btn" type="submit">Login</button>-->
-                                            </div>
-                                            <div class="checkbox">
-                                                <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Remember me</label>
-                                            </div>
-                                            <a href="#" class="lost-pass" style="color: #1A76D1;" >Lost your password ?</a>
-                                        </div>
-                                        <div style="border: 2px solid black; border-radius: 10px; height: 60px; width: 200px; box-sizing: border-box; padding: 10px;">
-                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:9999/SWP391_/LoginGoogleHandler&response_type=code
-                                               &client_id=1073304818230-a4am8uj87r2prl8sgi5seddqmnfn2vjm.apps.googleusercontent.com&approval_prompt=force"
-                                               style="text-decoration: none; color: black; font-weight: bold;">
-                                                <img style="width: 40px; height: 40px; vertical-align: middle;" src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo"> Login With Google
-                                            </a>
-                                        </div>
 
+                                                <br/>
+                                                <br/>
+                                                <div style="border: 2px solid black; border-radius: 10px; height: 60px; width: 200px; box-sizing: border-box; padding: 10px;">
+                                                    <a href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:9999/SWP391_/LoginGoogleHandler&response_type=code
+                                                       &client_id=1073304818230-a4am8uj87r2prl8sgi5seddqmnfn2vjm.apps.googleusercontent.com&approval_prompt=force"
+                                                       style="text-decoration: none; color: black; font-weight: bold;">
+                                                        <img style="width: 40px; height: 40px; vertical-align: middle;" src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo"> Login With Google
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
+                                            </form>
+                                            <!--/ End Form -->
+                                        </div>
                                     </div>
-                                </form>
-                                <!--/ End Form -->
                             </div>
+                                        <div style="position: relative; left:   160px;top:  20px">
+                            <a  style="display: inline-block;
+                               padding: 10px 20px;
+                               font-size: 16px;
+                               cursor: pointer;
+                               text-align: center;
+                               text-decoration: none;
+                               outline: none;
+                               border: none;
+                               border-radius: 5px;
+                               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                               background-color: #1A76D1;
+                               color: white;
+                               transition: background-color 0.3s;
+                               margin-top: 10px;" href="forgotpassword.jsp" class="lost-pass" style="color: #1A76D1;" >Lost your password ?</a>
                         </div>
+                                        </div>
                     </div>
                 </div>
             </div>
+
         </section>
         <!--/ End Login -->
+
 
         <!-- Footer Area -->
         <footer id="footer" class="footer ">
@@ -415,7 +433,7 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
-   
+
     </body>
 </html>
 

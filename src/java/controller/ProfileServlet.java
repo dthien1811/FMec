@@ -4,22 +4,18 @@
  */
 package controller;
 
-import bo.UserLogic;
-import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Lenovo
  */
-public class LoginServlet extends HttpServlet {
+public class ProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +34,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ProfileServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProfileServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +55,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Main Template/login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -73,41 +69,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        //Logic
-        UserLogic userLogic = new UserLogic();
-        List<User> listUserFound = userLogic.findByUsernamePassword(email, password);
-        
-        if (!listUserFound.isEmpty()) {
-            for (User user : listUserFound) {
-            int majorId = user.getMajorId(); // Assuming getMajorId() is the getter method for MajorId
-            // Do something with the majorId here
-             switch (majorId) {
-                case 1:
-                    session.setAttribute("listUserFound", listUserFound);
-                    request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
-                    break;
-                case 2:
-                    session.setAttribute("listUserFound", listUserFound);
-                    request.getRequestDispatcher("Main Template/register.jsp").forward(request, response);
-
-                    break;
-                case 3:
-                    session.setAttribute("listUserFound", listUserFound);
-                    request.getRequestDispatcher("Main Template/forgotpassword.jsp").forward(request, response);
-
-                    break;
-            }
-        }
-           
-
-        } else {
-
-            request.setAttribute("eror", "Gmail or PassWord incorrect!");
-            request.getRequestDispatcher("Main Template/login.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

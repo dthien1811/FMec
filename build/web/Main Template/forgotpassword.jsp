@@ -43,18 +43,7 @@
         <link rel="stylesheet" href="css/responsive.css">
 
         <!-- Color CSS -->
-        <link rel="stylesheet" href="css/color/color1.css">
-        <!--<link rel="stylesheet" href="css/color/color2.css">-->
-        <!--<link rel="stylesheet" href="css/color/color3.css">-->
-        <!--<link rel="stylesheet" href="css/color/color4.css">-->
-        <!--<link rel="stylesheet" href="css/color/color5.css">-->
-        <!--<link rel="stylesheet" href="css/color/color6.css">-->
-        <!--<link rel="stylesheet" href="css/color/color7.css">-->
-        <!--<link rel="stylesheet" href="css/color/color8.css">-->
-        <!--<link rel="stylesheet" href="css/color/color9.css">-->
-        <!--<link rel="stylesheet" href="css/color/color10.css">-->
-        <!--<link rel="stylesheet" href="css/color/color11.css">-->
-        <!--<link rel="stylesheet" href="css/color/color12.css">-->
+        <link rel="stylesheet" href="css/color/color1.css">       
 
         <link rel="stylesheet" href="#" id="colors">
 
@@ -208,11 +197,11 @@
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Register</h2>
+                            <h2>Forgot Password 1/2</h2>
                             <ul class="bread-list">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="index.jsp">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Register</li>
+                                <li class="active">Forgot Password 1/2</li>
                             </ul>
                         </div>
                     </div>
@@ -228,15 +217,15 @@
                     <div class="row"> 
                         <div class="col-lg-6">
                             <div class="register-left">
-                                <img  src="img/register.png" alt="">
+                                <img style="width: 540px;height: 540px" src="img/ForgetPWchange.jpg" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="register-form">
-                                <h2>Register Here</h2>
-                                <p>Already have an account ? <a href="login.jsp">Login Here</a></p>
+                                <h2>Forgot Password 1/2</h2>
+                                <p style="color: #EEBD44 ">Please enter the email address associated with your account. <b style="color: orangered">We'll send you a verification key to reset your password.</b></p>
                                 <!--                                 Form -->
-                                <form id="emailForm" class="form" method="" action="register.jsp">
+                                <form id="emailForm" class="form" method="" action="forgotpassword.jsp">
                                     <div>
                                         <div class="row">                                  
                                             <div class="col-lg-6">
@@ -283,24 +272,24 @@
 
                                             <%    if (token != null && !token.isEmpty()) {
                                             %>
-                                            <div style="position: relative; left:   300px;top:  63px">      <a href="register2.jsp?token=<%=token%>&email=<%=email%>"
-                                                                                                    style="display: inline-block;
-                                                                                                    padding: 10px 20px;
-                                                                                                    font-size: 16px;
-                                                                                                    cursor: pointer;
-                                                                                                    text-align: center;
-                                                                                                    text-decoration: none;
-                                                                                                    outline: none;
-                                                                                                    border: none;
-                                                                                                    border-radius: 5px;
-                                                                                                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                                                                                                    background-color: #1A76D1;
-                                                                                                    color: white;
-                                                                                                    transition: background-color 0.3s;
-                                                                                                    margin-top: 10px; /* Optional: Add margin top for spacing */"
-                                                                                                    onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                                                                                    onmouseout="this.style.backgroundColor = '#1A76D1';">
-                                                    Register Step 2/2 =>
+                                            <div style="position: relative; left:   89px;top:  140px">      <a href="forgotpassword2.jsp?token=<%=token%>&email=<%=email%>"
+                                                                                                               style="display: inline-block;
+                                                                                                               padding: 10px 20px;
+                                                                                                               font-size: 16px;
+                                                                                                               cursor: pointer;
+                                                                                                               text-align: center;
+                                                                                                               text-decoration: none;
+                                                                                                               outline: none;
+                                                                                                               border: none;
+                                                                                                               border-radius: 5px;
+                                                                                                               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                                                                                               background-color: #1A76D1;
+                                                                                                               color: white;
+                                                                                                               transition: background-color 0.3s;
+                                                                                                               margin-top: 10px; /* Optional: Add margin top for spacing */"
+                                                                                                               onmouseover="this.style.backgroundColor = '#2C2D3F';"
+                                                                                                               onmouseout="this.style.backgroundColor = '#1A76D1';">
+                                                    Set New Password 2/2 =>
                                                 </a>
                                             </div> 
 
@@ -329,8 +318,9 @@
                                        color: white;
                                        transition: background-color 0.3s;"
                                        onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                       onmouseout="this.style.backgroundColor = '#1A76D1'" onclick="sendMail()";  type="submit" value="Send Verification Code 1/2">
+                                       onmouseout="this.style.backgroundColor = '#1A76D1'" onclick="sendMail()";  type="submit" value="Send Verification Code To Reset Password 1/2">
                                 <!--/ End Form -->
+
                             </div>
                         </div>
                     </div>
@@ -469,37 +459,10 @@
         <script src="js/main.js"></script>
 
 
-
-
-        <!--        <script>
-                    function sendMail() {
-                        (function () {
-                            emailjs.init("7Qhsfv2qBZKUnVVaG"); // Account Public Key
-                        })();
-                        var params = {
-                            // sendername: document.querySelector("#sendername").value,
-                            to: document.querySelector("#to").value,
-                            // subject: document.querySelector("#subject").value,
-                            // replyto: document.querySelector("#replyto").value,
-                            // message: document.querySelector("#message").value,
-                        };
-                        var serviceID = "service_5upst68"; // Email Serv
-                        var templateID = "template_qah0i6l"; // Email Te
-                        emailjs.send(serviceID, templateID, params)
-                                .then(res => {
-                                    alert("Email Sent Successfully! Please check your email to activate your account ");
-                                })
-                                .catch(error => {
-                                    console.error("Error sending email:", error);
-                                });
-                    }
-        
-        
-                </script>-->
         <script>
                                                function sendMail() {
                                                    (function () {
-                                                      emailjs.init("Ln9HbpdUdxHyqtE9w"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
+                                                       emailjs.init("GaiyO2LJxEi21DqPk"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
                                                    })();
 
                                                    var toEmail = document.querySelector("#to").value;
@@ -516,8 +479,8 @@
                                                        token: token // Truy?n mã token vào tham s?
                                                    };
 
-                                                   var serviceID = "service_pwmd1nq"; // Email Serv
-                                                   var templateID = "template_vyeb1eu"; // Email Te
+                                                   var serviceID = "service_kbrv7ja"; // Email Serv
+                                                   var templateID = "template_z5a1w02"; // Email Te
 
                                                    // G?i email
                                                    emailjs.send(serviceID, templateID, params)
@@ -529,23 +492,20 @@
                                                            });
                                                }
 
-                                               // Bi?n l?u tr? các mã token ?ã ???c t?o ra
+                                               // Bien luu tru cac ma da tao ra
                                                var generatedTokens = new Set();
 
                                                function generateToken() {
-                                                   // Hàm t?o UUID ng?u nhiên
-                                                   function uuidv4() {
-                                                       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                                                           var r = Math.random() * 16 | 0,
-                                                                   v = c == 'x' ? r : (r & 0x3 | 0x8);
-                                                           return v.toString(16);
-                                                       });
-                                                   }
+                                                   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; // Các ký t? ???c s? d?ng
+                                                   var token = '';
+                                                   var charactersLength = characters.length;
+                                                   var tokenLength = 6; // ?? dài c?a mã token (6 ký t?)
 
                                                    // T?o mã token m?i
-                                                   var token;
                                                    do {
-                                                       token = uuidv4();
+                                                       for (var i = 0; i < tokenLength; i++) {
+                                                           token += characters.charAt(Math.floor(Math.random() * charactersLength));
+                                                       }
                                                    } while (generatedTokens.has(token)); // Ki?m tra xem mã token ?ã t?n t?i ch?a
 
                                                    // Thêm mã token m?i vào danh sách
@@ -553,7 +513,7 @@
 
                                                    return token;
 
-                                                   window.location.href = "register2.jsp";
+                                                   window.location.href = "forgotpassword2.jsp";
                                                }
 
         </script>

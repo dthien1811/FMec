@@ -43,17 +43,7 @@
 
         <!-- Color CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color1.css">
-        <!--<link rel="stylesheet" href="css/color/color2.css">-->
-        <!--<link rel="stylesheet" href="css/color/color3.css">-->
-        <!--<link rel="stylesheet" href="css/color/color4.css">-->
-        <!--<link rel="stylesheet" href="css/color/color5.css">-->
-        <!--<link rel="stylesheet" href="css/color/color6.css">-->
-        <!--<link rel="stylesheet" href="css/color/color7.css">-->
-        <!--<link rel="stylesheet" href="css/color/color8.css">-->
-        <!--<link rel="stylesheet" href="css/color/color9.css">-->
-        <!--<link rel="stylesheet" href="css/color/color10.css">-->
-        <!--<link rel="stylesheet" href="css/color/color11.css">-->
-        <!--<link rel="stylesheet" href="css/color/color12.css">-->
+        
 
         <link rel="stylesheet" href="#" id="colors">
 
@@ -207,11 +197,11 @@
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Register</h2>
+                            <h2><h2>Forgot Password 2/2</h2></h2>
                             <ul class="bread-list">
                                 <li><a href="${pageContext.request.contextPath}/Main Template/index.jsp">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Register</li>
+                                <li class="active">Forgot Password 2/2</li>
                             </ul>
                         </div>
                     </div>
@@ -227,63 +217,55 @@
                     <div class="row"> 
                         <div class="col-lg-6">
                             <div class="register-left">
-                                <img  src="${pageContext.request.contextPath}/Main Template/img/register.png" alt="">
+                                <img style="width: 540px;height: 600px" src="img/FGPW2change.jpg" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="register-form">
-                                <h2>Register Here</h2>
-                                <p>Already have an account ? <a href="${pageContext.request.contextPath}/Main Template/login.jsp">Login Here</a></p>
+                                <h2>Forgot Password 2/2</h2>
+                                <p>Please enter the key you received in your Gmail to verify and <b>Set a New Password</b> </p>
                                 <!--                                 Form -->
-                                <form  class="form" method="post" action="${pageContext.request.contextPath}/RegisterServlet">
+                                <form  class="form" method="POST" action="ForgotPassServlet">
                                     <div>
                                         <div class="row">
-                                            <div class="col-lg-12">
+                                              <div class="col-lg-12">
                                                 <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="text" name="name" placeholder="Full Name" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                    <input type="email" id="emailCheck" name="emailCheck" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
                                                 </div>
-                                            </div>                                                                       
-                                            <div class="col-lg-6">
-                                                <div  style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9]+" title="Please enter only numbers" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                </div>
-                                            </div>                                                                  
-                                            <div class="col-lg-6">
-                                                <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="email" id="to" name="emailCheck" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                </div>
-                                            </div>                                   
+                                            </div>                                                                             
+                                                                 
                                             <div class="col-lg-6">
                                                 <div style="background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="password" id="password" name="password" placeholder="Password" required style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                    <input type="password" id="password" name="passwordPass" placeholder="Set New Password" required style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
                                                 </div>
                                             </div>                                      
                                             <div class="col-lg-6">
                                                 <div style = "background-color: #1A76D1;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required oninput="checkPasswordMatch()" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm New Password" required oninput="checkPasswordMatch()" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
                                                     <span id="passwordMatchMessage"></span>
                                                 </div>
                                             </div>
                                             <br/>
-                                            <input type="hidden" id="tokenInput" name="token" value="">
+                                          
                                             <br/>
                                             <div class="col-lg-12">
                                                 <div style = "background-color: #1A76D1;border: 3px solid black; border-radius: 10px;">
                                                     <b style="color: white">Key:</b>   
-                                                    <input id="tokenMatchResult" type="text" name="tokenCheck" placeholder="Activate Your Account" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
+                                                    <input id="tokenMatchResult" type="text" name="tokenCheck" placeholder="Activate Your New Password" required=""  style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
 
 
                                                 </div>
                                             </div>  
                                         </div>
                                         <br/>
-                                        <div style="color: red; margin-left: 20px"> ${errorRegis2}</div>
+                                         <div style="color: red; margin-left: 20px"> ${errorPass}</div>
                                         <br/>
                                         <div class="col-12">
                                             <div class="form-group login-btn">
-                                                <button class="btn" type="submit" onclick="validateForm()">Sign Up</button>
+                                                <button class="btn" type="submit"">Save New Password</button>
                                             </div>
-                                            <%
+                                             </div>
+                                              <%
                                                 // L?y giá tr? c?a tham s? 'token' t? URL
                                                 String token = request.getParameter("token");
 
@@ -315,10 +297,12 @@
                                             <div id="emailMatchResult"></div>
 
 
-                                        </div>
+
+                                      
+                                       
 
                                     </div>
-                                </form>
+                                                                            </form>
 
 
 

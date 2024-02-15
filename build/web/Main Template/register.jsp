@@ -283,26 +283,26 @@
 
                                             <%    if (token != null && !token.isEmpty()) {
                                             %>
-                                            <div style="position: relative; left:   300px">      <a href="register2.jsp?token=<%=token%>&email=<%=email%>"
-                                               style="display: inline-block;
-                                               padding: 10px 20px;
-                                               font-size: 16px;
-                                               cursor: pointer;
-                                               text-align: center;
-                                               text-decoration: none;
-                                               outline: none;
-                                               border: none;
-                                               border-radius: 5px;
-                                               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                                               background-color: #1A76D1;
-                                               color: white;
-                                               transition: background-color 0.3s;
-                                               margin-top: 10px; /* Optional: Add margin top for spacing */"
-                                               onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                               onmouseout="this.style.backgroundColor = '#1A76D1';">
-                                                Move Register 2
-                                            </a>
-</div> 
+                                            <div style="position: relative; left:   300px;top:  63px">      <a href="register2.jsp?token=<%=token%>&email=<%=email%>"
+                                                                                                    style="display: inline-block;
+                                                                                                    padding: 10px 20px;
+                                                                                                    font-size: 16px;
+                                                                                                    cursor: pointer;
+                                                                                                    text-align: center;
+                                                                                                    text-decoration: none;
+                                                                                                    outline: none;
+                                                                                                    border: none;
+                                                                                                    border-radius: 5px;
+                                                                                                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                                                                                    background-color: #1A76D1;
+                                                                                                    color: white;
+                                                                                                    transition: background-color 0.3s;
+                                                                                                    margin-top: 10px; /* Optional: Add margin top for spacing */"
+                                                                                                    onmouseover="this.style.backgroundColor = '#2C2D3F';"
+                                                                                                    onmouseout="this.style.backgroundColor = '#1A76D1';">
+                                                    Register Step 2/2 =>
+                                                </a>
+                                            </div> 
 
                                             <%
                                                 }
@@ -329,7 +329,7 @@
                                        color: white;
                                        transition: background-color 0.3s;"
                                        onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                       onmouseout="this.style.backgroundColor = '#1A76D1'" onclick="sendMail()";  type="submit" value="Send Verification Code">
+                                       onmouseout="this.style.backgroundColor = '#1A76D1'" onclick="sendMail()";  type="submit" value="Send Verification Code 1/2">
                                 <!--/ End Form -->
                             </div>
                         </div>
@@ -499,7 +499,7 @@
         <script>
                                                function sendMail() {
                                                    (function () {
-                                                       emailjs.init("7Qhsfv2qBZKUnVVaG"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
+                                                      emailjs.init("Ln9HbpdUdxHyqtE9w"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
                                                    })();
 
                                                    var toEmail = document.querySelector("#to").value;
@@ -516,8 +516,8 @@
                                                        token: token // Truy?n mã token vào tham s?
                                                    };
 
-                                                   var serviceID = "service_5upst68"; // Email ServFd
-                                                   var templateID = "template_qah0i6l"; // Email Te
+                                                   var serviceID = "service_pwmd1nq"; // Email Serv
+                                                   var templateID = "template_vyeb1eu"; // Email Te
 
                                                    // G?i email
                                                    emailjs.send(serviceID, templateID, params)

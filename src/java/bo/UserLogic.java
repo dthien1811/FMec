@@ -6,6 +6,7 @@ package bo;
 
 import dal.UserDAO;
 import entity.User;
+import java.util.List;
 
 /**
  *
@@ -13,19 +14,12 @@ import entity.User;
  */
 public class UserLogic {
 
-    public User findByUsernamePassword(String email, String password) {
-        User user = new User();
-        UserDAO userDAO = new UserDAO();
-        //Dua email nhan duoc o giao dien ve user
-        user.setEmail(email);
-        user.setPassword(password);
-        User userFound = userDAO.findByUsernamePassword(user);
-        return userFound;
-    }
+//    public User findByUsernamePassword(String email, String password) {
 
+//    }
 
-    public void createUser(String name, String phone, String email, String password,String token) {
-       User userRegister = new User();
+    public void createUser(String name, String phone, String email, String password, String token) {
+        User userRegister = new User();
         UserDAO userDAO = new UserDAO();
         userRegister.setName(name);
         userRegister.setPhone(phone);
@@ -36,10 +30,41 @@ public class UserLogic {
         if (userDAO.findbyEmail(userRegister) != null) {
             throw new IllegalArgumentException("Email Existed.!");
         } else {
-           userDAO.createUser(userRegister);
+            userDAO.createUser(userRegister);
 
         }
     }
 
+//    public boolean setNewPassword(String email, String password) {
+//        User user = new User();
+//        UserDAO userDAO = new UserDAO();
+//        user.setEmail(email);
+//        user.setPassword(password);
+//         boolean isSuccessSetNewPassword = userDAO.setNewPassword(user);
+//         return isSuccessSetNewPassword;
+//    }
+    public void setNewPassword(String email, String password) {
+        User userRegister = new User();
+        UserDAO userDAO = new UserDAO();
+        userRegister.setEmail(email);
+        userRegister.setPassword(password);
+          if (userDAO.findbyEmail(userRegister) != null) {
+            throw new IllegalArgumentException("Email Is Not Availble.!");
+        } else {
+            userDAO.setNewPassword(userRegister);
+
+        }
+        
+    }
+
+    public List<User> findByUsernamePassword(String email, String password) {
+ User user = new User();
+        UserDAO userDAO = new UserDAO();
+        //Dua email nhan duoc o giao dien ve user
+        user.setEmail(email);
+        user.setPassword(password);
+        List<User> listUserFound = userDAO.findByUsernamePassword(user);
+        return listUserFound;
+    }
 
 }

@@ -57,14 +57,24 @@ public class UserLogic {
         
     }
 
-    public List<User> findByUsernamePassword(String email, String password) {
- User user = new User();
+//    public List<User> findByUsernamePassword(String email, String password) {
+// User user = new User();
+//        UserDAO userDAO = new UserDAO();
+//        //Dua email nhan duoc o giao dien ve user
+//        user.setEmail(email);
+//        user.setPassword(password);
+//        List<User> listUserFound = userDAO.findByUsernamePassword(user);
+//        return listUserFound;
+//    }
+
+    public User findByUsernamePassword(String email, String password) {
+User user = new User();
         UserDAO userDAO = new UserDAO();
         //Dua email nhan duoc o giao dien ve user
         user.setEmail(email);
         user.setPassword(password);
-        List<User> listUserFound = userDAO.findByUsernamePassword(user);
-        return listUserFound;
+        user = userDAO.findByUsernamePassword(user);
+        return user;
     }
 
 }

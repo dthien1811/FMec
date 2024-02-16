@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
@@ -19,7 +20,7 @@
         <meta name="description" content="">
         <meta name='copyright' content=''>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  
         <!-- Title -->
         <title>FPT Medical - FMed</title>
 
@@ -183,8 +184,14 @@
                                     <span id="user-options" style="display: none; position: absolute; background-color: #fff; border: 1px solid #ccc; padding: 5px; z-index: 999;">
                                         <a href="${pageContext.request.contextPath}/Main Template/profile.jsp" style="display: block;
                                            text-decoration: none; color: #333; font-weight: bold">Profile</a>
+                                           <c:if test="${sessionScope.user == null}">
                                         <a href="${pageContext.request.contextPath}/Main Template/login.jsp" style="display: block; text-decoration: none;
                                            color: #333; font-weight: bold">Login</a>
+                                           </c:if>
+                                            <c:if test="${sessionScope.user != null}">
+                                        <a href="${pageContext.request.contextPath}/LogOutServlet" style="display: block; text-decoration: none;
+                                           color: #333; font-weight: bold">Logout</a>
+                                           </c:if>
                                     </span>
                                 </div>
                                 <!--/ End Single Widget -->

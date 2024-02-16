@@ -228,8 +228,8 @@ public class UserDAO extends DBContext {
         return false;
     }
 
-    public List<User> findByUsernamePassword(User user) {
-        List<User> listUserFound = new ArrayList<>();
+    public User findByUsernamePassword(User user) {
+   
  String sql = "SELECT [userId]\n"
                 + "      ,[majorId]\n"
                 + "      ,[role]\n"
@@ -261,9 +261,8 @@ public class UserDAO extends DBContext {
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 String token = resultSet.getString("token");
-                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);
-                listUserFound.add(userFound);
-                return listUserFound;
+                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);              
+                return userFound;
                 
             }
 
@@ -288,5 +287,8 @@ public class UserDAO extends DBContext {
         }
         return null;   
     }
+        
+
     
+     
 }

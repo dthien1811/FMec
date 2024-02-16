@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -272,6 +273,7 @@
                     </div>
                     <div class="col-lg-8">
                         <!--Form-->
+                        <c:forEach items="account" var="account" >
                         <form method="" action="">
                             <div class="card">
                                 <div class="card-body">
@@ -317,6 +319,7 @@
                                 </div>
                             </div>
                         </form>
+                        </c:forEach>
                     </div>
                 </div>
             </div>

@@ -85,7 +85,6 @@ public class UserDAO extends DBContext {
         }
     }
 
-
     public void createUser(User userRegister) {
         String sql = "INSERT INTO [dbo].[User]\n"
                 + "           ( "
@@ -187,22 +186,17 @@ public class UserDAO extends DBContext {
     }
 
     public boolean setNewPassword(User userRegister) {
-        String sql = "INSERT INTO [dbo].[User]\n"
-                + "           (\n"
-                + "           [password]\n"
-                + "          )\n"
-                + "     VALUES\n"
-                + "           (\n"
-                + "           ?\n"
-                + "          )\n"
-                + "		   WHERE  email = ?";
+        String sql = "UPDATE [dbo].[User]\n"
+                + "   SET [password] = ?\n"
+                + "      \n"
+                + " WHERE email = ?";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             //Dua vao user va lay ra de sql
             statement.setString(1, userRegister.getPassword());
             statement.setString(2, userRegister.getEmail());
-            
+
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -229,8 +223,8 @@ public class UserDAO extends DBContext {
     }
 
     public User findByUsernamePassword(User user) {
-   
- String sql = "SELECT [userId]\n"
+
+        String sql = "SELECT [userId]\n"
                 + "      ,[majorId]\n"
                 + "      ,[role]\n"
                 + "      ,[address]\n"
@@ -261,9 +255,9 @@ public class UserDAO extends DBContext {
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 String token = resultSet.getString("token");
-                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);              
+                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);
                 return userFound;
-                
+
             }
 
         } catch (SQLException ex) {
@@ -285,10 +279,7 @@ public class UserDAO extends DBContext {
                 throw new RuntimeException(e);
             }
         }
-        return null;   
+        return null;
     }
-        
 
-    
-     
 }

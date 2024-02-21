@@ -183,7 +183,7 @@
                                     <!-- Hi?n th? ch? Profile và Login -->
                                     <span id="user-options" style="display: none; position: absolute; background-color: #fff; border: 1px solid #ccc; padding: 5px; z-index: 999;">
                                         <a href="${pageContext.request.contextPath}/Main Template/profile.jsp" style="display: block;
-                                           text-decoration: none; color: #333; font-weight: bold">Profile</a>
+                                           text-decoration: none; color: #333; font-weight: bold">Profile</a>                                          
                                            <c:if test="${sessionScope.user == null}">
                                         <a href="${pageContext.request.contextPath}/Main Template/login.jsp" style="display: block; text-decoration: none;
                                            color: #333; font-weight: bold">Login</a>

@@ -225,7 +225,7 @@
                                 <h2>Forgot Password 2/2</h2>
                                 <p>Please enter the key you received in your Gmail to verify and <b>Set a New Password</b> </p>
                                 <!--                                 Form -->
-                                <form  class="form" method="POST" action="ForgotPassServlet">
+                                <form  class="form" method="POST" action="../ForgotPassServlet">
                                     <div>
                                         <div class="row">
                                               <div class="col-lg-12">

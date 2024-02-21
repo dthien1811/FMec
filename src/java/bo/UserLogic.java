@@ -48,7 +48,7 @@ public class UserLogic {
         UserDAO userDAO = new UserDAO();
         userRegister.setEmail(email);
         userRegister.setPassword(password);
-          if (userDAO.findbyEmail(userRegister) != null) {
+          if (userDAO.findbyEmail(userRegister) == null) {
             throw new IllegalArgumentException("Email Is Not Availble.!");
         } else {
             userDAO.setNewPassword(userRegister);

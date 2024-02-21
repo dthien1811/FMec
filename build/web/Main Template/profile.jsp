@@ -1,10 +1,11 @@
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
 
-
+   
         <title>profile edit data and skills - Bootdey.com</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -83,7 +84,7 @@
         <!--<link rel="stylesheet" href="css/color/color10.css">-->
         <!--<link rel="stylesheet" href="css/color/color11.css">-->
         <!--<link rel="stylesheet" href="css/color/color12.css">-->
-
+  
         <link rel="stylesheet" href="#" id="colors">
     </head>
     <body>
@@ -161,8 +162,14 @@
                                     <span id="user-options" style="display: none; position: absolute; background-color: #fff; border: 1px solid #ccc; padding: 5px; z-index: 999;">
                                         <a href="${pageContext.request.contextPath}/Main Template/profile.jsp" style="display: block;
                                            text-decoration: none; color: #333; font-weight: bold">Profile</a>
+                                       <c:if test="${sessionScope.user == null}">
                                         <a href="${pageContext.request.contextPath}/Main Template/login.jsp" style="display: block; text-decoration: none;
                                            color: #333; font-weight: bold">Login</a>
+                                           </c:if>
+                                            <c:if test="${sessionScope.user != null}">
+                                        <a href="${pageContext.request.contextPath}/LogOutServlet" style="display: block; text-decoration: none;
+                                           color: #333; font-weight: bold">Logout</a>
+                                           </c:if>
                                     </span>
                                 </div>
                                 <!--/ End Single Widget -->
@@ -273,7 +280,7 @@
                     </div>
                     <div class="col-lg-8">
                         <!--Form-->
-                        <c:forEach items="account" var="account" >
+                        <%--<c:forEach items="user" var="user" >--%>
                         <form method="" action="">
                             <div class="card">
                                 <div class="card-body">
@@ -282,7 +289,8 @@
                                             <h6 class="mb-0">Full Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input class="form-control" type="text" id="" name="name" placeholder="Your Full Name"/>
+                                            <input class="form-control" type="text" id="" name="name" placeholder="Your Full Name"
+                                                   value="${user.name}"/>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -290,7 +298,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input class="form-control" type="text" id="" name="email" placeholder="Your Email"/>
+                                            <input class="form-control" type="text" id="" name="email" placeholder="Your Email" value="${user.email}"/>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -298,7 +306,7 @@
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input class="form-control" type="text" id="" name="phone" placeholder="Your Phone"/>
+                                            <input class="form-control" type="text" id="" name="phone" placeholder="Your Phone" value="${user.phone}"/>
                                         </div>
                                     </div>
 
@@ -307,7 +315,7 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input class="form-control" type="text" id="" name="address" placeholder="Your Address"/>
+                                            <input class="form-control" type="text" id="" name="address" placeholder="Your Address" value="${user.address}"/>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -319,7 +327,7 @@
                                 </div>
                             </div>
                         </form>
-                        </c:forEach>
+                       
                     </div>
                 </div>
             </div>

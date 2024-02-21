@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserLogic userLogic = new UserLogic();
-        HttpSession session = request.getSession();
+       HttpSession session =request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         //Logic

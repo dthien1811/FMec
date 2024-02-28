@@ -282,4 +282,47 @@ public class UserDAO extends DBContext {
         return null;
     }
 
+    public void updateProfile(User user) {
+        String sql = "UPDATE [dbo].[User]\n"
+                + "   SET "
+                + "      [avatar] = ?"
+                + "      ,[name] = ?"
+                + "      ,[phone] = ?"
+                
+                + "      ,[address] = ?"
+                + " WHERE email = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            //Dua vao user va lay ra de sql
+            statement.setString(1, user.getAvatar());
+
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getPhone());          
+            statement.setString(4, user.getAddress());
+            statement.setString(5, user.getEmail());
+            statement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
 }

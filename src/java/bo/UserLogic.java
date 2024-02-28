@@ -77,4 +77,34 @@ User user = new User();
         return user;
     }
 
+//    public void updateProfile(String name, String email, String phone, String address) {
+//      User user = new User();
+//      UserDAO userDAO = new UserDAO();
+//      
+//      user.setName(name);
+//      user.setEmail(email);
+//      user.setPhone(phone);
+//      user.setAddress(address);
+//      userDAO.updateProfile(user);
+//    }
+
+//    public User updateProfile(String name, String email, String phone, String address) {
+//              User user = new User();
+//      UserDAO userDAO = new UserDAO();
+//      
+//      user.setName(name);
+//      user.setEmail(email);
+//      user.setPhone(phone);
+//      user.setAddress(address);
+//      userDAO.updateProfile(user);
+//      
+//    }
+
+    public User updateProfile(User user) {
+UserDAO userDAO = new UserDAO();   
+userDAO.updateProfile(user);
+return user;
+    }
+    
+
 }

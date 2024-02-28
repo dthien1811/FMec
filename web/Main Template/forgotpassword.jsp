@@ -217,7 +217,7 @@
                     <div class="row"> 
                         <div class="col-lg-6">
                             <div class="register-left">
-                                <img style="width: 540px;height: 540px" src="img/ForgetPWchange.jpg" alt="">
+                                <img style="width: 540px;height: 540px" src="img/passs2.png" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6">

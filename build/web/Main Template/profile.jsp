@@ -5,14 +5,16 @@
     <head>
         <meta charset="utf-8">
 
-   
+
         <title>profile edit data and skills - Bootdey.com</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">|
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <style>
 
             body{
                 background: #1A76D1;
+
                 margin-top:20px;
             }
             .card {
@@ -84,7 +86,7 @@
         <!--<link rel="stylesheet" href="css/color/color10.css">-->
         <!--<link rel="stylesheet" href="css/color/color11.css">-->
         <!--<link rel="stylesheet" href="css/color/color12.css">-->
-  
+
         <link rel="stylesheet" href="#" id="colors">
     </head>
     <body>
@@ -162,14 +164,14 @@
                                     <span id="user-options" style="display: none; position: absolute; background-color: #fff; border: 1px solid #ccc; padding: 5px; z-index: 999;">
                                         <a href="${pageContext.request.contextPath}/Main Template/profile.jsp" style="display: block;
                                            text-decoration: none; color: #333; font-weight: bold">Profile</a>
-                                       <c:if test="${sessionScope.user == null}">
-                                        <a href="${pageContext.request.contextPath}/Main Template/login.jsp" style="display: block; text-decoration: none;
-                                           color: #333; font-weight: bold">Login</a>
-                                           </c:if>
-                                            <c:if test="${sessionScope.user != null}">
-                                        <a href="${pageContext.request.contextPath}/LogOutServlet" style="display: block; text-decoration: none;
-                                           color: #333; font-weight: bold">Logout</a>
-                                           </c:if>
+                                        <c:if test="${sessionScope.user == null}">
+                                            <a href="${pageContext.request.contextPath}/Main Template/login.jsp" style="display: block; text-decoration: none;
+                                               color: #333; font-weight: bold">Login</a>
+                                        </c:if>
+                                        <c:if test="${sessionScope.user != null}">
+                                            <a href="${pageContext.request.contextPath}/LogOutServlet" style="display: block; text-decoration: none;
+                                               color: #333; font-weight: bold">Logout</a>
+                                        </c:if>
                                     </span>
                                 </div>
                                 <!--/ End Single Widget -->
@@ -260,14 +262,63 @@
                         <div class="card">
                             <div class="card-body" >
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    <img src="/SWP391_/${user.avatar}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3">
                                         <!--256 Name-->
-                                        <h4>John Doe</h4>
+                                        <h4>${user.name}</h4>
 
 
-                                        <button class="btn btn-primary">Follow</button>
-                                        <button class="btn btn-outline-primary">Message</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateProfileModal">
+                                            Update Profile
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="post" action="/SWP391_/UpdateProfileServlet" enctype="multipart/form-data">
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-3">
+                                                                    <label class="input-group-text" for="avatar">Avatar</label>
+                                                                    <input type="file" class="form-control" id="avatar" name="avatar">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="fullName" style="margin-right: 390px; font-weight: bold;color:#1A76D1 ">Full Name:</label>
+                                                                <input type="text" class="form-control" id="fullName" name="nameUpdate" placeholder="Enter Full Name" value="${user.name}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="email" style="margin-right: 420px; font-weight: bold;color:#1A76D1 ">Email:</label>
+                                                                <input type="email" class="form-control" id="email" name="emailUpdate" placeholder="Enter Email" value="${user.email}" readonly>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="phone" style="margin-right: 420px; font-weight: bold;color:#1A76D1 ">Phone:</label>
+                                                                <input type="text" class="form-control" id="phone"  name="phoneUpdate" placeholder="Enter Phone"
+                                                                       pattern="[0-9]+" title="Please enter numbers only" value="${user.phone}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="address" style="margin-right: 410px; font-weight: bold;color:#1A76D1 ">Address:</label>
+                                                                <input type="text" class="form-control" id="address"  name="addressUpdate" placeholder="Enter Address" value="${user.address}">
+                                                            </div>
+                                                             <div class="modal-footer">
+                                                        <input class="btn btn-outline-primary" type="submit" value="Save Changes">
+                                                     
+                                                    </div>
+                                                        </form>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <button class="btn btn-outline-primary">Patient Medical Records</button>
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -327,7 +378,7 @@
                                 </div>
                             </div>
                         </form>
-                       
+
                     </div>
                 </div>
             </div>
@@ -378,14 +429,16 @@
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
         <script>
-    document.getElementById("user-icon").addEventListener("click", function () {
-        var userOptions = document.getElementById("user-options");
-        if (userOptions.style.display === "none") {
-            userOptions.style.display = "inline-block";
-        } else {
-            userOptions.style.display = "none";
-        }
-    });
+            document.getElementById("user-icon").addEventListener("click", function () {
+                var userOptions = document.getElementById("user-options");
+                if (userOptions.style.display === "none") {
+                    userOptions.style.display = "inline-block";
+                } else {
+                    userOptions.style.display = "none";
+                }
+            });
         </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

@@ -4,18 +4,25 @@
  */
 package controller;
 
+import bo.UserLogic;
+import entity.User;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Lenovo
  */
-public class ProfileServlet extends HttpServlet {
+@MultipartConfig
+public class UpdateProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +41,10 @@ public class ProfileServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProfileServlet</title>");            
+            out.println("<title>Servlet UpdateProfileServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProfileServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateProfileServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,7 +62,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            request.getRequestDispatcher("Main Template/profile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -69,7 +76,39 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        User user = new User();
+        UserLogic userLogic = new UserLogic();
+        HttpSession session = request.getSession();
+       
+      
+        Part part = request.getPart("avatar");
+        try {
+        File dir  = new File(request.getServletContext().getRealPath("/images")); 
+            if (!dir.exists()) {
+                 //Tao ra duong dan
+                dir.mkdirs();
+            }
+              String name = request.getParameter("nameUpdate");
+        String email = request.getParameter("emailUpdate");
+        String phone = request.getParameter("phoneUpdate");
+        String address = request.getParameter("addressUpdate");
+            File avatar = new File(dir,part.getSubmittedFileName());
+            part.write(avatar.getAbsolutePath());
+           user.setAvatar("images/"+ avatar.getName() );
+           user.setName(name);
+      user.setEmail(email);
+      user.setPhone(phone);
+      user.setAddress(address);
+      user = userLogic.updateProfile(user);
+      session.setAttribute("user", user);
+               
+            request.getRequestDispatcher("Main Template/profile.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
+               
+       
     }
 
     /**

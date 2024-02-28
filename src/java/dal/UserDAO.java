@@ -324,5 +324,59 @@ public class UserDAO extends DBContext {
         }
 
     }
+    public User getUserById(int userId){
+        String sql = "SELECT [userId]\n"
+                + "      ,[majorId]\n"
+                + "      ,[role]\n"
+                + "      ,[address]\n"
+                + "      ,[avatar]\n"
+                + "      ,[name]\n"
+                + "      ,[phone]\n"
+                + "      ,[email]\n"
+                + "      ,[password]\n"
+                + "      ,[token]\n"
+                + "  FROM [dbo].[User]"
+                + "where userId = ? ";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int majorId = resultSet.getInt("majorId");
+                String role = resultSet.getString("role");
+                String address = resultSet.getString("address");
+                String avatar = resultSet.getString("avatar");
+                String name = resultSet.getString("name");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String token = resultSet.getString("token");
+                User userFound = new User(userId, majorId, role, address, avatar, name, phone, email, password, token);
+                return userFound;
 
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+    
 }

@@ -3,14 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="PRJ301">
-            <file>file:/D:/SWP391_Folder/SWP391/src/java/controller/LogOutServlet.java</file>
-            <file>file:/D:/SWP391_Folder/SWP391/web/META-INF/context.xml</file>
-            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/profile.jsp</file>
+            <file>file:/D:/SWP391_Folder/SWP391/src/java/controller/RegisterServlet.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/src/java/entity/DayOfWeek.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/support.jsp</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/edit-one-time-table.jsp</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/support/support.js</file>
             <file>file:/D:/SWP391_Folder/SWP391/src/java/controller/UpdateProfileServlet.java</file>
             <file>file:/D:/SWP391_Folder/SWP391/src/java/dal/UserDAO.java</file>
             <file>file:/D:/SWP391_Folder/SWP391/src/java/controller/ProfileServlet.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/src/java/dal/TimeSessionDAO.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/src/java/entity/TimeManagement.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/edit-time-table.jsp</file>
+            <file>file:/D:/SWP391_Folder/SWP391/src/java/controller/LogOutServlet.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/src/java/dal/DayOfWeekDAO.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/src/java/controller/TimeSessionServlet.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/profile.jsp</file>
             <file>file:/D:/SWP391_Folder/SWP391/src/java/controller/LoginServlet.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/index.jsp</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/WEB-INF/web.xml</file>
             <file>file:/D:/SWP391_Folder/SWP391/src/java/bo/UserLogic.java</file>
+            <file>file:/D:/SWP391_Folder/SWP391/web/Main%20Template/css/support.css</file>
         </group>
     </open-files>
 </project-private>

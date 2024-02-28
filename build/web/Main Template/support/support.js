@@ -5,7 +5,7 @@ const sendBtn = document.querySelector(".bar-wrapper button");
 const messageBox = document.querySelector(".message-box");
 
 let API_URL = "https://api.openai.com/v1/chat/completions";
-let API_KEY = "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";
+let API_KEY = "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";
 let isChatting = false;
 
 window.onload = function() {

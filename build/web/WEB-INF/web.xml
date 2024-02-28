@@ -29,8 +29,8 @@
         <servlet-class>controller.LogOutServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UpdateProfileServlet</servlet-name>
-        <servlet-class>controller.UpdateProfileServlet</servlet-class>
+        <servlet-name>TimeSessionServlet</servlet-name>
+        <servlet-class>controller.TimeSessionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -61,8 +61,8 @@
         <url-pattern>/LogOutServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UpdateProfileServlet</servlet-name>
-        <url-pattern>/UpdateProfileServlet</url-pattern>
+        <servlet-name>TimeSessionServlet</servlet-name>
+        <url-pattern>/TimeSessionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

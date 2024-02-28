@@ -200,6 +200,6 @@
                 </div>
             </div> 
         </section>
-        <script src="support/support.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/support/support.js"></script>
     </body>
 </html>

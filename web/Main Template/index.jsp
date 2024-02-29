@@ -119,7 +119,7 @@
                             <!-- Contact -->
                             <ul class="top-link">
                                 <li><a href="${pageContext.request.contextPath}/Main Template/about.html">About</a></li>
-                                <li><a href="${pageContext.request.contextPath}/Main Template/doctors.html">Doctors</a></li>
+                                <li><a href="${pageContext.request.contextPath}/doctors">Doctors</a></li>
                                 <li><a href="${pageContext.request.contextPath}/Main Template/contact.html">Contact</a></li>
                                 <li><a href="${pageContext.request.contextPath}/Main Template/faq.html">FAQ</a></li>
                             </ul>

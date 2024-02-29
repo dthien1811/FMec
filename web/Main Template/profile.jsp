@@ -99,7 +99,7 @@
                             <!-- Contact -->
                             <ul class="top-link">
                                 <li><a href="${pageContext.request.contextPath}/Main Template/about.html">About</a></li>
-                                <li><a href="${pageContext.request.contextPath}/Main Template/doctors.html">Doctors</a></li>
+                                <li><a href="${pageContext.request.contextPath}/doctors">Doctors</a></li>
                                 <li><a href="${pageContext.request.contextPath}/Main Template/contact.html">Contact</a></li>
                                 <li><a href="${pageContext.request.contextPath}/Main Template/faq.html">FAQ</a></li>
                             </ul>
@@ -202,7 +202,7 @@
                                             </li>
                                             <li><a href="#">Doctors <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/doctors.html">Doctor</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/doctors">Doctor</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">Doctor Details</a></li>
                                                 </ul>
                                             </li>

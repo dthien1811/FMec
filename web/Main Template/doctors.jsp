@@ -1,4 +1,5 @@
 <!doctype html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html class="no-js" lang="zxx">
     <head>
         <!-- Meta Tags -->
@@ -8,7 +9,7 @@
         <meta name="description" content="">
         <meta name='copyright' content=''>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
         <!-- Title -->
         <title>Mediplus - Medical and Doctor Directory HTML Template.</title>
 
@@ -19,36 +20,190 @@
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/bootstrap.min.css">
         <!-- Nice Select CSS -->
-        <link rel="stylesheet" href="css/nice-select.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/nice-select.css">
         <!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/font-awesome.min.css">
         <!-- icofont CSS -->
-        <link rel="stylesheet" href="css/icofont.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/icofont.css">
         <!-- Slicknav -->
-        <link rel="stylesheet" href="css/slicknav.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/slicknav.min.css">
         <!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/owl-carousel.css">
         <!-- Datepicker CSS -->
-        <link rel="stylesheet" href="css/datepicker.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/datepicker.css">
         <!-- Animate CSS -->
-        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/animate.min.css">
         <!-- Magnific Popup CSS -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/magnific-popup.css">
 
         <!-- Medipro CSS -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="css/responsive.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/normalize.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/responsive.css">
 
         <!-- Color CSS -->
-        <link rel="stylesheet" href="css/color/color1.css">       
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color1.css">
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color2.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color3.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color4.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color5.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color6.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color7.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color8.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color9.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color10.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color11.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color12.css">-->
 
         <link rel="stylesheet" href="#" id="colors">
+        <style>
+            #paging{
+                margin-top: 5px;
+                display: flex;
+                justify-content: center;
+            }
+            #paging a {
+                display: inline-block;
+                padding: 8px 16px;
+                margin: 0 4px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                text-decoration: none;
+                color: #333;
+                background-color: #fff;
+                transition: all 0.3s ease;
+            }
 
+            #paging a:hover {
+                background-color: #f0f0f0;
+                border-color: #aaa;
+            }
+
+            .active {
+                background-color: #007bff !important;
+                color: #fff !important;
+                border-color: #007bff !important;
+            }
+
+            .avatar {
+                width: 100%; /* Adjust size as needed */
+                height: 200px; /* Adjust size as needed */
+                border: 2px solid #fff; /* Add a border */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow */
+                object-fit: fill;
+            }
+
+            .threedot{
+                font-size: 26px;
+                color: #888;
+                font-weight: bold;
+                text-decoration: none;
+                margin-left: 5px;
+                margin-right: 5px;
+                margin-top: 2px;
+            }
+            /* Search container */
+            .search-container {
+                position: relative;
+                display: inline-block;
+            }
+
+            /* Search input field */
+            .search-input {
+                width: 300px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 25px;
+                outline: none;
+                font-size: 16px;
+            }
+
+            /* Search button */
+            .search-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: #007bff;
+                border: none;
+                padding: 7px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .search-button:hover {
+                background-color: #0056b3;
+            }
+
+            /* Icon inside the button */
+            .search-button i {
+                color: #fff;
+                font-size: 18px;
+            }
+        </style>
+        <script>
+            var gap = 2;
+            function paging(url) {
+                var currentPage = parseInt($("#curentPage").val());
+                var totalPage = $("#totalPage").val();
+                var query = $("#query").val();
+
+                if (totalPage <= 1) {
+                    return;
+                }
+
+                $("#paging").append(
+                        `<a id=1 href=${url}`
+                        + "?pageNumber=0" + "&query=" + query + "> 1 </a>"
+                        );
+
+                if (currentPage - gap - 1 > 1) {
+                    $("#paging").append(
+                            " <span class='threedot'> ... </span>"
+                            );
+                }
+
+                for (let i = currentPage - gap; i <= currentPage; i++) {
+                    if (i > 1) {
+                        $("#paging").append(
+                                `<a id=` + i + ` href=${url}`
+                                + "?pageNumber=" + (i - 1) + "&query=" + query + " >" + i + "</a>"
+                                );
+                    }
+                }
+
+                for (let i = currentPage + 1; i <= currentPage + gap; i++) {
+                    if (i < totalPage) {
+                        $("#paging").append(
+                                "<a id= " + i + ` href=${url}`
+                                + "?pageNumber=" + (i - 1) + "&query=" + query + ">" + i + "</a>"
+                                );
+                    }
+                }
+                if (currentPage + gap < (totalPage - 1)) {
+                    $("#paging").append(
+                            "<span class='threedot'> ... </span>");
+                }
+                if (currentPage == totalPage)
+                    return;
+                $("#paging").append(
+                        "<a id='" + totalPage + `' href=${url}`
+                        + "?pageNumber=" + (totalPage - 1) + "&query=" + query + ">" + totalPage + "</a>"
+                        );
+            }
+
+            function activePage() {
+                var currentPage = parseInt($("#curentPage").val());
+
+                $("#" + currentPage).addClass('active');
+            }
+        </script>
     </head>
-    <body>
+    <body onload="paging('${pageContext.request.contextPath}/doctors');
+            activePage()">
+        <input type="hidden" id="curentPage" value="${requestScope.pageNumber + 1}">
+        <input type="hidden" id="totalPage" value="${requestScope.totalPage}">
 
         <!-- Preloader -->
         <div class="preloader">
@@ -122,7 +277,7 @@
                             <div class="col-lg-3 col-md-3 col-12">
                                 <!-- Start Logo -->
                                 <div class="logo">
-                                    <a href="index.jsp"><img src="img/logo.png" alt="#"></a>
+                                    <a href="index.html"><img src="img/logo.png" alt="#"></a>
                                 </div>
                                 <!-- End Logo -->
                                 <!-- Mobile Nav -->
@@ -136,8 +291,8 @@
                                         <ul class="nav menu">
                                             <li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="index.html">Home Page 1</a></li>
-                                                    <li><a href="index2.html">Home Page 2</a></li>
+                                                    <li><a href="index.html">Default Homepage</a></li>
+                                                    <li><a href="index2.html">Animation Homepage</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Doctos <i class="icofont-rounded-down"></i></a>
@@ -197,11 +352,11 @@
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Forgot Password 1/2</h2>
+                            <h2>Meet Our Qualified Doctors</h2>
                             <ul class="bread-list">
-                                <li><a href="index.jsp">Home</a></li>
+                                <li><a href="index.html">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Forgot Password 1/2</li>
+                                <li class="active">Doctors</li>
                             </ul>
                         </div>
                     </div>
@@ -210,124 +365,70 @@
         </div>
         <!-- End Breadcrumbs -->
 
-        <!-- Shop Register -->
-        <section class="register section">
+        <!-- Start Team -->
+        <section id="team" class="team section single-page">
             <div class="container">
-                <div class="inner">
-                    <div class="row"> 
-                        <div class="col-lg-6">
-                            <div class="register-left">
-                                <img style="width: 540px;height: 540px" src="img/passs2.png" alt="">
+                <div class="search-container row">
+                    <form action="${pageContext.request.contextPath}/doctors?pageNumber=${requestScope.pageNumber}" method="GET">
+                        <input type="text" id="query" placeholder="Search by doctor's name or major..." class="search-input" value="${query}" name="query">
+                        <button type="submit" class="search-button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="row">
+                    <c:forEach items="${doctors}" var="doctor">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Team -->
+                            <div class="single-team">
+                                <div class="t-head">
+                                    <img src="${doctor.avatar}" class="avatar" alt="${doctor.doctorName}">
+                                    <div class="t-icon">
+                                        <a href="appointment.html" class="btn">Get Appointment</a>
+                                    </div>
+                                </div>
+                                <div class="t-bottom">
+                                    <p>${doctor.major}</p>
+                                    <h2><a href="doctor-details.html">${doctor.doctorName}</a></h2>
+                                </div>
                             </div>
+                            <!-- End Single Team -->
+                        </div>	
+                    </c:forEach>
+                </div>
+                <div id="paging" class="row">
+                </div>
+            </div>
+        </section>
+        <!--/ End Team -->
+
+        <!-- Start Newsletter Area -->
+        <section class="newsletter section">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-6  col-12">
+                        <!-- Start Newsletter Form -->
+                        <div class="subscribe-text ">
+                            <h6>Sign up for newsletter</h6>
+                            <p class="">Cu qui soleat partiendo urbanitas. Eum aperiri indoctum eu,<br> homero alterum.</p>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="register-form">
-                                <h2>Forgot Password 1/2</h2>
-                                <p style="color: #EEBD44 ">Please enter the email address associated with your account. <b style="color: orangered">We'll send you a verification key to reset your password.</b></p>
-                                <!--                                 Form -->
-                                <form id="emailForm" class="form" method="" action="forgotpassword.jsp">
-                                    <div>
-                                        <div class="row">                                  
-                                            <div class="col-lg-6">
-                                                <div style = "background-color: black;border: 3px solid black; border-radius: 10px;">
-                                                    <input type="email" id="to" name="email" placeholder="Email" required="" style="border: none; outline: none; padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box; color: black; background-color: white;">
-                                                </div>
-                                            </div>                                   
-                                            <div>
-                                                <input type="hidden" id="tokenInput" name="token" value="">
-                                            </div>
-
-                                            <%
-                                                // L?y giá tr? c?a tham s? 'token' t? URL
-                                                String token = request.getParameter("token");
-
-                                                // Ki?m tra xem token có t?n t?i không
-                                                if (token != null && !token.isEmpty()) {
-                                                    // Token ???c tìm th?y trong URL
-                                                    out.println("Token From URL: " + token);
-                                                } else {
-                                                    // Không tìm th?y token trong URL
-                                                    out.println("No Token in URL");
-
-                                                    if (token != null && !token.isEmpty()) {
-                                                        // ??t token vào session
-                                                        session.setAttribute("token", token);
-                                                    }
-
-                                                }
-
-                                            %>
-                                            <%                                                // L?y giá tr? c?a tham s? 'email' t? URL
-                                                String email = request.getParameter("email");
-
-                                                // Ki?m tra xem email có t?n t?i không
-                                                if (email != null && !email.isEmpty()) {
-                                                    // Email ???c tìm th?y trong URL
-                                                    out.println("    Email : " + email);
-                                                } else {
-                                                    // Không tìm th?y email trong URL
-                                                    out.println("No Email");
-                                                }
-                                            %>
-
-                                            <%    if (token != null && !token.isEmpty()) {
-                                            %>
-                                            <div style="position: relative; left:   89px;top:  140px">      <a href="forgotpassword2.jsp?token=<%=token%>&email=<%=email%>"
-                                                                                                               style="display: inline-block;
-                                                                                                               padding: 10px 20px;
-                                                                                                               font-size: 16px;
-                                                                                                               cursor: pointer;
-                                                                                                               text-align: center;
-                                                                                                               text-decoration: none;
-                                                                                                               outline: none;
-                                                                                                               border: none;
-                                                                                                               border-radius: 5px;
-                                                                                                               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                                                                                                               background-color: #1A76D1;
-                                                                                                               color: white;
-                                                                                                               transition: background-color 0.3s;
-                                                                                                               margin-top: 10px; /* Optional: Add margin top for spacing */"
-                                                                                                               onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                                                                                               onmouseout="this.style.backgroundColor = '#1A76D1';">
-                                                    Set New Password 2/2 =>
-                                                </a>
-                                            </div> 
-
-                                            <%
-                                                }
-                                            %>
-
-
-
-
-                                        </div>
-                                </form>
-                                <br/>
-
-                                <input style="display: inline-block;
-                                       padding: 10px 20px;
-                                       font-size: 16px;
-                                       cursor: pointer;
-                                       text-align: center;
-                                       text-decoration: none;
-                                       outline: none;
-                                       border: none;
-                                       border-radius: 5px;
-                                       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                                       background-color: #1A76D1;
-                                       color: white;
-                                       transition: background-color 0.3s;"
-                                       onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                       onmouseout="this.style.backgroundColor = '#1A76D1'" onclick="sendMail()";  type="submit" value="Send Verification Code To Reset Password 1/2">
-                                <!--/ End Form -->
-
-                            </div>
+                        <!-- End Newsletter Form -->
+                    </div>
+                    <div class="col-lg-6  col-12">
+                        <!-- Start Newsletter Form -->
+                        <div class="subscribe-form ">
+                            <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                <input name="EMAIL" placeholder="Your email address" class="common-input" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'Your email address'" required="" type="email">
+                                <button class="btn">Subscribe</button>
+                            </form>
                         </div>
+                        <!-- End Newsletter Form -->
                     </div>
                 </div>
             </div>
         </section>
-        <!--/ End Register -->
+        <!-- /End Newsletter Area -->
 
         <!-- Footer Area -->
         <footer id="footer" class="footer ">
@@ -418,105 +519,44 @@
         <!--/ End Footer Area -->
 
         <!-- jquery Min JS -->
-        <script src="js/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.min.js"></script>
         <!-- jquery Migrate JS -->
-        <script src="js/jquery-migrate-3.0.0.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-migrate-3.0.0.js"></script>
         <!-- jquery Ui JS -->
-        <script src="js/jquery-ui.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-ui.min.js"></script>
         <!-- Easing JS -->
-        <script src="js/easing.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/easing.js"></script>
         <!-- Color JS -->
-        <script src="js/colors.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/colors.js"></script>
         <!-- Popper JS -->
-        <script src="js/popper.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/popper.min.js"></script>
         <!-- Bootstrap Datepicker JS -->
-        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap-datepicker.js"></script>
         <!-- Jquery Nav JS -->
-        <script src="js/jquery.nav.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.nav.js"></script>
         <!-- Slicknav JS -->
-        <script src="js/slicknav.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/slicknav.min.js"></script>
         <!-- ScrollUp JS -->
-        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.scrollUp.min.js"></script>
         <!-- Niceselect JS -->
-        <script src="js/niceselect.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/niceselect.js"></script>
         <!-- Tilt Jquery JS -->
-        <script src="js/tilt.jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/tilt.jquery.min.js"></script>
         <!-- Owl Carousel JS -->
-        <script src="js/owl-carousel.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/owl-carousel.js"></script>
         <!-- counterup JS -->
-        <script src="js/jquery.counterup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.counterup.min.js"></script>
         <!-- Steller JS -->
-        <script src="js/steller.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/steller.js"></script>
         <!-- Wow JS -->
-        <script src="js/wow.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/wow.min.js"></script>
         <!-- Magnific Popup JS -->
-        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.magnific-popup.min.js"></script>
         <!-- Counter Up CDN JS -->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
         <!-- Bootstrap JS -->
-        <script src="js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
-        <script src="js/main.js"></script>
-
-
-        <script>
-                                               function sendMail() {
-                                                   (function () {
-                                                       emailjs.init("GaiyO2LJxEi21DqPk"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
-                                                   })();
-
-                                                   var toEmail = document.querySelector("#to").value;
-
-                                                   // T?o m?t mã token ng?u nhiên (ví d?: s? d?ng UUID)
-                                                   var token = generateToken();
-                                                   document.getElementById("tokenInput").value = token;
-
-// Submit form
-                                                   document.getElementById("emailForm").submit();
-
-                                                   var params = {
-                                                       to: toEmail,
-                                                       token: token // Truy?n mã token vào tham s?
-                                                   };
-
-                                                   var serviceID = "service_kbrv7ja"; // Email Serv
-                                                   var templateID = "template_z5a1w02"; // Email Te
-
-                                                   // G?i email
-                                                   emailjs.send(serviceID, templateID, params)
-                                                           .then(res => {
-                                                               alert("Email Sent Successfully! Please check your email to activate your account ");
-                                                           })
-                                                           .catch(error => {
-                                                               console.error("Error sending email:", error);
-                                                           });
-                                               }
-
-                                               // Bien luu tru cac ma da tao ra
-                                               var generatedTokens = new Set();
-
-                                               function generateToken() {
-                                                   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; // Các ký t? ???c s? d?ng
-                                                   var token = '';
-                                                   var charactersLength = characters.length;
-                                                   var tokenLength = 6; // ?? dài c?a mã token (6 ký t?)
-
-                                                   // T?o mã token m?i
-                                                   do {
-                                                       for (var i = 0; i < tokenLength; i++) {
-                                                           token += characters.charAt(Math.floor(Math.random() * charactersLength));
-                                                       }
-                                                   } while (generatedTokens.has(token)); // Ki?m tra xem mã token ?ã t?n t?i ch?a
-
-                                                   // Thêm mã token m?i vào danh sách
-                                                   generatedTokens.add(token);
-
-                                                   return token;
-
-                                                   window.location.href = "forgotpassword2.jsp";
-                                               }
-
-        </script>
-
+        <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
     </body>
 </html>

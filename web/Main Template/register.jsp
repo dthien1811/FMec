@@ -153,7 +153,7 @@
                                             </li>
                                             <li><a href="#">Doctos <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="doctors.html">Doctor</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/doctors">Doctor</a></li>
                                                     <li><a href="doctor-details.html">Doctor Details</a></li>
                                                 </ul>
                                             </li>

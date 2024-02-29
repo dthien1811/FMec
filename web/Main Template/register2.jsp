@@ -165,7 +165,7 @@
                                             <li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
                                                     <li><a href="${pageContext.request.contextPath}/Main Template/about.html">About Us</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/appointment.html">Appointment</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/appointment">Appointment</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/Main Template/time-table.html">Time Table</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/Main Template/testimonials.html">Testimonials</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/Main Template/pricing.html">Our Pricing</a></li>
@@ -190,7 +190,7 @@
                             </div>
                             <div class="col-lg-2 col-12">
                                 <div class="get-quote">
-                                    <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Book Appointment</a>
+                                    <a href="${pageContext.request.contextPath}/appointment" class="btn">Book Appointment</a>
                                 </div>
                             </div>
                         </div>

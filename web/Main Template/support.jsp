@@ -139,7 +139,7 @@
 											<li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
 													<li><a href="about.html">About Us</a></li>
-													<li><a href="appointment.html">Appointment</a></li>
+													<li><a href="${pageContext.request.contextPath}/appointment">Appointment</a></li>
 													<li><a href="time-table.html">Time Table</a></li>
 													<li><a href="testimonials.html">Testimonials</a></li>
 													<li><a href="pricing.html">Our Pricing</a></li>
@@ -164,7 +164,7 @@
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a href="appointment.html" class="btn">Book Appointment</a>
+									<a href="${pageContext.request.contextPath}/appointment" class="btn">Book Appointment</a>
 								</div>
 							</div>
 						</div>

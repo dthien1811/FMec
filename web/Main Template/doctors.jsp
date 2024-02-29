@@ -310,7 +310,7 @@
                                             <li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
                                                     <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="appointment.html">Appointment</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/appointment">Appointment</a></li>
                                                     <li><a href="time-table.html">Time Table</a></li>
                                                     <li><a href="testimonials.html">Testimonials</a></li>
                                                     <li><a href="pricing.html">Our Pricing</a></li>
@@ -335,7 +335,7 @@
                             </div>
                             <div class="col-lg-2 col-12">
                                 <div class="get-quote">
-                                    <a href="appointment.html" class="btn">Book Appointment</a>
+                                    <a href="${pageContext.request.contextPath}/appointment" class="btn">Book Appointment</a>
                                 </div>
                             </div>
                         </div>
@@ -384,7 +384,7 @@
                                 <div class="t-head">
                                     <img src="${doctor.avatar}" class="avatar" alt="${doctor.doctorName}">
                                     <div class="t-icon">
-                                        <a href="appointment.html" class="btn">Get Appointment</a>
+                                        <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                                     </div>
                                 </div>
                                 <div class="t-bottom">

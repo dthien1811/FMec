@@ -170,7 +170,7 @@
                                 <!-- Single Widget -->
                                 <div class="single-widget button">
                                     <div class="get-quote">
-                                        <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Book Appointment</a>
+                                        <a href="${pageContext.request.contextPath}/appointment" class="btn">Book Appointment</a>
                                     </div>
                                 </div>
                                 <!--/ End Single Widget -->
@@ -239,7 +239,7 @@
                                         <li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
                                             <ul class="dropdown">
                                                 <li><a href="${pageContext.request.contextPath}/Main Template/about.html">About Us</a></li>
-                                                <li><a href="${pageContext.request.contextPath}/Main Template/appointment.html">Appointment</a></li>
+                                                <li><a href="${pageContext.request.contextPath}/appointment">Appointment</a></li>
                                                 <li><a href="${pageContext.request.contextPath}/Main Template/time-table.html">Time Table</a></li>
                                                 <li><a href="${pageContext.request.contextPath}/Main Template/testimonials.html">Testimonials</a></li>
                                                 <li><a href="${pageContext.request.contextPath}/Main Template/pricing.html">Our Pricing</a></li>
@@ -294,7 +294,7 @@
                                     <h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
                                     <div class="button">
-                                        <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Get Appointment</a>
+                                        <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                                         <a href="${pageContext.request.contextPath}/Main Template/service.html" class="btn primary">Our service</a>
                                     </div>
                                 </div>
@@ -314,7 +314,7 @@
                                     <h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
                                     <div class="button">
-                                        <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Get Appointment</a>
+                                        <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                                         <a href="${pageContext.request.contextPath}/Main Template/about.html" class="btn primary">About Us</a>
                                     </div>
                                 </div>
@@ -334,7 +334,7 @@
                                     <h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
                                     <div class="button">
-                                        <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Get Appointment</a>
+                                        <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                                         <a href="${pageContext.request.contextPath}/Main Template/contact.html" class="btn primary">Contact Now</a>
                                     </div>
                                 </div>
@@ -1005,7 +1005,7 @@
                         <div class="t-head">
                             <img src="https://via.placeholder.com/560x575" alt="#">
                             <div class="t-icon">
-                                <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Get Appointment</a>
+                                <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                             </div>
                         </div>
                         <div class="t-bottom">
@@ -1022,7 +1022,7 @@
                         <div class="t-head">
                             <img src="https://via.placeholder.com/560x575" alt="#">
                             <div class="t-icon">
-                                <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Get Appointment</a>
+                                <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                             </div>
                         </div>
                         <!-- Team Bottom -->
@@ -1041,7 +1041,7 @@
                         <div class="t-head">
                             <img src="https://via.placeholder.com/560x575" alt="#">
                             <div class="t-icon">
-                                <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Get Appointment</a>
+                                <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                             </div>
                         </div>
                         <!-- Team Bottom -->
@@ -1060,7 +1060,7 @@
                         <div class="t-head">
                             <img src="https://via.placeholder.com/560x575" alt="#">
                             <div class="t-icon">
-                                <a href="${pageContext.request.contextPath}/Main Template/appointment.html" class="btn">Get Appointment</a>
+                                <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
                             </div>
                         </div>
                         <!-- Team Bottom -->

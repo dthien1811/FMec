@@ -77,9 +77,34 @@
             .slot-item:hover {
                 background-color: #45a049;
             }
+
+            .avatar {
+                width: 100%; /* Adjust size as needed */
+                height: 200px; /* Adjust size as needed */
+                border: 2px solid #fff; /* Add a border */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow */
+                object-fit: fill;
+            }
+
+            .my-container{
+                display: flex;
+                justify-content: space-between;
+                height: 300px;
+            }
+            .container-right{
+                display: flex;
+                flex-direction: column;
+                margin-left: 20px;
+            }
         </style>
         <script>
-            window.onload = function () {
+            window.onload = generateTimeSlots;
+
+            function generateTimeSlots() {
+                var availableSlots = JSON.parse(document.getElementById("availableSlots").value);
+                var doctorId = document.getElementById("selectDoctor").value;
+                if (doctorId.length === 0)
+                    return;
                 var duration = document.getElementById("duration").value;
                 var startTime = parseTimeString(document.getElementById("starTime").value);
                 var endTime = parseTimeString(document.getElementById("endTime").value);
@@ -90,17 +115,28 @@
                 endTime.setFullYear(date.getFullYear());
                 endTime.setMonth(date.getMonth());
                 endTime.setDate(date.getDate());
+                var count = 0;
                 while (startTime < endTime) {
                     var startTimeString = getHourAndMinute(startTime);
+                    var startTimeTemp = new Date(startTime);
                     startTime.setMinutes(startTime.getMinutes() + parseInt(duration));
                     var endTimeString = ""
+                    var endTimeTemp = new Date(startTime);
                     if (startTime > endTime) {
                         endTimeString = getHourAndMinute(endTime);
                     } else {
                         endTimeString = getHourAndMinute(startTime);
                     }
-                    $(".time-schedule").append('<button type="button" class="slot-item col-lg-4 col-md-5 col-12">' + startTimeString + "-" + endTimeString + ' </button>');
+                    if (availableSlots[count]) {
+                        var buttonHTML = '<button type="button" onclick="booking(\'' + startTimeTemp + '\', \'' + endTimeTemp + '\')" class="slot-item col-lg-4 col-md-5 col-12">' + startTimeString + "-" + endTimeString + '</button>';
+                        $(".time-schedule").append(buttonHTML);
+                    }
+                    count++;
                 }
+            }
+
+            function booking(stateDate, endDate) {
+                alert(stateDate + "  -   " + endDate);
             }
 
             function getHourAndMinute(date) {
@@ -129,9 +165,12 @@
 
                 return now;
             }
-            
-            function pickDate(date , url){
-                window.location.href = url + "?date="+date;
+
+            function request(url) {
+                var doctorId = document.getElementById("selectDoctor").value;
+                var majorId = document.getElementById("selectMajor").value;
+                var date = document.getElementById("selectDate").value;
+                window.location.href = url + "?date=" + date + "&doctorId=" + doctorId + "&majorId=" + majorId;
             }
         </script>
     </head>
@@ -140,6 +179,8 @@
         <input type="hidden" value="${requestScope.starTime}" id="starTime">
         <input type="hidden" value="${requestScope.endTime}" id="endTime">
         <input type="hidden" value="${requestScope.date}" id="date">
+        <input type="hidden" value="${requestScope.availableSlots}" id="availableSlots">
+        <input type="hidden" value="${requestScope.majorId}" id="majorId">
         <!-- Preloader -->
         <div class="preloader">
             <div class="loader">
@@ -329,32 +370,27 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <div class="nice-select form-control wide" tabindex="0"><span class="current">Department</span>
-                                                <ul class="list">
-                                                    <li data-value="1" class="option selected ">Department</li>
-                                                    <li data-value="2" class="option">Cardiac Clinic</li>
-                                                    <li data-value="3" class="option">Neurology</li>
-                                                    <li data-value="4" class="option">Dentistry</li>
-                                                    <li data-value="5" class="option">Gastroenterology</li>
-                                                </ul>
-                                            </div>
+                                            <select class="form-control" id="selectMajor" name="majorId" onchange="request('${pageContext.request.contextPath}/appointment')">
+                                                <option value="">Department</option>
+                                                <c:forEach items="${requestScope.majors}" var="major">
+                                                    <option value="${major.id}" ${requestScope.majorId == major.id ? 'selected="selected"' : ''} > ${major.nameMajor} </option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <div class="nice-select form-control wide" tabindex="0"><span class="current">Doctor</span>
-                                                <ul class="list">
-                                                    <li data-value="1" class="option selected ">Doctor</li>
-                                                    <li data-value="2" class="option">Dr. Akther Hossain</li>
-                                                    <li data-value="3" class="option">Dr. Dery Alex</li>
-                                                    <li data-value="4" class="option">Dr. Jovis Karon</li>
-                                                </ul>
-                                            </div>
+                                            <select class="form-control"  name="doctorId" id="selectDoctor" onchange="request('${pageContext.request.contextPath}/appointment')">
+                                                <option  value="">Doctor</option>
+                                                <c:forEach items="${requestScope.doctors}" var="doctor">
+                                                    <option value="${doctor.doctorId}" ${requestScope.doctorId == doctor.doctorId ? 'selected="selected"' : ''} > ${doctor.doctorName} </option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <input type="date" placeholder="Date" id="date" value="${requestScope.date}" name="date" onchange="pickDate(this.value , '${pageContext.request.contextPath}/appointment')">
+                                            <input type="date" placeholder="Date" id="selectDate" value="${requestScope.date}" name="date" onchange="request('${pageContext.request.contextPath}/appointment')">
                                         </div>
                                     </div>
                                     <div class="time-schedule">
@@ -379,19 +415,18 @@
                         </div>
                     </div>
                     <div class="col-lg-5 col-md-12 ">
-                        <div class="work-hour">
-                            <h3>Working Hours</h3>
-                            <ul class="time-sidual">
-                                <li class="day">Monday - Fridayp <span>8.00-20.00</span></li>
-                                <li class="day">Saturday <span>9.00-18.30</span></li>
-                                <li class="day">Monday - Thusday <span>9.00-15.00</span></li>
-                                <li class="day">Monday - Fridayp <span>8.00-20.00</span></li>
-                                <li class="day">Saturday <span>9.00-18.30</span></li>
-                                <li class="day">Monday - Thusday <span>9.00-15.00</span></li>
-                                <li class="day">Monday - Fridayp <span>8.00-20.00</span></li>
-                                <li class="day">Saturday <span>9.00-18.30</span></li>
-                                <li class="day">Monday - Thusday <span>9.00-15.00</span></li>
-                            </ul>
+                        <div class="my-container appointment-inner">
+                            <div>
+                                <img class="avatar" src="${requestScope.doctor != null ? requestScope.doctor.avatar : ""}" />
+                            </div>
+                            <div class="container-right">
+                                <h2>${requestScope.doctor != null ? requestScope.doctor.name : ""}</h2>
+                                <c:forEach items="${requestScope.majors}" var="major">
+                                    <c:if test="${requestScope.doctor.majorId == major.id}">
+                                       <h4>${major.nameMajor}</h4>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -507,8 +542,6 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/slicknav.min.js"></script>
         <!-- ScrollUp JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/jquery.scrollUp.min.js"></script>
-        <!-- Niceselect JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/niceselect.js"></script>
         <!-- Tilt Jquery JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/tilt.jquery.min.js"></script>
         <!-- Owl Carousel JS -->

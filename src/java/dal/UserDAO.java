@@ -387,7 +387,6 @@ public class UserDAO extends DBContext {
         String sql = "SELECT [userId]\n"
                 + "      ,[User].[name] as userName\n"
                 + "      ,[Major].[name] as majorName\n"
-                + "      ,[gender]\n"
                 + "      ,[avatar]\n"
                 + "  FROM [dbo].[User] "
                 + " LEFT JOIN [Major] on [User].majorId = [Major].majorId "
@@ -405,7 +404,50 @@ public class UserDAO extends DBContext {
                 int userId = resultSet.getInt("userId");
                 String avatar = resultSet.getString("avatar");
                 String doctorName = resultSet.getString("userName");
-                boolean gender = resultSet.getBoolean("gender");
+                String majorName = resultSet.getString("majorName");
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar);
+                list.add(doctorCardDto);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return list;
+    }
+    
+    public List<DoctorCardDto> findDoctorsByMajor(int majorId){
+        List<DoctorCardDto> list = new ArrayList<>();
+        String role = UserRoleEnum.UserRole.Professor.toString();
+        String sql = "SELECT [userId]\n"
+                + "      ,[User].[name] as userName\n"
+                + "      ,[Major].[name] as majorName\n"
+                + "      ,[avatar]\n"
+                + "  FROM [dbo].[User] "
+                + " LEFT JOIN [Major] on [User].majorId = [Major].majorId "
+                + "where [role] = ? and [User].majorId = ? ";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, role);
+            statement.setInt(2, majorId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
+                String avatar = resultSet.getString("avatar");
+                String doctorName = resultSet.getString("userName");
                 String majorName = resultSet.getString("majorName");
                 DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar);
                 list.add(doctorCardDto);

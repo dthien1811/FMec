@@ -9,12 +9,12 @@
         <meta name="description" content="">
         <meta name='copyright' content=''>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
+
         <!-- Title -->
         <title>Mediplus - Medical and Doctor Directory HTML Template.</title>
 
         <!-- Favicon -->
-        <link rel="icon" href="${pageContext.request.contextPath}/Main Template/img/favicon.png">
+        <link rel="icon" href="img/favicon.png">
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
@@ -45,56 +45,61 @@
 
         <!-- Color CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color1.css">
-        <!--<link rel="stylesheet" href="css/color/color2.css">-->
-        <!--<link rel="stylesheet" href="css/color/color3.css">-->
-        <!--<link rel="stylesheet" href="css/color/color4.css">-->
-        <!--<link rel="stylesheet" href="css/color/color5.css">-->
-        <!--<link rel="stylesheet" href="css/color/color6.css">-->
-        <!--<link rel="stylesheet" href="css/color/color7.css">-->
-        <!--<link rel="stylesheet" href="css/color/color8.css">-->
-        <!--<link rel="stylesheet" href="css/color/color9.css">-->
-        <!--<link rel="stylesheet" href="css/color/color10.css">-->
-        <!--<link rel="stylesheet" href="css/color/color11.css">-->
-        <!--<link rel="stylesheet" href="css/color/color12.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color2.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color3.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color4.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color5.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color6.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color7.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color8.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color9.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color10.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color11.css">-->
+        <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color12.css">-->
 
         <link rel="stylesheet" href="#" id="colors">
-
+        <style>
+            .doctor-details-item{
+                text-align: center;
+                color: white;
+            }
+        </style>
     </head>
     <body>
 
-        <!--         Preloader 
-                <div class="preloader">
-                    <div class="loader">
-                        <div class="loader-outter"></div>
-                        <div class="loader-inner"></div>
-        
-                        <div class="indicator"> 
-                            <svg width="16px" height="12px">
-                            <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
-                            <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
-                            </svg>
-                        </div>
-                    </div>
+        <!-- Preloader -->
+        <div class="preloader">
+            <div class="loader">
+                <div class="loader-outter"></div>
+                <div class="loader-inner"></div>
+
+                <div class="indicator"> 
+                    <svg width="16px" height="12px">
+                    <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                    <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                    </svg>
                 </div>
-                 End Preloader -->
+            </div>
+        </div>
+        <!-- End Preloader -->
 
         <!-- Mediplus Color Plate -->
         <div class="color-plate">
             <a class="color-plate-icon"><i class="fa fa-cog fa-spin"></i></a>
             <h4>Mediplus</h4>
             <p>Here is some awesome color's available on Mediplus Template.</p>
-            <span class="${pageContext.request.contextPath}/Main Template/color1"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color2"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color3"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color4"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color5"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color6"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color7"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color8"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color9"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color10"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color11"></span>
-            <span class="${pageContext.request.contextPath}/Main Template/color12"></span>
+            <span class="color1"></span>
+            <span class="color2"></span>
+            <span class="color3"></span>
+            <span class="color4"></span>
+            <span class="color5"></span>
+            <span class="color6"></span>
+            <span class="color7"></span>
+            <span class="color8"></span>
+            <span class="color9"></span>
+            <span class="color10"></span>
+            <span class="color11"></span>
+            <span class="color12"></span>
         </div>
         <!-- /End Color Plate -->
 
@@ -118,7 +123,7 @@
                             <!-- Top Contact -->
                             <ul class="top-contact">
                                 <li><i class="fa fa-phone"></i>+880 1234 56789</li>
-                                <li><i class="fa fa-envelope"></i><a href="${pageContext.request.contextPath}/Main Template/mailto:support@yourmail.com">support@yourmail.com</a></li>
+                                <li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">support@yourmail.com</a></li>
                             </ul>
                             <!-- End Top Contact -->
                         </div>
@@ -134,7 +139,7 @@
                             <div class="col-lg-3 col-md-3 col-12">
                                 <!-- Start Logo -->
                                 <div class="logo">
-                                    <a href="${pageContext.request.contextPath}/Main Template/index.jsp"><img src="${pageContext.request.contextPath}/Main Template/img/logo.png" alt="#"></a>
+                                    <a href="index.html"><img src="img/logo.png" alt="#"></a>
                                 </div>
                                 <!-- End Logo -->
                                 <!-- Mobile Nav -->
@@ -148,8 +153,8 @@
                                         <ul class="nav menu">
                                             <li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/index.html">Default Homepage</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/index2.html">Animation Homepage</a></li>
+                                                    <li><a href="index.html">Default Homepage</a></li>
+                                                    <li><a href="index2.html">Animation Homepage</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Doctos <i class="icofont-rounded-down"></i></a>
@@ -160,31 +165,31 @@
                                             </li>
                                             <li><a href="#">Services <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/service.html">Service</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/service-details.html">Service Details</a></li>
+                                                    <li><a href="service.html">Service</a></li>
+                                                    <li><a href="service-details.html">Service Details</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/about.html">About Us</a></li>
+                                                    <li><a href="about.html">About Us</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/appointment">Appointment</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/time-table.html">Time Table</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/testimonials.html">Testimonials</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/pricing.html">Our Pricing</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/register.jsp">Sign Up</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/login.jsp">Login</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/faq.html">Faq</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/mail-success.html">Mail Success</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/404.html">404 Error</a></li>
+                                                    <li><a href="time-table.html">Time Table</a></li>
+                                                    <li><a href="testimonials.html">Testimonials</a></li>
+                                                    <li><a href="pricing.html">Our Pricing</a></li>
+                                                    <li><a href="register.html">Sign Up</a></li>
+                                                    <li><a href="login.html">Login</a></li>
+                                                    <li><a href="faq.html">Faq</a></li>
+                                                    <li><a href="mail-success.html">Mail Success</a></li>
+                                                    <li><a href="404.html">404 Error</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Blogs <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/blog-grid.html">Blog Grid</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/blog-single.html">Blog Details</a></li>
+                                                    <li><a href="blog-grid.html">Blog Grid</a></li>
+                                                    <li><a href="blog-single.html">Blog Details</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="${pageContext.request.contextPath}/Main Template/contact.html">Contact Us</a></li>
+                                            <li><a href="contact.html">Contact Us</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -209,11 +214,11 @@
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Add</h2>
+                            <h2>Doctor Details</h2>
                             <ul class="bread-list">
-                                <li><a href="${pageContext.request.contextPath}/Main Template/index.html">Home</a></li>
+                                <li><a href="index.html">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Add</li>
+                                <li class="active">Doctor Details</li>
                             </ul>
                         </div>
                     </div>
@@ -222,71 +227,44 @@
         </div>
         <!-- End Breadcrumbs -->
 
-        <!-- Shop Login -->
-        <section class="login section">
+        <!-- Doctor Details -->
+        <div class="doctor-details-area section">
             <div class="container">
-                <div class="inner">
-                    <div class="row"> 
-                        <div class="col-lg-6">
-                            <div class="login-left">
-                                <img src="${pageContext.request.contextPath}/Main Template/img/login.png" alt="">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="doctor-details-item doctor-details-left">
+                            <img src="${requestScope.doctor.avatar}" alt="#">
+                            <div class="t-icon">
+                                <a href="${pageContext.request.contextPath}/appointment?doctorId=${requestScope.doctor.doctorId}&majorId=${requestScope.doctor.majorId}" class="btn">Get Appointment</a>
+                            </div>
+                            <div class="doctor-details-contact">
+                                <h3>${doctor.doctorName}</h3>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="login-form">
-
-                                <!-- Form -->
-                                <form action="TimeSessionServlet" method="GET">
-                                    <input type="hidden" name="command" value="add"/>
-                                    <div style=" border-radius: 10px;">
-                                        <select name="dayOfWeekId" class="form-control">
-                                            <c:forEach items="${requestScope.dayOfWeeks}" var="dayOfWeek">
-                                                <option value="${dayOfWeek.dayOfWeekId}">${dayOfWeek.dayOfWeekName}</option>
-                                            </c:forEach>
-                                        </select>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="doctor-details-item">
+                            <div class="doctor-details-right">
+                                <div class="doctor-name">
+                                    <h3 class="name">${doctor.doctorName}</h3>
+                                    <p class="deg">${doctor.major}</p>
+                                </div>
+                                <br>
+                                <h2>Feedbacks</h2>
+                                <c:forEach items="${doctor.feedbacks}" var="feedback">
+                                    <div class="doctor-details-biography">
+                                        <h3>${feedback.patient.email}</h3>
+                                        <p>${feedback.content}</p>
                                     </div>
-                                    <div style=" border-radius: 10px;">
-                                        <select name="timeManagementId" class="form-control">
-                                            <c:forEach items="${requestScope.timeManagements}" var="timeManagement">
-                                                <option value="${timeManagement.timeManagementId}">${timeManagement.timeStart} - ${timeManagement.timeEnd}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div style=" border-radius: 10px;">
-                                        <select name="userId" class="form-control" >
-                                            <c:forEach items="${requestScope.users}" var="user" >
-
-                                                <option value="${user.userId}" >     
-                                                    ${user.name}\    
-                                                    Email:
-                                                    ${user.email}\
-                                                    Phone:
-                                                    ${user.phone}
-                                                </option>
-
-                                            </c:forEach>
-                                        </select>
-
-
-                                    </div>
-                                    <div style=" border-radius: 10px;" >
-
-                                    </div >
-                                    <br>
-                                    <button type="submit" class="btn btn-dark"/>Add</button>
-                                    <br>
-                                </form>
+                                </c:forEach>
 
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-
-        </section>
-        <!--/ End Login -->
-
+        </div>
+        <!-- End Doctor Details -->
 
         <!-- Footer Area -->
         <footer id="footer" class="footer ">
@@ -349,7 +327,7 @@
                             <div class="single-footer">
                                 <h2>Newsletter</h2>
                                 <p>subscribe to our newsletter to get allour news in your inbox.. Lorem ipsum dolor sit amet, consectetur adipisicing elit,</p>
-                                <form action="${pageContext.request.contextPath}/Main Template/mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
                                     <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
                                            onblur="this.placeholder = 'Your email address'" required="" type="email">
                                     <button class="button"><i class="icofont icofont-paper-plane"></i></button>
@@ -366,7 +344,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="copyright-content">
-                                <p>© Copyright 2018  |  All Rights Reserved by <a href="${pageContext.request.contextPath}/Main Template/https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
+                                <p>© Copyright 2018  |  All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
                             </div>
                         </div>
                     </div>
@@ -411,42 +389,10 @@
         <!-- Magnific Popup JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/jquery.magnific-popup.min.js"></script>
         <!-- Counter Up CDN JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
         <!-- Bootstrap JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
-         <script>
-        // Get the option element
-        var option = document.getElementById("multiline-option");
-
-        // Replace '\n' with '<br>' for line breaks
-        option.innerHTML = option.innerHTML.replace(/\\n/g, "<br>");
-    </script>
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

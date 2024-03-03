@@ -227,7 +227,7 @@
                                                         <!-- Add other parameters as needed -->
                                                     </c:url>
                                                <li><a href="${showUrl}">Doctor</a></li>
-                                                <li><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">Doctor Details</a></li>
+                                                <li><a href="${pageContext.request.contextPath}/doctorDetails">Doctor Details</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="#">Services <i class="icofont-rounded-down"></i></a>
@@ -1010,7 +1010,7 @@
                         </div>
                         <div class="t-bottom">
                             <p>Neurosurgeon</p>
-                            <h2><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">Collis Molate</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/doctorDetails">Collis Molate</a></h2>
                         </div>
                     </div>
                     <!-- End Single Team -->
@@ -1028,7 +1028,7 @@
                         <!-- Team Bottom -->
                         <div class="t-bottom">
                             <p>Neurosurgeon</p>
-                            <h2><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">Domani Plavon</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/doctorDetails">Domani Plavon</a></h2>
                         </div>
                         <!--/ End Team Bottom -->
                     </div>
@@ -1047,7 +1047,7 @@
                         <!-- Team Bottom -->
                         <div class="t-bottom">
                             <p>Dental Surgeon</p>
-                            <h2><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">John Mard</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/doctorDetails">John Mard</a></h2>
                         </div>
                         <!--/ End Team Bottom -->
                     </div>
@@ -1066,7 +1066,7 @@
                         <!-- Team Bottom -->
                         <div class="t-bottom">
                             <p>Neurosurgeon</p>
-                            <h2><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">Amanal Frond</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/doctorDetails">Amanal Frond</a></h2>
                         </div>
                         <!--/ End Team Bottom -->
                     </div>

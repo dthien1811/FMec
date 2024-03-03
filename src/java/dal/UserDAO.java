@@ -6,6 +6,8 @@ package dal;
 
 import Enums.UserRoleEnum;
 import dto.DoctorCardDto;
+import dto.DoctorDetailDto;
+import entity.Feedback;
 import entity.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -388,6 +390,7 @@ public class UserDAO extends DBContext {
                 + "      ,[User].[name] as userName\n"
                 + "      ,[Major].[name] as majorName\n"
                 + "      ,[avatar]\n"
+                + "      ,[Major].[majorId]\n"
                 + "  FROM [dbo].[User] "
                 + " LEFT JOIN [Major] on [User].majorId = [Major].majorId "
                 + "where [role] = ? and ( [Major].name like ? or [User].name like ?) ORDER BY [Major].[name] OFFSET ? rows FETCH next ? rows only ";
@@ -405,7 +408,8 @@ public class UserDAO extends DBContext {
                 String avatar = resultSet.getString("avatar");
                 String doctorName = resultSet.getString("userName");
                 String majorName = resultSet.getString("majorName");
-                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar);
+                int majorId = resultSet.getInt("majorId");
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , majorId);
                 list.add(doctorCardDto);
             }
 
@@ -449,7 +453,7 @@ public class UserDAO extends DBContext {
                 String avatar = resultSet.getString("avatar");
                 String doctorName = resultSet.getString("userName");
                 String majorName = resultSet.getString("majorName");
-                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar);
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , majorId);
                 list.add(doctorCardDto);
             }
 
@@ -507,6 +511,81 @@ public class UserDAO extends DBContext {
             }
         }
         return result;
+    }
+    
+    public DoctorDetailDto getDoctorById(int id){
+        String sql = "SELECT doctor.[userId] as doctorId\n"
+                + "      ,doctor.[majorId] as doctorMajor\n"
+                + "      ,doctor.[avatar] as doctorAvatar\n"
+                + "      ,doctor.[name] as doctorName\n"
+                + "      ,f.[content]\n"
+                + "      ,m.[name] majorName\n"
+                + "      ,patient.[email] as patientEmail\n"
+                + "  FROM [dbo].[User] doctor"
+                + " LEFT JOIN [Feedback] f ON f.bacsiNhanFeedbackId = doctor.[userId] "
+                + " LEFT JOIN [User] patient ON f.benhnhanFeedbackId = patient.[userId] "
+                + " LEFT JOIN [Major] m ON doctor.[majorId] = m.[majorId] "
+                + "where doctor.[userId] = ? ";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int doctorId = resultSet.getInt("doctorId");
+                int majorId = resultSet.getInt("doctorMajor");
+                String majorName = resultSet.getString("majorName");
+                String content = resultSet.getString("content");
+                String avatar = resultSet.getString("doctorAvatar");
+                String doctorName = resultSet.getString("doctorName");
+                String patientEmail = resultSet.getString("patientEmail");
+                DoctorDetailDto doctorDetailDto = new DoctorDetailDto();
+                doctorDetailDto.setAvatar(avatar);
+                doctorDetailDto.setDoctorId(doctorId);
+                doctorDetailDto.setDoctorName(doctorName);
+                doctorDetailDto.setMajor(majorName);
+                doctorDetailDto.setMajorId(majorId);
+                List<Feedback> feedbacks = new ArrayList<Feedback>();
+                Feedback feedback = new Feedback();
+                feedback.setContent(content);
+                User patient = new User();
+                patient.setEmail(patientEmail);
+                feedback.setPatient(patient);
+                feedbacks.add(feedback);
+                while(resultSet.next()){
+                    patientEmail = resultSet.getString("patientEmail");
+                    content = resultSet.getString("content");
+                    feedback = new Feedback();
+                    feedback.setContent(content);
+                    patient = new User();
+                    patient.setEmail(patientEmail);
+                    feedback.setPatient(patient);
+                    feedbacks.add(feedback);
+                }
+                doctorDetailDto.setFeedbacks(feedbacks);
+                return doctorDetailDto;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
     }
     
 }

@@ -298,7 +298,7 @@
                                             <li><a href="#">Doctos <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
                                                     <li><a href="${pageContext.request.contextPath}/doctors">Doctor</a></li>
-                                                    <li><a href="doctor-details.html">Doctor Details</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/doctorDetails">Doctor Details</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Services <i class="icofont-rounded-down"></i></a>
@@ -384,12 +384,12 @@
                                 <div class="t-head">
                                     <img src="${doctor.avatar}" class="avatar" alt="${doctor.doctorName}">
                                     <div class="t-icon">
-                                        <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
+                                        <a href="${pageContext.request.contextPath}/appointment?doctorId=${doctor.doctorId}&majorId=${doctor.majorId}" class="btn">Get Appointment</a>
                                     </div>
                                 </div>
                                 <div class="t-bottom">
                                     <p>${doctor.major}</p>
-                                    <h2><a href="doctor-details.html">${doctor.doctorName}</a></h2>
+                                    <h2><a href="${pageContext.request.contextPath}/doctorDetails?doctorId=${doctor.doctorId}">${doctor.doctorName}</a></h2>
                                 </div>
                             </div>
                             <!-- End Single Team -->

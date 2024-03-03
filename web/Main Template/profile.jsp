@@ -203,7 +203,7 @@
                                             <li><a href="#">Doctors <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
                                                     <li><a href="${pageContext.request.contextPath}/doctors">Doctor</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/doctor-details.html">Doctor Details</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/doctorDetails">Doctor Details</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Services <i class="icofont-rounded-down"></i></a>

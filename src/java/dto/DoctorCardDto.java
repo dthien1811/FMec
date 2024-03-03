@@ -11,6 +11,7 @@ package dto;
  */
 public class DoctorCardDto {
     public int doctorId;
+    private int majorId;
     public String doctorName;
     public String major;
     public String avatar;
@@ -20,11 +21,12 @@ public class DoctorCardDto {
     
     
 
-    public DoctorCardDto(String doctorName, String major , int doctorId , String avatar) {
+    public DoctorCardDto(String doctorName, String major , int doctorId , String avatar , int majorId) {
         this.doctorName = doctorName;
         this.avatar = avatar;
         this.major = major;
         this.doctorId = doctorId;
+        this.majorId = majorId;
     }
     
     
@@ -60,6 +62,16 @@ public class DoctorCardDto {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    public int getMajorId() {
+        return majorId;
+    }
+
+    public void setMajorId(int majorId) {
+        this.majorId = majorId;
+    }
+    
+    
     
     
 }

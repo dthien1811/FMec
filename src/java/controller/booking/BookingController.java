@@ -13,6 +13,7 @@ import dal.DoctorScheduleDAO;
 import dal.MajorDAO;
 import dal.TimeConfigDAO;
 import dal.UserDAO;
+import dto.BookingDTO;
 import dto.DoctorCardDto;
 import dto.SlotDTO;
 import entity.Booking;
@@ -38,6 +39,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -132,8 +134,8 @@ public class BookingController extends HttpServlet {
             }
             boolean isInBooking = false;
             for (Booking booking : bookings) {
-                if (compareDates(slot.getStartDate(), booking.getEndDate()) <= 0
-                        && compareDates(slot.getEndDate(), booking.getStartDate()) >= 0) {
+                if (compareDates(slot.getStartDate(), booking.getEndDate()) < 0
+                        && compareDates(slot.getEndDate(), booking.getStartDate()) > 0) {
                     isInBooking = true;
                     break;
                 }
@@ -220,7 +222,31 @@ public class BookingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String format = "EEE MMM dd yyyy HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        String doctorIdRaw = request.getParameter("doctorId");
+        String note = request.getParameter("note");
+
+        String startDateRaw = request.getParameter("startDate");
+        String endDateRaw = request.getParameter("endDate");
+        Date startDate = null;
+        Date endDate = null;
+        if (startDateRaw != null && endDateRaw != null) {
+            try {
+                startDate = sdf.parse(startDateRaw);
+                endDate = sdf.parse(endDateRaw);
+            } catch (ParseException ex) {
+                Logger.getLogger(BookingController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (startDate != null && endDate != null) {
+            HttpSession session = request.getSession();
+            User customer = (User) session.getAttribute("user");
+            Integer doctorId = doctorIdRaw == null || doctorIdRaw.length() == 0 ? null : Integer.parseInt(doctorIdRaw);
+            BookingDTO bookingDTO = new BookingDTO(0, doctorId, customer.getUserId(), 0, note, startDate, endDate);
+            int result = bookingDAO.insertBooking(bookingDTO);
+        }
+        response.sendRedirect("/myAppointment");
     }
 
     /**

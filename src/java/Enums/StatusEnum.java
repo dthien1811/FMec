@@ -23,4 +23,18 @@ public class StatusEnum {
         }
         
     }
+    
+    public enum BookingStatus{
+        PENDING(0) , CANCELED(1) , APPROVED(2);
+        private final int value;
+
+        private BookingStatus(int value) {
+            this.value = value;
+        }
+        
+        public int getValue() {
+            return value;
+        }
+        
+    }
 }

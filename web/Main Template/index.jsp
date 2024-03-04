@@ -222,11 +222,8 @@
                                             </li>
                                             <li><a href="#">Doctors <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                   <c:url value="TimeSessionServlet" var="showUrl">
-                                                        <c:param name="command" value="list" />
-                                                        <!-- Add other parameters as needed -->
-                                                    </c:url>
-                                               <li><a href="${showUrl}">Doctor</a></li>
+                                                   
+                                               <li><a href="${pageContext.request.contextPath}/doctors">Doctors</a></li>
                                                 <li><a href="${pageContext.request.contextPath}/doctorDetails">Doctor Details</a></li>
                                             </ul>
                                         </li>

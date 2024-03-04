@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html class="no-js" lang="zxx">
     <head>
         <!-- Meta Tags -->
@@ -57,144 +57,44 @@
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color11.css">-->
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color12.css">-->
 
+        <!-- Include DataTables CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
+
+
         <link rel="stylesheet" href="#" id="colors">
+        <script>
+            window.onload = function () {
+                var table = $('#myTable').DataTable();
+                var jsonString = document.getElementById("bookings").value;
+                console.log(jsonString);
+                var bookings = JSON.parse(jsonString);
+
+                for (var i = 0; i < bookings.length; i++) {
+                    table.row.add([
+                        bookings[i].doctorName, // ID
+                        bookings[i].startDate, // Name
+                        bookings[i].endDate ,
+                        bookings[i].note ,
+                        bookings[i].statusName
+                    ]).draw();
+                }
+            };
+        </script>
         <style>
-            .slot-item {
-                background-color: #4CAF50; /* Green */
-                border: none;
-                color: white;
-                padding: 15px 32px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 16px;
-                margin: 4px 2px;
-                cursor: pointer;
-                border-radius: 8px;
-            }
-
-            
-
-            .avatar {
-                width: 100%; /* Adjust size as needed */
-                height: 200px; /* Adjust size as needed */
-                border: 2px solid #fff; /* Add a border */
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow */
-                object-fit: fill;
-            }
-
-            .my-container{
+            #team{
                 display: flex;
-                justify-content: space-between;
-                height: 300px;
-            }
-            .container-right{
-                display: flex;
-                flex-direction: column;
-                margin-left: 20px;
             }
             
-            .selected{
-                 background-color: #008CBA;
+            #myTable_wrapper{
+                left : 10%;
+            }
+
+            #myTable{
+                width: 80vw;
             }
         </style>
-        <script>
-            window.onload = generateTimeSlots;
-            var startDate = null;
-            var endDate = null;
-
-            function generateTimeSlots() {
-                var availableSlots = JSON.parse(document.getElementById("availableSlots").value);
-                var doctorId = document.getElementById("selectDoctor").value;
-                if (doctorId.length === 0)
-                    return;
-                var duration = document.getElementById("duration").value;
-                var startTime = parseTimeString(document.getElementById("starTime").value);
-                var endTime = parseTimeString(document.getElementById("endTime").value);
-                var date = new Date(document.getElementById("date").value);
-                startTime.setFullYear(date.getFullYear());
-                startTime.setMonth(date.getMonth());
-                startTime.setDate(date.getDate());
-                endTime.setFullYear(date.getFullYear());
-                endTime.setMonth(date.getMonth());
-                endTime.setDate(date.getDate());
-                var count = 0;
-                while (startTime < endTime) {
-                    var startTimeString = getHourAndMinute(startTime);
-                    var startTimeTemp = new Date(startTime);
-                    startTime.setMinutes(startTime.getMinutes() + parseInt(duration));
-                    var endTimeString = ""
-                    var endTimeTemp = new Date(startTime);
-                    if (startTime > endTime) {
-                        endTimeString = getHourAndMinute(endTime);
-                    } else {
-                        endTimeString = getHourAndMinute(startTime);
-                    }
-                    if (availableSlots[count]) {
-                        var buttonHTML = '<button  type="button" onclick="booking(event,\'' + startTimeTemp + '\', \'' + endTimeTemp + '\')" class="slot-item col-lg-4 col-md-5 col-12">' + startTimeString + "-" + endTimeString + '</button>';
-                        $(".time-schedule").append(buttonHTML);
-                    }
-                    count++;
-                }
-            }
-
-            function booking(event , slotStart, slotEnd) {
-                var btnSlot = event.target;
-                var slots = document.getElementsByClassName("slot-item");
-                for(var i = 0 ; i < slots.length ; i++){
-                    slots[i].classList.remove("selected");
-                }
-                btnSlot.classList.add("selected");
-                var btnBooking = document.getElementById("bookAppointment");
-                btnBooking.disabled = false;
-                startDate = slotStart;
-                endDate = slotEnd;
-                document.getElementById("selectedStartDate").value = slotStart;
-                document.getElementById("selectedEndDate").value = slotEnd;
-            }
-
-            function getHourAndMinute(date) {
-                var hour = date.getHours();
-                var minute = date.getMinutes();
-
-                // Formatting the hour and minute with leading zeros if necessary
-                hour = hour < 10 ? '0' + hour : hour;
-                minute = minute < 10 ? '0' + minute : minute;
-
-                return hour + ':' + minute;
-            }
-
-
-            function parseTimeString(timeString) {
-                var parts = timeString.split(':');
-                var hour = parseInt(parts[0], 10);
-                var minute = parseInt(parts[1], 10);
-
-                // Create a new Date object with today's date
-                var now = new Date();
-
-                // Set the hours and minutes
-                now.setHours(hour);
-                now.setMinutes(minute);
-
-                return now;
-            }
-
-            function request(url) {
-                var doctorId = document.getElementById("selectDoctor").value;
-                var majorId = document.getElementById("selectMajor").value;
-                var date = document.getElementById("selectDate").value;
-                window.location.href = url + "?date=" + date + "&doctorId=" + doctorId + "&majorId=" + majorId;
-            }
-        </script>
     </head>
     <body>
-        <input type="hidden" value="${requestScope.duration}" id="duration">
-        <input type="hidden" value="${requestScope.starTime}" id="starTime">
-        <input type="hidden" value="${requestScope.endTime}" id="endTime">
-        <input type="hidden" value="${requestScope.date}" id="date">
-        <input type="hidden" value="${requestScope.availableSlots}" id="availableSlots">
-        <input type="hidden" value="${requestScope.majorId}" id="majorId">
         <!-- Preloader -->
         <div class="preloader">
             <div class="loader">
@@ -342,11 +242,11 @@
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Get Your Appointment</h2>
+                            <h2>My Appointment</h2>
                             <ul class="bread-list">
                                 <li><a href="index.html">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Appointment</li>
+                                <li class="active">My Appointment</li>
                             </ul>
                         </div>
                     </div>
@@ -355,100 +255,25 @@
         </div>
         <!-- End Breadcrumbs -->
 
-        <!-- Start Appointment -->
-        <section class="appointment single-page">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-7 col-md-12 col-12">
-                        <div class="appointment-inner">
-                            <div class="title">
-                                <h3>Book your appointment</h3>
-                                <p>We will confirm your appointment within 2 hours</p>
-                            </div>
-                            <form class="form" action="${pageContext.request.contextPath}/appointment" method="post">
-                                <input type="hidden" name="startDate" id="selectedStartDate"/>
-                                <input type="hidden" name="endDate" id="selectedEndDate"/>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <input name="name" type="text" placeholder="Name" disabled value="${sessionScope.user.name}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <input name="email" type="email" placeholder="Email" disabled value="${sessionScope.user.email}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <input name="phone" type="text" placeholder="Phone" disabled value="${sessionScope.user.phone}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <select class="form-control" id="selectMajor" name="majorId" onchange="request('${pageContext.request.contextPath}/appointment')">
-                                                <option value="">Department</option>
-                                                <c:forEach items="${requestScope.majors}" var="major">
-                                                    <option value="${major.id}" ${requestScope.majorId == major.id ? 'selected="selected"' : ''} > ${major.nameMajor} </option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <select class="form-control"  name="doctorId" id="selectDoctor" onchange="request('${pageContext.request.contextPath}/appointment')">
-                                                <option  value="">Doctor</option>
-                                                <c:forEach items="${requestScope.doctors}" var="doctor">
-                                                    <option value="${doctor.doctorId}" ${requestScope.doctorId == doctor.doctorId ? 'selected="selected"' : ''} > ${doctor.doctorName} </option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <input type="date" placeholder="Date" id="selectDate" value="${requestScope.date}" name="date" onchange="request('${pageContext.request.contextPath}/appointment')">
-                                        </div>
-                                    </div>
-                                    <div class="time-schedule">
+        <!-- Start Team -->
+        <section id="team" class="team section single-page">
+            <input type="hidden" value='${requestScope.bookings}' id="bookings"/>
+            <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Note</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-12">
-                                        <div class="form-group">
-                                            <textarea name="note"  placeholder="Write Your Note Here....."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <div class="button">
-                                                <button type="submit" disabled class="btn" id="bookAppointment">Book An Appointment</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-12 ">
-                        <div class="my-container appointment-inner">
-                            <div>
-                                <img class="avatar" src="${requestScope.doctor != null ? requestScope.doctor.avatar : ""}" />
-                            </div>
-                            <div class="container-right">
-                                <h2>${requestScope.doctor != null ? requestScope.doctor.name : ""}</h2>
-                                <c:forEach items="${requestScope.majors}" var="major">
-                                    <c:if test="${requestScope.doctor.majorId == major.id}">
-                                       <h4>${major.nameMajor}</h4>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </section>
-        <!--/End Appointment -->
+        <!--/ End Team -->
 
         <!-- Footer Area -->
         <footer id="footer" class="footer ">
@@ -537,13 +362,7 @@
             <!--/ End Copyright -->
         </footer>
         <!--/ End Footer Area -->
-
-        <!-- jquery Min JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.min.js"></script>
-        <!-- jquery Migrate JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-migrate-3.0.0.js"></script>
-        <!-- jquery Ui JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-ui.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- Easing JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/easing.js"></script>
         <!-- Color JS -->
@@ -558,6 +377,8 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/slicknav.min.js"></script>
         <!-- ScrollUp JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/jquery.scrollUp.min.js"></script>
+        <!-- Niceselect JS -->
+        <script src="${pageContext.request.contextPath}/Main Template/js/niceselect.js"></script>
         <!-- Tilt Jquery JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/tilt.jquery.min.js"></script>
         <!-- Owl Carousel JS -->
@@ -576,5 +397,8 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
+        <!-- Include DataTables JS -->
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
     </body>
 </html>
+

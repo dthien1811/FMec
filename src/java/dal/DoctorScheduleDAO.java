@@ -5,6 +5,7 @@
  */
 package dal;
 
+import Enums.StatusEnum;
 import entity.DoctorSchedule;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public class DoctorScheduleDAO extends DBContext{
         try {
             String sql = "SELECT * FROM DoctorSchedule s WHERE s.doctor_id = ? "
                     + "and DATEPART(year , s.start_date) = ? AND DATEPART(month , s.start_date) = ? AND "
-                    + "DATEPART(day , s.start_date) = ?";
+                    + "DATEPART(day , s.start_date) = ? AND s.status = ?";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, doctorId);
@@ -36,6 +37,7 @@ public class DoctorScheduleDAO extends DBContext{
             statement.setInt(2,year);
             statement.setInt(3, month);
             statement.setInt(4, day);
+            statement.setInt(5, StatusEnum.ScheduleStatus.APPROVED.getValue());
             ResultSet resultSet = statement.executeQuery();
             DoctorSchedule doctorSchedule;
             while(resultSet.next()){

@@ -7,11 +7,9 @@ package controller.booking;
 
 import com.google.gson.Gson;
 import dal.BookingDAO;
-import dto.MyAppointmentDTO;
-import entity.Booking;
+import dto.DoctorAppointmentDTO;
 import entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,12 +22,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author My Computer
  */
-@WebServlet(name = "MyAppointMentController", urlPatterns = {"/myAppointment"})
-public class MyAppointMentController extends HttpServlet {
+@WebServlet(name = "DoctorAppointmentController", urlPatterns = {"/doctorAppointment"})
+public class DoctorAppointmentController extends HttpServlet {
 
     private final BookingDAO bookingDAO;
     private final Gson gson;
-    public MyAppointMentController() {
+
+    public DoctorAppointmentController() {
         bookingDAO = new BookingDAO();
         gson = new Gson();
     }
@@ -37,12 +36,12 @@ public class MyAppointMentController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User customer = (User) session.getAttribute("user");
-        if (customer != null) {
-            List<MyAppointmentDTO> bookings = bookingDAO.getPatientAppointment(customer.getUserId());
+        User doctor = (User) session.getAttribute("user");
+        if (doctor != null) {
+            List<DoctorAppointmentDTO> bookings = bookingDAO.getDoctorAppointment(doctor.getUserId());
             request.setAttribute("bookings", gson.toJson(bookings));
         }
-        request.getRequestDispatcher("Main Template/my-appointment.jsp").forward(request, response);
+        request.getRequestDispatcher("Main Template/doctor-appointment.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

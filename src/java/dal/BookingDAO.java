@@ -7,6 +7,7 @@ package dal;
 
 import Enums.StatusEnum;
 import dto.BookingDTO;
+import dto.DoctorAppointmentDTO;
 import dto.MyAppointmentDTO;
 import entity.Booking;
 import entity.User;
@@ -75,6 +76,7 @@ public class BookingDAO extends DBContext {
                 int id = resultSet.getInt("id");
                 Date startDate = resultSet.getTimestamp("start_date");
                 Date endDate = resultSet.getTimestamp("end_date");
+                Date createDate = resultSet.getTimestamp("create_date");
                 String doctorName = resultSet.getString("name");
                 String note = resultSet.getString("note");
                 int status = resultSet.getInt("status");
@@ -85,7 +87,42 @@ public class BookingDAO extends DBContext {
                         break;
                     }
                 }
-                booking = new MyAppointmentDTO(id, doctorName, statusName, note, startDate, endDate);
+                booking = new MyAppointmentDTO(id, doctorName, statusName, note, startDate, endDate , createDate);
+                bookings.add(booking);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bookings;
+    }
+    
+    public List<DoctorAppointmentDTO> getDoctorAppointment(int doctorId) {
+        List<DoctorAppointmentDTO> bookings = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM Booking s "
+                    + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
+                    + "  WHERE s.doctor_id = ? ";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, doctorId);
+            ResultSet resultSet = statement.executeQuery();
+            DoctorAppointmentDTO booking;
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Date startDate = resultSet.getTimestamp("start_date");
+                Date endDate = resultSet.getTimestamp("end_date");
+                Date createDate = resultSet.getTimestamp("create_date");
+                String doctorName = resultSet.getString("name");
+                String note = resultSet.getString("note");
+                int status = resultSet.getInt("status");
+                String statusName = "";
+                for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
+                    if(status == s.getValue()){
+                        statusName = s.name();
+                        break;
+                    }
+                }
+                booking = new DoctorAppointmentDTO(id, doctorName, statusName, note, startDate, endDate , createDate);
                 bookings.add(booking);
             }
         } catch (Exception ex) {

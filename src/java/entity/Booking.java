@@ -15,6 +15,7 @@ public class Booking {
     private int id;
     private Date startDate;
     private Date endDate;
+    private Date createDate;
     private int status;
     private User doctor;
     private User customer;
@@ -23,12 +24,13 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(int id, Date startDate, Date endDate, int status, User doctor, User customer, String note) {
+    public Booking(int id, Date startDate, Date endDate, int status, User doctor, User customer, String note , Date createDate) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
         this.doctor = doctor;
+        this.createDate = createDate;
         this.customer = customer;
         this.note = note;
     }
@@ -90,6 +92,16 @@ public class Booking {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+    
+    
     
     
 }

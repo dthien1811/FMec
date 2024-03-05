@@ -11,29 +11,35 @@ import java.util.Date;
  *
  * @author My Computer
  */
-public class MyAppointmentDTO {
+public class DoctorAppointmentDTO {
     private int id;
-    private String doctorName;
+    private String customerName;
     private String statusName;
     private String note;
     private Date startDate;
     private Date endDate;
     private Date createDate;
 
-    public MyAppointmentDTO() {
+    public DoctorAppointmentDTO() {
     }
 
-    public MyAppointmentDTO(int id, String doctorName, String statusName, String note, Date startDate, Date endDate , Date createDate) {
+    public DoctorAppointmentDTO(int id, String customerName, String statusName, String note, Date startDate, Date endDate , Date createDate) {
         this.id = id;
-        this.doctorName = doctorName;
+        this.customerName = customerName;
         this.statusName = statusName;
         this.note = note;
         this.startDate = startDate;
         this.endDate = endDate;
         this.createDate = createDate;
     }
-    
-    
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public int getId() {
         return id;
@@ -43,13 +49,7 @@ public class MyAppointmentDTO {
         this.id = id;
     }
 
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
-    }
+    
 
     public String getStatusName() {
         return statusName;
@@ -90,6 +90,4 @@ public class MyAppointmentDTO {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-    
-    
 }

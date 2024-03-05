@@ -71,12 +71,13 @@
 
                 for (var i = 0; i < bookings.length; i++) {
                     table.row.add([
-                        bookings[i].doctorName, // ID
+                        bookings[i].customerName, // ID
                         bookings[i].startDate, // Name
                         bookings[i].endDate ,
                         bookings[i].createDate ,
                         bookings[i].note ,
-                        bookings[i].statusName
+                        bookings[i].statusName,
+                        bookings[i].statusName == 'APPROVED' ? '<a href="#">Edit</a>' : ''
                     ]).draw();
                 }
             };
@@ -262,12 +263,13 @@
             <table id="myTable">
                 <thead>
                     <tr>
-                        <th>Doctor</th>
+                        <th>Customer</th>
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Book Time</th>
                         <th>Note</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>

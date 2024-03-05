@@ -5,6 +5,8 @@
  */
 package controller.doctorlist;
 
+import Enums.ConfigEnum;
+import dal.ConfigDAO;
 import dal.UserDAO;
 import dto.DoctorCardDto;
 import java.io.IOException;
@@ -23,9 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ViewDoctorListController", urlPatterns = {"/doctors"})
 public class ViewDoctorListController extends HttpServlet {
     private final UserDAO userDAO;
+    private final ConfigDAO configDAO;
     private final int DOCTORSPERPAGE = 6;
     public ViewDoctorListController(){
         userDAO = new UserDAO();
+        configDAO = new ConfigDAO();
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,9 +43,11 @@ public class ViewDoctorListController extends HttpServlet {
         int offset = pageNumber * DOCTORSPERPAGE;
         int fetch = DOCTORSPERPAGE;
         List<DoctorCardDto> doctors = userDAO.findDoctorsBasicInformation(offset , fetch , query);
+        double defaultPrice = configDAO.getConfigValue(ConfigEnum.Config.DEFAULT_PRICE.toString());
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("query", query);
+        request.setAttribute("defaultPrice", defaultPrice);
         
         request.setAttribute("doctors", doctors);
         request.getRequestDispatcher("Main Template/doctors.jsp").forward(request, response);

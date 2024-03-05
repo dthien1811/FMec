@@ -406,7 +406,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <input type="date" placeholder="Date" id="selectDate" value="${requestScope.date}" name="date" onchange="request('${pageContext.request.contextPath}/appointment')">
+                                            <input type="date" placeholder="Date" min="${requestScope.minDate}" id="selectDate" value="${requestScope.date}" name="date" onchange="request('${pageContext.request.contextPath}/appointment')">
                                         </div>
                                     </div>
                                     <div class="time-schedule">

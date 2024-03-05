@@ -6,6 +6,7 @@
 package controller.booking;
 
 import Enums.ConfigEnum;
+import Enums.StatusEnum;
 import com.google.gson.Gson;
 import dal.BookingDAO;
 import dal.ConfigDAO;
@@ -100,7 +101,7 @@ public class BookingController extends HttpServlet {
             }
             List<SlotDTO> slots = generateListSlot(startTime, endTime, date, durationConfig);
             List<Booking> bookings = bookingDAO.getDoctorBooking(doctorId, date);
-            List<DoctorSchedule> schedules = doctorScheduleDAO.getDoctorSchedule(doctorId, date);
+            List<DoctorSchedule> schedules = doctorScheduleDAO.getDoctorSchedule(doctorId, date , StatusEnum.ScheduleStatus.APPROVED.getValue());
             Boolean[] availableSlots = returnAvailableSlots(slots, bookings, schedules);
             request.setAttribute("duration", durationConfig);
             request.setAttribute("starTime", startTime);
@@ -108,7 +109,9 @@ public class BookingController extends HttpServlet {
             request.setAttribute("doctor", doctor);
             request.setAttribute("availableSlots", gson.toJson(availableSlots));
         }
-
+        
+        String minDate = dateFormat.format(new Date());
+        request.setAttribute("minDate", minDate);
         request.setAttribute("date", dateFormat.format(date));
         request.setAttribute("majors", majors);
         request.setAttribute("doctors", doctors);

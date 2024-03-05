@@ -1,5 +1,7 @@
 <!doctype html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html class="no-js" lang="zxx">
     <head>
         <!-- Meta Tags -->
@@ -377,6 +379,8 @@
                     </form>
                 </div>
                 <div class="row">
+                    <fmt:setLocale value="vi_VN" />
+                    <fmt:setBundle basename="java.text.resources.LocaleElements"/>
                     <c:forEach items="${doctors}" var="doctor">
                         <div class="col-lg-4 col-md-6 col-12">
                             <!-- Single Team -->
@@ -390,6 +394,8 @@
                                 <div class="t-bottom">
                                     <p>${doctor.major}</p>
                                     <h2><a href="${pageContext.request.contextPath}/doctorDetails?doctorId=${doctor.doctorId}">${doctor.doctorName}</a></h2>
+                                    <p>Price</p>
+                                    <h4><fmt:formatNumber type="currency" value="${requestScope.defaultPrice}" currencyCode="VND" /> </h4>
                                 </div>
                             </div>
                             <!-- End Single Team -->
@@ -508,7 +514,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="copyright-content">
-                                <p>© Copyright 2018  |  All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
+                                <p>Â© Copyright 2018  |  All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
                             </div>
                         </div>
                     </div>

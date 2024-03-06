@@ -25,7 +25,7 @@ public class StatusEnum {
     }
     
     public enum BookingStatus{
-        PENDING(0) , CANCELED(1) , APPROVED(2) , DONE(3);
+        PENDING(0) , CANCELED(1) , APPROVED(2) , DONE(3) , EXAMINING(4);
         private final int value;
 
         private BookingStatus(int value) {

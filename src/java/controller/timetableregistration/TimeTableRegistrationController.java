@@ -151,7 +151,7 @@ public class TimeTableRegistrationController extends HttpServlet {
             response.getWriter().print(result);
             return;
         }
-        response.getWriter().print(-1);
+        response.getWriter().print(0);
     }
 
     /**

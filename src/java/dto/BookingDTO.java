@@ -15,15 +15,20 @@ public class BookingDTO {
     private int id;
     private int doctorId;
     private int customerId;
+    private String customerName;
     private int status;
     private String note;
     private Date startDate;
     private Date endDate;
+    private Date createDate;
+    private Date realStartDate;
+    private Date realEndDate;
+    private double totalPrice;
 
     public BookingDTO() {
     }
 
-    public BookingDTO(int id, int doctorId, int customerId, int status, String note, Date startDate, Date endDate) {
+    public BookingDTO(int id, int doctorId, int customerId, int status, String note, Date startDate, Date endDate , Date realStartDate , Date realEndDate) {
         this.id = id;
         this.doctorId = doctorId;
         this.customerId = customerId;
@@ -31,8 +36,27 @@ public class BookingDTO {
         this.note = note;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.realEndDate = realEndDate;
+        this.realStartDate = realStartDate;
     }
-    
+
+    public BookingDTO(int id, String customerName, int status, Date startDate, Date endDate , Date createDate , String note) {
+        this.id = id;
+        this.customerName = customerName;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createDate = createDate;
+        this.note = note;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
     
 
     public int getId() {
@@ -90,6 +114,40 @@ public class BookingDTO {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public Date getRealStartDate() {
+        return realStartDate;
+    }
+
+    public void setRealStartDate(Date realStartDate) {
+        this.realStartDate = realStartDate;
+    }
+
+    public Date getRealEndDate() {
+        return realEndDate;
+    }
+
+    public void setRealEndDate(Date realEndDate) {
+        this.realEndDate = realEndDate;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    
+    
     
     
 }

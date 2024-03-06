@@ -1,6 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!doctype html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html class="no-js" lang="zxx">
     <head>
         <!-- Meta Tags -->
@@ -58,59 +57,159 @@
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color11.css">-->
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color12.css">-->
 
-        <link rel="stylesheet" href="#" id="colors">
+        <!-- Include DataTables CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
         <!-- SweetAlert2 CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
+        <link rel="stylesheet" href="#" id="colors">
+        <script>
+            var medicines;
+            var bookingMedicines;
+            var table;
+            var bookingMedicinesTable;
+            var totalPrice = 0;
+            var selectedMedicineId = new Set();
+            var defaultPrice = 0;
+            var bookingId = 0;
+            window.onload = function () {
+                table = $('#medicinesTables').DataTable();
+                bookingMedicinesTable = $('#bookingMedicinesTable').DataTable();
+                var jsonString = document.getElementById("medicines").value;
+                medicines = JSON.parse(jsonString);
+                bookingMedicines = JSON.parse(document.getElementById("bookingMedicines").value);
+                defaultPrice = parseFloat(document.getElementById("defaultPrice").value);
+                generateDatatables();
+                bookingId = document.getElementById("bookingId").value;
+            };
+
+            function save(endPoint , doctorAppointmentEndpoint) {
+                var updateNeededMedicine = medicines.filter(m => {
+                    return selectedMedicineId.has(m.medicineId); 
+                })
+                $.ajax({
+                    type: "POST",
+                    url: endPoint,
+                    data: {
+                        bookingId: bookingId,
+                        totalPrice: totalPrice,
+                        bookingMedicines: JSON.stringify(bookingMedicines),
+                        medicines: JSON.stringify(updateNeededMedicine)
+                    },
+                    success: function (response) {
+                        var result = parseInt(response);
+                        if (result !== 0) {
+                            swal({
+                                title: 'Success!',
+                                text: 'Save successfully.',
+                                icon: 'success',
+                                confirmButtonText: 'Okay'
+                            }).then((result) => {
+                                window.location.href = doctorAppointmentEndpoint;
+                            });
+                            return;
+                        }
+                        swal({
+                            title: 'Fail!',
+                            text: 'Something wrong happened!.',
+                            icon: 'error'
+                        })
+                    }
+                });
+            }
+
+            function generateDatatables() {
+                table.clear().draw();
+                bookingMedicinesTable.clear().draw();
+                for (var i = 0; i < medicines.length; i++) {
+                    table.row.add([
+                        medicines[i].medicineName, // ID
+                        medicines[i].description, // Name
+                        medicines[i].quantity,
+                        medicines[i].price,
+                        "<button class='btn btn-default' onclick='addMedicine(" + medicines[i].medicineId + ")'> Add </button>"
+                    ]).draw();
+                }
+                totalPrice = defaultPrice;
+                for (var i = 0; i < bookingMedicines.length; i++) {
+                    bookingMedicinesTable.row.add([
+                        bookingMedicines[i].medicineName, // ID
+                        bookingMedicines[i].description, // Name
+                        bookingMedicines[i].quantity,
+                        bookingMedicines[i].price,
+                        "<input class='form-control' type='text' value='"+ bookingMedicines[i].note  +"' onchange='updateNote(" + bookingMedicines[i].medicineId + " , this.value)' /> ",
+                        "<button class='btn btn-default' onclick='deleteMedicine(" + bookingMedicines[i].medicineId + ")'> Delete </button>"
+                    ]).draw();
+                    totalPrice += bookingMedicines[i].price * bookingMedicines[i].quantity;
+                }
+                $("#totalPrice").html(totalPrice + "");
+            }
+
+            function updateNote(id, note) {
+                var bookingMedicine = bookingMedicines.filter(m => {
+                    return m.medicineId === id;
+                })[0];
+                bookingMedicine.note = note;
+                console.log(bookingMedicine);
+            }
+
+            function deleteMedicine(medicineId) {
+                var bookingMedicine = bookingMedicines.filter(m => {
+                    return m.medicineId === medicineId;
+                })[0];
+
+                var medicine = medicines.filter(m => {
+                    return m.medicineId === medicineId;
+                })[0];
+                bookingMedicines = bookingMedicines.filter(m => {
+                    return m.medicineId !== medicineId;
+                });
+                console.log(bookingMedicines);
+                medicine.quantity += bookingMedicine.quantity;
+                generateDatatables();
+            }
+
+            function addMedicine(medicineId) {
+                selectedMedicineId.add(medicineId);
+                console.log(selectedMedicineId);
+                var medicine = medicines.filter(m => {
+                    return m.medicineId === medicineId;
+                })[0];
+                medicine.quantity = medicine.quantity - 1;
+                var bookingMedicine = bookingMedicines.filter(m => {
+                    return m.medicineId === medicineId;
+                })[0];
+                if (typeof bookingMedicine === 'undefined') {
+                    var newMedicine = {
+                        ...medicine,
+                        quantity: 1,
+                        note: "",
+                        bookingId : bookingId
+                    }
+                    bookingMedicines.push(newMedicine);
+                } else {
+                    bookingMedicine.quantity++;
+                }
+                generateDatatables();
+            }
+        </script>
         <style>
-            .slot-item {
-                background-color: #4CAF50; /* Green */
-                border: none;
-                color: white;
-                padding: 15px 32px;
+            .appointment{
+                padding-bottom:  10px !important;
+            }
+
+            #totalPrice{
                 text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 16px;
-                margin: 4px 2px;
-                cursor: pointer;
-                border-radius: 8px;
-            }
-
-
-
-            .avatar {
-                width: 100%; /* Adjust size as needed */
-                height: 200px; /* Adjust size as needed */
-                border: 2px solid #fff; /* Add a border */
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow */
-                object-fit: fill;
-            }
-
-            .my-container{
-                display: flex;
-                justify-content: space-between;
-            }
-            .container-right{
-                display: flex;
-                flex-direction: column;
-                margin-left: 20px;
-            }
-
-            .selected{
-                background-color: #008CBA;
-            }
-
-            #calendar{
-                width: 100%;
-                height: 40%;
             }
         </style>
-        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-        
     </head>
     <body>
-        <input type="hidden" value='${requestScope.doctorSchedules}' id="doctorSchedules" />
-        <input type="hidden" value="${requestScope.date}" id="date">
+        <input type="hidden" value='${requestScope.medicines}' id="medicines" />
+        <input type="hidden" value='${requestScope.bookingMedicines}' id="bookingMedicines" />
+        <input type="hidden" value="${requestScope.booking.id}" id="bookingId" />
+        <input type="hidden" value="${requestScope.defaultPrice}" id="defaultPrice" />
+
+
         <!-- Preloader -->
         <div class="preloader">
             <div class="loader">
@@ -258,11 +357,11 @@
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Time Table Registration</h2>
+                            <h2>My Appointment</h2>
                             <ul class="bread-list">
                                 <li><a href="index.html">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Time Table Registration</li>
+                                <li class="active">My Appointment</li>
                             </ul>
                         </div>
                     </div>
@@ -270,42 +369,90 @@
             </div>
         </div>
         <!-- End Breadcrumbs -->
-      
-        <!-- Start Appointment -->
         <section class="appointment single-page">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-12 col-12">
                         <div class="appointment-inner">
-                            <div class="title">
-                                <h3>Time Table Registration</h3>
-                            </div>
-                            <form class="form" action="${pageContext.request.contextPath}/timeTableRegistration" method="post">
+                            <form class="form">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <input type="date"  min="${requestScope.minDate}" placeholder="Date" id="selectDate" value="${requestScope.date}"  onchange="request('${pageContext.request.contextPath}/timeTableRegistration' , this.value)">
+                                            <label> Customer </label>
+                                            <input  type="text"  disabled value="${requestScope.booking.customerName}">
                                         </div>
                                     </div>
-                                    <div class="time-schedule">
-                                        <c:forEach items="${requestScope.slots}" var="slot"> 
-                                            <button type="button" onclick="register('${slot.startHour}', '${slot.endHour}', '${pageContext.request.contextPath}/timeTableRegistration')" class="slot-item" > <fmt:formatDate value="${slot.startHour}" pattern="HH:mm" />  - <fmt:formatDate value="${slot.endHour}" pattern="HH:mm" /></button>
-                                        </c:forEach>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label> Start Time </label>
+                                            <input  type="text"  disabled value="${requestScope.booking.startDate}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label> End Time </label>
+                                            <input  type="text"  disabled value="${requestScope.booking.endDate}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label> Booked Time </label>
+                                            <input  type="text"  disabled value="${requestScope.booking.createDate}">
+                                        </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12 " style="margin-top: 10px;">
-                        <div class="my-container appointment-inner">
-                            <h3>Time Table</h3>
-                            <div id='calendar'></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
-        <!--/End Appointment -->
+        <!-- Start Team -->
+        <section id="team" class="team section single-page">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <h2>Medicines</h2>
+                    <table id="medicinesTables">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <h2>Booking Medicines</h2>
+                    <table id="bookingMedicinesTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Note</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                        <tr>
+                            <td>Total Price  :</td>
+                            <td colspan="4" id="totalPrice"> </td>
+                            <td > <button class="btn btn-default" onclick="save('${pageContext.request.contextPath}/endExamining' , '${pageContext.request.contextPath}/doctorAppointment')"> Save </button> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!--/ End Team -->
 
         <!-- Footer Area -->
         <footer id="footer" class="footer ">
@@ -393,14 +540,10 @@
             </div>
             <!--/ End Copyright -->
         </footer>
+        <!-- Sweet Alert -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!--/ End Footer Area -->
-
-        <!-- jquery Min JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.min.js"></script>
-        <!-- jquery Migrate JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-migrate-3.0.0.js"></script>
-        <!-- jquery Ui JS -->
-        <script src="${pageContext.request.contextPath}/Main Template/js/jquery-ui.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- Easing JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/easing.js"></script>
         <!-- Color JS -->
@@ -415,6 +558,8 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/slicknav.min.js"></script>
         <!-- ScrollUp JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/jquery.scrollUp.min.js"></script>
+        <!-- Niceselect JS -->
+        <script src="${pageContext.request.contextPath}/Main Template/js/niceselect.js"></script>
         <!-- Tilt Jquery JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/tilt.jquery.min.js"></script>
         <!-- Owl Carousel JS -->
@@ -433,67 +578,8 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
-        <!-- Sweet Alert -->
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-
-            document.addEventListener('DOMContentLoaded', function () {
-                var calendarEl = document.getElementById('calendar');
-                var scheduleJson = document.getElementById('doctorSchedules').value;
-                console.log(scheduleJson);
-                var schedule = JSON.parse(scheduleJson);
-                var dataMapping = schedule.map(schedule => {
-                    return {
-                        title: schedule.status == 0 ? 'PENDING' : schedule.status == 1 ? 'CANCELED' : 'APPROVED',
-                        start: new Date(schedule.startDate),
-                        end: new Date(schedule.endDate)
-                    }
-                });
-                console.log(dataMapping);
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'timeGridWeek',
-                    events: dataMapping
-                });
-                calendar.render();
-            });
-
-            function register(startDate, endDate, endPoint) {
-                var confirm = window.confirm("Are you sure to register slot from " + startDate + " to " + endDate);
-                if (confirm) {
-                    $.ajax({
-                        url: endPoint,
-                        type: 'POST',
-                        data: {
-                            startDate: startDate,
-                            endDate: endDate
-                        },
-                        success: function (result) {
-                            if (parseInt(result) !== 0) {
-                                swal({
-                                    title: 'Success!',
-                                    text: 'Register successfully.',
-                                    icon: 'success',
-                                    confirmButtonText: 'Okay'
-                                }).then((result) => {
-                                    window.location.reload();
-                                });
-                                return;
-                            }
-                            swal({
-                                title: 'Fail!',
-                                text: 'Something wrong happened!.',
-                                icon: 'error'
-                            })
-                        }
-                    });
-
-                }
-            }
-            
-            function request(endpoint , dateValue){
-                window.location.href = endpoint + "?date=" + dateValue;
-            }
-
-        </script>
+        <!-- Include DataTables JS -->
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
     </body>
 </html>
+

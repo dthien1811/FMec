@@ -136,7 +136,7 @@ public class DoctorScheduleDAO extends DBContext {
         } catch (Exception ex) {
             Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return -1;
+        return 0;
     }
 
 }

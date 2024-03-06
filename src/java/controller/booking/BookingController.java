@@ -246,7 +246,7 @@ public class BookingController extends HttpServlet {
             HttpSession session = request.getSession();
             User customer = (User) session.getAttribute("user");
             Integer doctorId = doctorIdRaw == null || doctorIdRaw.length() == 0 ? null : Integer.parseInt(doctorIdRaw);
-            BookingDTO bookingDTO = new BookingDTO(0, doctorId, customer.getUserId(), 0, note, startDate, endDate);
+            BookingDTO bookingDTO = new BookingDTO(0, doctorId, customer.getUserId(), 0, note, startDate, endDate , null , null);
             int result = bookingDAO.insertBooking(bookingDTO);
         }
         response.sendRedirect("/myAppointment");

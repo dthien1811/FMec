@@ -100,7 +100,7 @@ public class BookingDAO extends DBContext {
         List<DoctorAppointmentDTO> bookings = new ArrayList<>();
         try {
             String sql = "SELECT * FROM Booking s "
-                    + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
+                    + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] "
                     + "  WHERE s.doctor_id = ? ";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
@@ -112,7 +112,7 @@ public class BookingDAO extends DBContext {
                 Date startDate = resultSet.getTimestamp("start_date");
                 Date endDate = resultSet.getTimestamp("end_date");
                 Date createDate = resultSet.getTimestamp("create_date");
-                String doctorName = resultSet.getString("name");
+                String customerName = resultSet.getString("name");
                 String note = resultSet.getString("note");
                 int status = resultSet.getInt("status");
                 String statusName = "";
@@ -122,13 +122,45 @@ public class BookingDAO extends DBContext {
                         break;
                     }
                 }
-                booking = new DoctorAppointmentDTO(id, doctorName, statusName, note, startDate, endDate , createDate);
+                booking = new DoctorAppointmentDTO(id, customerName, statusName, note, startDate, endDate , createDate , status);
                 bookings.add(booking);
             }
         } catch (Exception ex) {
             Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bookings;
+    }
+    
+    public BookingDTO getBookingById(int id) {
+        try {
+            String sql = "SELECT * FROM Booking s "
+                    + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] "
+                    + "  WHERE s.id = ? ";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            BookingDTO booking;
+            if (resultSet.next()) {
+                Date startDate = resultSet.getTimestamp("start_date");
+                Date endDate = resultSet.getTimestamp("end_date");
+                Date createDate = resultSet.getTimestamp("create_date");
+                String customerName = resultSet.getString("name");
+                String note = resultSet.getString("note");
+                int status = resultSet.getInt("status");
+                String statusName = "";
+                for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
+                    if(status == s.getValue()){
+                        statusName = s.name();
+                        break;
+                    }
+                }
+                return new BookingDTO(id, customerName, status , startDate, endDate , createDate , note);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public int insertBooking(BookingDTO bookingDTO) {
@@ -154,6 +186,37 @@ public class BookingDAO extends DBContext {
         } catch (Exception ex) {
             Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return -1;
+        return 0;
+    }
+    
+    public int updateBookingStartExamining(BookingDTO bookingDTO) {
+        try {
+            String sql = "UPDATE [dbo].[Booking] SET [status] = ? , [real_start_date] = ? WHERE id = ?";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, StatusEnum.BookingStatus.EXAMINING.getValue());
+            statement.setTimestamp(2, new java.sql.Timestamp(new Date().getTime()));
+            statement.setInt(3, bookingDTO.getId());
+            return statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public int updateBookingEndExamining(BookingDTO bookingDTO) {
+        try {
+            String sql = "UPDATE [dbo].[Booking] SET [status] = ? , [real_end_date] = ? , [total_price] = ? WHERE id = ?";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, StatusEnum.BookingStatus.DONE.getValue());
+            statement.setTimestamp(2, new java.sql.Timestamp(new Date().getTime()));
+            statement.setDouble(3, bookingDTO.getTotalPrice());
+            statement.setInt(4, bookingDTO.getId());
+            return statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

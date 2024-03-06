@@ -20,11 +20,14 @@ public class Booking {
     private User doctor;
     private User customer;
     private String note;
+    private Date realStartDate;
+    private Date realEndDate;
 
     public Booking() {
     }
 
-    public Booking(int id, Date startDate, Date endDate, int status, User doctor, User customer, String note , Date createDate) {
+    public Booking(int id, Date startDate, Date endDate, int status, User doctor,
+            User customer, String note , Date createDate , Date realStartDate , Date realEndDate) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -33,6 +36,8 @@ public class Booking {
         this.createDate = createDate;
         this.customer = customer;
         this.note = note;
+        this.realEndDate = realEndDate;
+        this.realStartDate = realStartDate;
     }
     
     
@@ -99,6 +104,22 @@ public class Booking {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Date getRealStartDate() {
+        return realStartDate;
+    }
+
+    public void setRealStartDate(Date realStartDate) {
+        this.realStartDate = realStartDate;
+    }
+
+    public Date getRealEndDate() {
+        return realEndDate;
+    }
+
+    public void setRealEndDate(Date realEndDate) {
+        this.realEndDate = realEndDate;
     }
     
     

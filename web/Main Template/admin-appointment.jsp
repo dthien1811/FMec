@@ -263,11 +263,11 @@
             <div class="bread-inner">
                 <div class="row">
                     <div class="col-12">
-                        <h2>My Appointment</h2>
+                        <h2>Appointment</h2>
                         <ul class="bread-list">
                             <li><a href="index.html">Home</a></li>
                             <li><i class="icofont-simple-right"></i></li>
-                            <li class="active">My Appointment</li>
+                            <li class="active">Appointment</li>
                         </ul>
                     </div>
                 </div>

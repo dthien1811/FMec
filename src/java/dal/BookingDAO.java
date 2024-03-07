@@ -215,9 +215,10 @@ public class BookingDAO extends DBContext {
                     + "           ,[status]\n"
                     + "           ,[note]\n"
                     + "           ,[start_date]\n"
-                    + "           ,[end_date])\n"
+                    + "           ,[end_date]\n"
+                    + "           ,[create_date])\n"
                     + "     VALUES\n"
-                    + "           (? , ? , ? , ? , ? , ?)";
+                    + "           (? , ? , ? , ? , ? , ? , ?)";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, bookingDTO.getDoctorId());
@@ -226,6 +227,7 @@ public class BookingDAO extends DBContext {
             statement.setString(4, bookingDTO.getNote());
             statement.setTimestamp(5, new java.sql.Timestamp(bookingDTO.getStartDate().getTime()) );
             statement.setTimestamp(6, new java.sql.Timestamp(bookingDTO.getEndDate().getTime()));
+            statement.setTimestamp(7, new java.sql.Timestamp(new Date().getTime()));
             return statement.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);

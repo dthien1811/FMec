@@ -248,8 +248,10 @@ public class BookingController extends HttpServlet {
             Integer doctorId = doctorIdRaw == null || doctorIdRaw.length() == 0 ? null : Integer.parseInt(doctorIdRaw);
             BookingDTO bookingDTO = new BookingDTO(0, doctorId, customer.getUserId(), 0, note, startDate, endDate , null , null);
             int result = bookingDAO.insertBooking(bookingDTO);
+            response.getWriter().print(result);
+            return;
         }
-        response.sendRedirect("/myAppointment");
+        response.getWriter().print(0);
     }
 
     /**

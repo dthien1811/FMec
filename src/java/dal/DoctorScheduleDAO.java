@@ -109,6 +109,7 @@ public class DoctorScheduleDAO extends DBContext {
                 doctorSchedule.setId(id);
                 doctorSchedule.setStartDate(startDate);
                 doctorSchedule.setEndDate(endDate);
+                doctorSchedule.setStatus(resultSet.getInt("status"));
                 schedules.add(doctorSchedule);
             }
         } catch (Exception ex) {

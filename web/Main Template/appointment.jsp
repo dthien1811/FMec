@@ -56,7 +56,8 @@
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color10.css">-->
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color11.css">-->
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color12.css">-->
-
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
         <link rel="stylesheet" href="#" id="colors">
         <style>
             .slot-item {
@@ -73,7 +74,7 @@
                 border-radius: 8px;
             }
 
-            
+
 
             .avatar {
                 width: 100%; /* Adjust size as needed */
@@ -93,9 +94,9 @@
                 flex-direction: column;
                 margin-left: 20px;
             }
-            
+
             .selected{
-                 background-color: #008CBA;
+                background-color: #008CBA;
             }
         </style>
         <script>
@@ -138,10 +139,10 @@
                 }
             }
 
-            function booking(event , slotStart, slotEnd) {
+            function booking(event, slotStart, slotEnd) {
                 var btnSlot = event.target;
                 var slots = document.getElementsByClassName("slot-item");
-                for(var i = 0 ; i < slots.length ; i++){
+                for (var i = 0; i < slots.length; i++) {
                     slots[i].classList.remove("selected");
                 }
                 btnSlot.classList.add("selected");
@@ -151,6 +152,41 @@
                 endDate = slotEnd;
                 document.getElementById("selectedStartDate").value = slotStart;
                 document.getElementById("selectedEndDate").value = slotEnd;
+            }
+
+            function onBook(endPoint) {
+                var doctorId = document.getElementById("selectDoctor").value;
+                var note = document.getElementById("note").value;
+
+                $.ajax({
+                    type: "POST",
+                    url: endPoint,
+                    data: {
+                        doctorId: doctorId,
+                        note: note,
+                        startDate: startDate,
+                        endDate: endDate
+                    },
+                    success: function (response) {
+                        var result = parseInt(response);
+                        if (result !== 0) {
+                            swal({
+                                title: 'Success!',
+                                text: 'Book successfully.',
+                                icon: 'success',
+                                confirmButtonText: 'Okay'
+                            }).then((result) => {
+                                window.location.reload();
+                            });
+                            return;
+                        }
+                        swal({
+                            title: 'Fail!',
+                            text: 'Something wrong happened!.',
+                            icon: 'error'
+                        })
+                    }
+                });
             }
 
             function getHourAndMinute(date) {
@@ -365,7 +401,7 @@
                                 <h3>Book your appointment</h3>
                                 <p>We will confirm your appointment within 2 hours</p>
                             </div>
-                            <form class="form" action="${pageContext.request.contextPath}/appointment" method="post">
+                            <div class="form">
                                 <input type="hidden" name="startDate" id="selectedStartDate"/>
                                 <input type="hidden" name="endDate" id="selectedEndDate"/>
                                 <div class="row">
@@ -414,7 +450,7 @@
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
-                                            <textarea name="note"  placeholder="Write Your Note Here....."></textarea>
+                                            <textarea name="note" id="note"  placeholder="Write Your Note Here....."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -422,12 +458,12 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <div class="button">
-                                                <button type="submit" disabled class="btn" id="bookAppointment">Book An Appointment</button>
+                                                <button disabled class="btn" id="bookAppointment" onclick="onBook('${pageContext.request.contextPath}/appointment')">Book An Appointment</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-5 col-md-12 ">
@@ -439,7 +475,7 @@
                                 <h2>${requestScope.doctor != null ? requestScope.doctor.name : ""}</h2>
                                 <c:forEach items="${requestScope.majors}" var="major">
                                     <c:if test="${requestScope.doctor.majorId == major.id}">
-                                       <h4>${major.nameMajor}</h4>
+                                        <h4>${major.nameMajor}</h4>
                                     </c:if>
                                 </c:forEach>
                             </div>
@@ -576,5 +612,7 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
+        <!-- Sweet Alert -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </body>
 </html>

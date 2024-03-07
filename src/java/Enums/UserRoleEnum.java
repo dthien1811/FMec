@@ -11,6 +11,6 @@ package Enums;
  */
 public class UserRoleEnum {
     public enum UserRole {
-        Professor, CUSTOMER , STAFF ,  ADMIN;
+        Professor, Customer , Staff ,  Admin;
     }
 }

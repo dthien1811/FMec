@@ -61,6 +61,50 @@ public class BookingDAO extends DBContext {
         return bookings;
     }
     
+    public List<BookingDTO> getAll(){
+        List<BookingDTO> list = new ArrayList<>();
+        try {
+            String sql = "SELECT s.id , s.start_date , s.end_date , s.create_date , s.note , s.status , "
+                    + " s.real_start_date , s.real_end_date , s.total_price , doctor.name as doctorName , customer.name as customerName FROM Booking s "
+                    + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
+                    + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] ";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            BookingDTO booking;
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Date startDate = resultSet.getTimestamp("start_date");
+                Date endDate = resultSet.getTimestamp("end_date");
+                Date createDate = resultSet.getTimestamp("create_date");
+                Date realStartDate = resultSet.getTimestamp("real_start_date");
+                Date realEndDate = resultSet.getTimestamp("real_end_date");
+                double totalPrice = resultSet.getDouble("total_price");
+                String customerName = resultSet.getString("customerName");
+                String doctorName = resultSet.getString("doctorName");
+                String note = resultSet.getString("note");
+                int status = resultSet.getInt("status");
+                String statusName = "";
+                for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
+                    if(status == s.getValue()){
+                        statusName = s.name();
+                        break;
+                    }
+                }
+                booking = new BookingDTO(id, customerName, status , startDate, endDate , createDate , note);
+                booking.setStatusName(statusName);
+                booking.setTotalPrice(totalPrice);
+                booking.setRealStartDate(realStartDate);
+                booking.setRealEndDate(realEndDate);
+                booking.setDoctorName(doctorName);
+                list.add(booking);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     public List<MyAppointmentDTO> getPatientAppointment(int customerId) {
         List<MyAppointmentDTO> bookings = new ArrayList<>();
         try {

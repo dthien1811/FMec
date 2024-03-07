@@ -15,6 +15,9 @@ public class DoctorCardDto {
     public String doctorName;
     public String major;
     public String avatar;
+    public String address;
+    public String email;
+    public String phone;
 
     public DoctorCardDto() {
     }
@@ -27,6 +30,30 @@ public class DoctorCardDto {
         this.major = major;
         this.doctorId = doctorId;
         this.majorId = majorId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
     
     

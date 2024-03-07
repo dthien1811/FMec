@@ -15,8 +15,10 @@ public class BookingDTO {
     private int id;
     private int doctorId;
     private int customerId;
+    private String doctorName;
     private String customerName;
     private int status;
+    private String statusName;
     private String note;
     private Date startDate;
     private Date endDate;
@@ -49,6 +51,23 @@ public class BookingDTO {
         this.createDate = createDate;
         this.note = note;
     }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+    
 
     public Date getCreateDate() {
         return createDate;

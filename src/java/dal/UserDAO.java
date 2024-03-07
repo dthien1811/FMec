@@ -476,6 +476,60 @@ public class UserDAO extends DBContext {
         return list;
     }
     
+    public List<DoctorCardDto> findDoctors(){
+        List<DoctorCardDto> list = new ArrayList<>();
+        String role = UserRoleEnum.UserRole.Professor.toString();
+        String sql = "SELECT [userId]\n"
+                + "      ,[User].[name] as userName\n"
+                + "      ,[Major].[name] as majorName\n"
+                + "      ,[Major].[majorId]\n"
+                + "      ,[avatar]\n"
+                + "      ,[address]\n"
+                + "      ,[email]\n"
+                + "      ,[phone]\n"
+                + "  FROM [dbo].[User] "
+                + " LEFT JOIN [Major] on [User].majorId = [Major].majorId "
+                + "where [role] = ? ";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, role);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
+                int majorId = resultSet.getInt("majorId");
+                String avatar = resultSet.getString("avatar");
+                String doctorName = resultSet.getString("userName");
+                String majorName = resultSet.getString("majorName");
+                String address = resultSet.getNString("address");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , majorId);
+                doctorCardDto.setAddress(address);
+                doctorCardDto.setPhone(phone);
+                doctorCardDto.setEmail(email);
+                list.add(doctorCardDto);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return list;
+    }
+    
     public int countDoctors(String query){
         String role = UserRoleEnum.UserRole.Professor.toString();
         String sql = "SELECT COUNT([User].userId) as result "
@@ -586,6 +640,56 @@ public class UserDAO extends DBContext {
             }
         }
         return null;
+    }
+    
+    public int createDdoctor(User userRegister) {
+        String sql = "INSERT INTO [dbo].[User]\n"
+                + "           ( "
+                + "           [name]\n"
+                + "           ,[phone]\n"
+                + "           ,[email]\n"
+                + "           ,[password]\n"
+                + "           ,[role]\n"
+                + "           ,[address]\n"
+                + "           ,[avatar]\n"
+                + "           ,[majorId])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?)";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            //Dua vao user va lay ra de sql
+            statement.setString(1, userRegister.getName());
+            statement.setString(2, userRegister.getPhone());
+            statement.setString(3, userRegister.getEmail());
+            statement.setString(4, userRegister.getPassword());
+            statement.setString(5, UserRoleEnum.UserRole.Professor.toString());
+            statement.setString(6, userRegister.getAddress());
+            statement.setString(7, userRegister.getAvatar());
+            statement.setInt(8, userRegister.getMajorId());
+            return statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return 0;
     }
     
 }

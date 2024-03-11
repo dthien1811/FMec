@@ -16,15 +16,17 @@ public class TimeConfigDTO {
     private String configName;
     private Date startHour;
     private Date endHour;
+    private boolean isDuplicated;
 
     public TimeConfigDTO() {
     }
 
-    public TimeConfigDTO(int id, String configName, Date startHour, Date endHour) {
+    public TimeConfigDTO(int id, String configName, Date startHour, Date endHour , boolean isDuplicated) {
         this.id = id;
         this.configName = configName;
         this.startHour = startHour;
         this.endHour = endHour;
+        this.isDuplicated = isDuplicated;
     }
 
     public int getId() {
@@ -58,6 +60,15 @@ public class TimeConfigDTO {
     public void setEndHour(Date endHour) {
         this.endHour = endHour;
     }
+
+    public boolean isIsDuplicated() {
+        return isDuplicated;
+    }
+
+    public void setIsDuplicated(boolean isDuplicated) {
+        this.isDuplicated = isDuplicated;
+    }
+    
     
     
 }

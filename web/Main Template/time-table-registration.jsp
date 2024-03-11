@@ -104,9 +104,25 @@
                 width: 100%;
                 height: 40%;
             }
+
+            .disabled{
+                background-color: #dddddd;
+                color: #aaaaaa;
+                cursor: not-allowed;
+                border: 1px solid #dddddd;
+                text-align: center;
+                display: inline-block;
+                text-decoration: none;
+            }
+
+            .slot-break{
+                border-bottom: 1px solid black;
+                width: 100%;
+                margin: 10px;
+            }
         </style>
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-        
+
     </head>
     <body>
         <input type="hidden" value='${requestScope.doctorSchedules}' id="doctorSchedules" />
@@ -270,7 +286,7 @@
             </div>
         </div>
         <!-- End Breadcrumbs -->
-      
+
         <!-- Start Appointment -->
         <section class="appointment single-page">
             <div class="container">
@@ -284,12 +300,36 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <input type="date"  min="${requestScope.minDate}" placeholder="Date" id="selectDate" value="${requestScope.date}"  onchange="request('${pageContext.request.contextPath}/timeTableRegistration' , this.value)">
+                                            <input type="date"  min="${requestScope.minDate}" placeholder="Date" id="selectDate" value="${requestScope.date}"  onchange="request('${pageContext.request.contextPath}/timeTableRegistration', this.value)">
                                         </div>
                                     </div>
-                                    <div class="time-schedule">
-                                        <c:forEach items="${requestScope.slots}" var="slot"> 
-                                            <button type="button" onclick="register('${slot.startHour}', '${slot.endHour}', '${pageContext.request.contextPath}/timeTableRegistration')" class="slot-item" > <fmt:formatDate value="${slot.startHour}" pattern="HH:mm" />  - <fmt:formatDate value="${slot.endHour}" pattern="HH:mm" /></button>
+                                </div>
+                                <div class="row">
+                                    <div class="morning-time-schedule">
+                                        <h4>Morning</h4>
+                                        <c:forEach items="${requestScope.slots}" var="slot">
+                                            <c:if test="${slot.startHour.getHours() < 12}">
+                                                <c:if test="${slot.isDuplicated}">
+                                                    <button type="button" class="slot-item disabled" > <fmt:formatDate value="${slot.startHour}" pattern="HH:mm" />  - <fmt:formatDate value="${slot.endHour}" pattern="HH:mm" /></button>
+                                                </c:if>
+                                                <c:if test="${!slot.isDuplicated}">
+                                                    <button type="button" onclick="register('${slot.startHour}', '${slot.endHour}', '${pageContext.request.contextPath}/timeTableRegistration')" class="slot-item" > <fmt:formatDate value="${slot.startHour}" pattern="HH:mm" />  - <fmt:formatDate value="${slot.endHour}" pattern="HH:mm" /></button>
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach>
+                                    </div>
+                                    <div class="slot-break"></div>
+                                    <div class="afternoon-time-schedule">
+                                        <h4>Afternoon</h4>
+                                        <c:forEach items="${requestScope.slots}" var="slot">
+                                            <c:if test="${slot.startHour.getHours() >= 12}">
+                                                <c:if test="${slot.isDuplicated}">
+                                                    <button type="button" class="slot-item disabled" > <fmt:formatDate value="${slot.startHour}" pattern="HH:mm" />  - <fmt:formatDate value="${slot.endHour}" pattern="HH:mm" /></button>
+                                                </c:if>
+                                                <c:if test="${!slot.isDuplicated}">
+                                                    <button type="button" onclick="register('${slot.startHour}', '${slot.endHour}', '${pageContext.request.contextPath}/timeTableRegistration')" class="slot-item" > <fmt:formatDate value="${slot.startHour}" pattern="HH:mm" />  - <fmt:formatDate value="${slot.endHour}" pattern="HH:mm" /></button>
+                                                </c:if>
+                                            </c:if>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -437,62 +477,61 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
 
-            document.addEventListener('DOMContentLoaded', function () {
-                var calendarEl = document.getElementById('calendar');
-                var scheduleJson = document.getElementById('doctorSchedules').value;
-                console.log(scheduleJson);
-                var schedule = JSON.parse(scheduleJson);
-                var dataMapping = schedule.map(schedule => {
-                    return {
-                        title: schedule.status == 0 ? 'PENDING' : schedule.status == 1 ? 'CANCELED' : 'APPROVED',
-                        start: new Date(schedule.startDate),
-                        end: new Date(schedule.endDate)
-                    }
-                });
-                console.log(dataMapping);
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'timeGridWeek',
-                    events: dataMapping
-                });
-                calendar.render();
-            });
+                                               document.addEventListener('DOMContentLoaded', function () {
+                                                   var calendarEl = document.getElementById('calendar');
+                                                   var scheduleJson = document.getElementById('doctorSchedules').value;
+                                                   console.log(scheduleJson);
+                                                   var schedule = JSON.parse(scheduleJson);
+                                                   var dataMapping = schedule.map(schedule => {
+                                                       return {
+                                                           title: schedule.status == 0 ? 'PENDING' : schedule.status == 1 ? 'CANCELED' : 'APPROVED',
+                                                           start: new Date(schedule.startDate),
+                                                           end: new Date(schedule.endDate)
+                                                       }
+                                                   });
+                                                   var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                       initialView: 'timeGridWeek',
+                                                       events: dataMapping
+                                                   });
+                                                   calendar.render();
+                                               });
 
-            function register(startDate, endDate, endPoint) {
-                var confirm = window.confirm("Are you sure to register slot from " + startDate + " to " + endDate);
-                if (confirm) {
-                    $.ajax({
-                        url: endPoint,
-                        type: 'POST',
-                        data: {
-                            startDate: startDate,
-                            endDate: endDate
-                        },
-                        success: function (result) {
-                            if (parseInt(result) !== 0) {
-                                swal({
-                                    title: 'Success!',
-                                    text: 'Register successfully.',
-                                    icon: 'success',
-                                    confirmButtonText: 'Okay'
-                                }).then((result) => {
-                                    window.location.reload();
-                                });
-                                return;
-                            }
-                            swal({
-                                title: 'Fail!',
-                                text: 'Something wrong happened!.',
-                                icon: 'error'
-                            })
-                        }
-                    });
+                                               function register(startDate, endDate, endPoint) {
+                                                   var confirm = window.confirm("Are you sure to register slot from " + startDate + " to " + endDate);
+                                                   if (confirm) {
+                                                       $.ajax({
+                                                           url: endPoint,
+                                                           type: 'POST',
+                                                           data: {
+                                                               startDate: startDate,
+                                                               endDate: endDate
+                                                           },
+                                                           success: function (result) {
+                                                               if (parseInt(result) !== 0) {
+                                                                   swal({
+                                                                       title: 'Success!',
+                                                                       text: 'Register successfully.',
+                                                                       icon: 'success',
+                                                                       confirmButtonText: 'Okay'
+                                                                   }).then((result) => {
+                                                                       window.location.reload();
+                                                                   });
+                                                                   return;
+                                                               }
+                                                               swal({
+                                                                   title: 'Fail!',
+                                                                   text: 'Something wrong happened!.',
+                                                                   icon: 'error'
+                                                               })
+                                                           }
+                                                       });
 
-                }
-            }
-            
-            function request(endpoint , dateValue){
-                window.location.href = endpoint + "?date=" + dateValue;
-            }
+                                                   }
+                                               }
+
+                                               function request(endpoint, dateValue) {
+                                                   window.location.href = endpoint + "?date=" + dateValue;
+                                               }
 
         </script>
     </body>

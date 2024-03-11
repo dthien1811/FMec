@@ -95,10 +95,11 @@ public class DoctorScheduleDAO extends DBContext {
     public List<DoctorSchedule> getDoctorSchedule(int doctorId) {
         List<DoctorSchedule> schedules = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM DoctorSchedule s WHERE s.doctor_id = ? ";
+            String sql = "SELECT * FROM DoctorSchedule s WHERE s.doctor_id = ? AND s.[status] != ?";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, doctorId);
+            statement.setInt(2, StatusEnum.ScheduleStatus.CANCELED.getValue());
             ResultSet resultSet = statement.executeQuery();
             DoctorSchedule doctorSchedule;
             while (resultSet.next()) {

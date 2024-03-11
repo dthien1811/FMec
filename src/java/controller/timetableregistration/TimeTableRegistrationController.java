@@ -72,8 +72,8 @@ public class TimeTableRegistrationController extends HttpServlet {
             endDate.setTime(date);
             endDate.set(Calendar.HOUR_OF_DAY, timeConfig.getEndHour().getHour());
             endDate.set(Calendar.MINUTE, timeConfig.getEndHour().getMinute());
-            if(isDuplicateSchedule(schedulesByDate, startDate.getTime(), endDate.getTime())) continue;
-            TimeConfigDTO dto = new TimeConfigDTO(timeConfig.getId(), timeConfig.getConfigName(), startDate.getTime() , endDate.getTime() );
+            boolean isDuplicated = isDuplicateSchedule(schedulesByDate, startDate.getTime(), endDate.getTime());
+            TimeConfigDTO dto = new TimeConfigDTO(timeConfig.getId(), timeConfig.getConfigName(), startDate.getTime() , endDate.getTime() , isDuplicated );
             dtos.add(dto);
         }
         request.setAttribute("slots", dtos);

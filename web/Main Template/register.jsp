@@ -60,147 +60,7 @@
 
     </head>
     <body>
-
-        <!-- Preloader -->
-        <div class="preloader">
-            <div class="loader">
-                <div class="loader-outter"></div>
-                <div class="loader-inner"></div>
-
-                <div class="indicator"> 
-                    <svg width="16px" height="12px">
-                    <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
-                    <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <!-- End Preloader -->
-
-        <!-- Mediplus Color Plate -->
-        <div class="color-plate">
-            <a class="color-plate-icon"><i class="fa fa-cog fa-spin"></i></a>
-            <h4>Mediplus</h4>
-            <p>Here is some awesome color's available on Mediplus Template.</p>
-            <span class="color1"></span>
-            <span class="color2"></span>
-            <span class="color3"></span>
-            <span class="color4"></span>
-            <span class="color5"></span>
-            <span class="color6"></span>
-            <span class="color7"></span>
-            <span class="color8"></span>
-            <span class="color9"></span>
-            <span class="color10"></span>
-            <span class="color11"></span>
-            <span class="color12"></span>
-        </div>
-        <!-- /End Color Plate -->
-
-        <!-- Header Area -->
-        <header class="header" >
-            <!-- Topbar -->
-            <div class="topbar">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-5 col-12">
-                            <!-- Contact -->
-                            <ul class="top-link">
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Doctors</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">FAQ</a></li>
-                            </ul>
-                            <!-- End Contact -->
-                        </div>
-                        <div class="col-lg-6 col-md-7 col-12">
-                            <!-- Top Contact -->
-                            <ul class="top-contact">
-                                <li><i class="fa fa-phone"></i>+880 1234 56789</li>
-                                <li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">support@yourmail.com</a></li>
-                            </ul>
-                            <!-- End Top Contact -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Topbar -->
-            <!-- Header Inner -->
-            <div class="header-inner">
-                <div class="container">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-3 col-12">
-                                <!-- Start Logo -->
-                                <div class="logo">
-                                    <a href="index.jsp"><img src="img/logo.png" alt="#"></a>
-                                </div>
-                                <!-- End Logo -->
-                                <!-- Mobile Nav -->
-                                <div class="mobile-nav"></div>
-                                <!-- End Mobile Nav -->
-                            </div>
-                            <div class="col-lg-7 col-md-9 col-12">
-                                <!-- Main Menu -->
-                                <div class="main-menu">
-                                    <nav class="navigation">
-                                        <ul class="nav menu">
-                                            <li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="index.html">Home Page 1</a></li>
-                                                    <li><a href="index2.html">Home Page 2</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Doctos <i class="icofont-rounded-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/doctors">Doctor</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/doctorDetails">Doctor Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Services <i class="icofont-rounded-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="service.html">Service</a></li>
-                                                    <li><a href="service-details.html">Service Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/appointment">Appointment</a></li>
-                                                    <li><a href="time-table.html">Time Table</a></li>
-                                                    <li><a href="testimonials.html">Testimonials</a></li>
-                                                    <li><a href="pricing.html">Our Pricing</a></li>
-                                                    <li><a href="register.html">Sign Up</a></li>
-                                                    <li><a href="login.html">Login</a></li>
-                                                    <li><a href="faq.html">Faq</a></li>
-                                                    <li><a href="mail-success.html">Mail Success</a></li>
-                                                    <li><a href="404.html">404 Error</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Blogs <i class="icofont-rounded-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog-grid.html">Blog Grid</a></li>
-                                                    <li><a href="blog-single.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                                <!--/ End Main Menu -->
-                            </div>
-                            <div class="col-lg-2 col-12">
-                                <div class="get-quote">
-                                    <a href="${pageContext.request.contextPath}/appointment" class="btn">Book Appointment</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--/ End Header Inner -->
-        </header>
-        <!-- End Header Area -->
+        <%@include file="header.jsp" %>
 
         <!-- Breadcrumbs -->
         <div class="breadcrumbs overlay">
@@ -284,22 +144,22 @@
                                             <%    if (token != null && !token.isEmpty()) {
                                             %>
                                             <div style="position: relative; left:   300px;top:  63px">      <a href="register2.jsp?token=<%=token%>&email=<%=email%>"
-                                                                                                    style="display: inline-block;
-                                                                                                    padding: 10px 20px;
-                                                                                                    font-size: 16px;
-                                                                                                    cursor: pointer;
-                                                                                                    text-align: center;
-                                                                                                    text-decoration: none;
-                                                                                                    outline: none;
-                                                                                                    border: none;
-                                                                                                    border-radius: 5px;
-                                                                                                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                                                                                                    background-color: #1A76D1;
-                                                                                                    color: white;
-                                                                                                    transition: background-color 0.3s;
-                                                                                                    margin-top: 10px; /* Optional: Add margin top for spacing */"
-                                                                                                    onmouseover="this.style.backgroundColor = '#2C2D3F';"
-                                                                                                    onmouseout="this.style.backgroundColor = '#1A76D1';">
+                                                                                                               style="display: inline-block;
+                                                                                                               padding: 10px 20px;
+                                                                                                               font-size: 16px;
+                                                                                                               cursor: pointer;
+                                                                                                               text-align: center;
+                                                                                                               text-decoration: none;
+                                                                                                               outline: none;
+                                                                                                               border: none;
+                                                                                                               border-radius: 5px;
+                                                                                                               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                                                                                               background-color: #1A76D1;
+                                                                                                               color: white;
+                                                                                                               transition: background-color 0.3s;
+                                                                                                               margin-top: 10px; /* Optional: Add margin top for spacing */"
+                                                                                                               onmouseover="this.style.backgroundColor = '#2C2D3F';"
+                                                                                                               onmouseout="this.style.backgroundColor = '#1A76D1';">
                                                     Register Step 2/2 =>
                                                 </a>
                                             </div> 
@@ -499,7 +359,7 @@
         <script>
                                                function sendMail() {
                                                    (function () {
-                                                      emailjs.init("Ln9HbpdUdxHyqtE9w"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
+                                                       emailjs.init("Ln9HbpdUdxHyqtE9w"); // Thay YOUR_USER_ID b?ng ID c?a tài kho?n EmailJS c?a b?n
                                                    })();
 
                                                    var toEmail = document.querySelector("#to").value;

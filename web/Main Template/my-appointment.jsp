@@ -62,36 +62,61 @@
 
 
         <link rel="stylesheet" href="#" id="colors">
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
         <script>
             window.onload = function () {
-                var table = $('#myTable').DataTable();
+                var calendar = document.getElementById('calendar');
                 var jsonString = document.getElementById("bookings").value;
-                console.log(jsonString);
                 var bookings = JSON.parse(jsonString);
 
-                for (var i = 0; i < bookings.length; i++) {
-                    table.row.add([
-                        bookings[i].doctorName, // ID
-                        bookings[i].startDate, // Name
-                        bookings[i].endDate ,
-                        bookings[i].createDate ,
-                        bookings[i].note ,
-                        bookings[i].statusName
-                    ]).draw();
-                }
+                var dataMapping = bookings.map(booking => {
+                    return {
+                        title: booking.statusName,
+                        start: new Date(booking.startDate),
+                        end: new Date(booking.endDate),
+                        status: booking.statusName
+                    }
+                });
+                var calendar = new FullCalendar.Calendar(calendar, {
+                    initialView: 'timeGridWeek',
+                    events: dataMapping,
+                    eventDidMount: function (info) {
+                        // Determine color based on status
+                        var statusColor;
+                        switch (info.event.extendedProps.status) {
+                            case 'EXAMINING':
+                                statusColor = 'green';
+                                break;
+                            case 'PENDING':
+                                statusColor = '#daf505';
+                                break;
+                            default:
+                                statusColor = 'blue'; // Default color
+                        }
+                        console.log(statusColor);
+                        info.el.style.backgroundColor = statusColor;
+                        info.el.style.borderColor = statusColor;
+                    }
+                });
+                calendar.render();
             };
         </script>
         <style>
             #team{
                 display: flex;
             }
-            
+
             #myTable_wrapper{
                 left : 10%;
             }
 
             #myTable{
                 width: 80vw;
+            }
+
+            #calendar{
+                width: 90%;
+                height: 70vh;
             }
         </style>
     </head>
@@ -120,21 +145,8 @@
         <!-- Start Team -->
         <section id="team" class="team section single-page">
             <input type="hidden" value='${requestScope.bookings}' id="bookings"/>
-            <table id="myTable">
-                <thead>
-                    <tr>
-                        <th>Doctor</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Book Time</th>
-                        <th>Note</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
+            <h3>Booking Schedule</h3>
+            <div id='calendar'></div>
         </section>
         <!--/ End Team -->
 

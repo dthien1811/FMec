@@ -347,12 +347,30 @@
                                                        return {
                                                            title: schedule.status == 0 ? 'PENDING' : schedule.status == 1 ? 'CANCELED' : 'APPROVED',
                                                            start: new Date(schedule.startDate),
-                                                           end: new Date(schedule.endDate)
+                                                           end: new Date(schedule.endDate),
+                                                           status : schedule.status
                                                        }
                                                    });
                                                    var calendar = new FullCalendar.Calendar(calendarEl, {
                                                        initialView: 'timeGridWeek',
-                                                       events: dataMapping
+                                                       events: dataMapping,
+                                                       eventDidMount: function (info) {
+                                                           // Determine color based on status
+                                                           var statusColor;
+                                                           switch (info.event.extendedProps.status) {
+                                                               case 2:
+                                                                   statusColor = 'green';
+                                                                   break;
+                                                               case 0:
+                                                                   statusColor = '#daf505';
+                                                                   break;
+                                                               default:
+                                                                   statusColor = 'red'; // Default color
+                                                           }
+                                                           console.log(statusColor);
+                                                           info.el.style.backgroundColor = statusColor;
+                                                           info.el.style.borderColor = statusColor;
+                                                       }
                                                    });
                                                    calendar.render();
                                                });

@@ -59,28 +59,74 @@
 
         <!-- Include DataTables CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
-
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 
         <link rel="stylesheet" href="#" id="colors">
     <input type="hidden" value="${pageContext.request.contextPath}/startExamining" id="endPointStartExamining"/>
     <script>
         window.onload = function () {
-            var table = $('#myTable').DataTable();
+            var calendar = document.getElementById("calendar");
             var jsonString = document.getElementById("bookings").value;
             var endPoint = document.getElementById("endPointStartExamining").value;
             var bookings = JSON.parse(jsonString);
 
-            for (var i = 0; i < bookings.length; i++) {
-                table.row.add([
-                    bookings[i].customerName, // ID
-                    bookings[i].startDate, // Name
-                    bookings[i].endDate,
-                    bookings[i].createDate,
-                    bookings[i].note,
-                    bookings[i].statusName,
-                    bookings[i].status === 2 || bookings[i].status === 4 ? '<a class="button" href="' + endPoint + '?id=' + bookings[i].id + '">Examining</a>' : ''
-                ]).draw();
-            }
+            /* for (var i = 0; i < bookings.length; i++) {
+             table.row.add([
+             bookings[i].customerName, // ID
+             bookings[i].startDate, // Name
+             bookings[i].endDate,
+             bookings[i].createDate,
+             bookings[i].note,
+             bookings[i].statusName,
+             bookings[i].status === 2 || bookings[i].status === 4 ? '<a class="button" href="' + endPoint + '?id=' + bookings[i].id + '">Examining</a>' : ''
+             ]).draw();
+             } */
+
+            var dataMapping = bookings.map(booking => {
+                return {
+                    title: booking.statusName,
+                    start: new Date(booking.startDate),
+                    end: new Date(booking.endDate),
+                    status: booking.statusName,
+                    extendedProps: {
+                        id : booking.id
+                    }
+                };
+            });
+            var calendar = new FullCalendar.Calendar(calendar, {
+                initialView: 'timeGridWeek',
+                events: dataMapping,
+                eventClick: function (info) {
+                    if(info.event.extendedProps.status !== 'EXAMINING' && info.event.extendedProps.status !== 'APPROVED') return;
+                    window.location.href = endPoint+"?id="+info.event.extendedProps.id;
+                },
+                eventMouseEnter: function(info){
+                    if(info.event.extendedProps.status !== 'EXAMINING' && info.event.extendedProps.status !== 'APPROVED') return;
+                    info.el.className += ' activeEvent';
+                },
+                eventDidMount: function (info) {
+                    // Determine color based on status
+                    var statusColor;
+                    
+                    switch (info.event.extendedProps.status) {
+                        case 'EXAMINING':
+                            statusColor = 'green';
+                            break;
+                        case 'PENDING':
+                            statusColor = '#daf505';
+                            break;
+                        case 'APPROVED':
+                            statusColor = 'blue';
+                            
+                        default:
+                            statusColor = 'red'; 
+                    }
+                    console.log(statusColor);
+                    info.el.style.backgroundColor = statusColor;
+                    info.el.style.borderColor = statusColor;
+                }
+            });
+            calendar.render();
         };
     </script>
     <style>
@@ -94,6 +140,16 @@
 
         #myTable{
             width: 80vw;
+        }
+
+        #calendar{
+            width: 90%;
+            height: 70vh;
+        }
+        
+        .activeEvent:hover{
+            opacity: 0.7;
+            cursor: pointer;
         }
 
         .button {
@@ -140,22 +196,8 @@
     <!-- Start Team -->
     <section id="team" class="team section single-page">
         <input type="hidden" value='${requestScope.bookings}' id="bookings"/>
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>Customer</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Book Time</th>
-                    <th>Note</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
+        <h3>Booking Schedule</h3>
+        <div id="calendar"></div>
     </section>
     <!--/ End Team -->
 

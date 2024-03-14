@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +60,7 @@ public class NotificationDAO extends DBContext {
             stm.setInt(2, notificationDTO.getToUserId());
             stm.setString(3, notificationDTO.getContent());
             stm.setString(4, notificationDTO.getLink());
-            stm.setDate(5, new java.sql.Date(notificationDTO.getCreatedAt().getTime()));
+            stm.setTimestamp(5, new java.sql.Timestamp(new Date().getTime()));
             return stm.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(NotificationDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -530,6 +530,48 @@ public class UserDAO extends DBContext {
         return list;
     }
     
+    public List<User> findAdmins(){
+        List<User> list = new ArrayList<>();
+        String role = UserRoleEnum.UserRole.Admin.toString();
+        String sql = "SELECT [userId]\n"
+                + "      ,[User].[name] as userName\n"
+                + "      ,[avatar]\n"
+                + "      ,[address]\n"
+                + "      ,[email]\n"
+                + "      ,[phone]\n"
+                + "  FROM [dbo].[User] "
+                + "where [role] = ? ";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, role);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
+                User user = new User();
+                user.setUserId(userId);
+                list.add(user);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return list;
+    }
+    
     public int countDoctors(String query){
         String role = UserRoleEnum.UserRole.Professor.toString();
         String sql = "SELECT COUNT([User].userId) as result "
@@ -691,5 +733,7 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
+    
+    
     
 }

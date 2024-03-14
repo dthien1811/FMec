@@ -12,10 +12,12 @@ import dal.BookingDAO;
 import dal.ConfigDAO;
 import dal.DoctorScheduleDAO;
 import dal.MajorDAO;
+import dal.NotificationDAO;
 import dal.TimeConfigDAO;
 import dal.UserDAO;
 import dto.BookingDTO;
 import dto.DoctorCardDto;
+import dto.NotificationDTO;
 import dto.SlotDTO;
 import entity.Booking;
 import entity.DoctorSchedule;
@@ -41,6 +43,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utils.Const;
 
 /**
  *
@@ -57,6 +60,7 @@ public class BookingController extends HttpServlet {
     private final Gson gson;
     private final MajorDAO majorDAO;
     private final UserDAO userDAO;
+    private final NotificationDAO notificationDAO;
 
     public BookingController() {
         this.configDAO = new ConfigDAO();
@@ -66,6 +70,7 @@ public class BookingController extends HttpServlet {
         gson = new Gson();
         majorDAO = new MajorDAO();
         userDAO = new UserDAO();
+        notificationDAO = new NotificationDAO();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -101,7 +106,7 @@ public class BookingController extends HttpServlet {
             }
             List<SlotDTO> slots = generateListSlot(startTime, endTime, date, durationConfig);
             List<Booking> bookings = bookingDAO.getDoctorBooking(doctorId, date);
-            List<DoctorSchedule> schedules = doctorScheduleDAO.getDoctorSchedule(doctorId, date , StatusEnum.ScheduleStatus.APPROVED.getValue());
+            List<DoctorSchedule> schedules = doctorScheduleDAO.getDoctorSchedule(doctorId, date, StatusEnum.ScheduleStatus.APPROVED.getValue());
             Boolean[] availableSlots = returnAvailableSlots(slots, bookings, schedules);
             request.setAttribute("duration", durationConfig);
             request.setAttribute("starTime", startTime);
@@ -109,7 +114,7 @@ public class BookingController extends HttpServlet {
             request.setAttribute("doctor", doctor);
             request.setAttribute("availableSlots", gson.toJson(availableSlots));
         }
-        
+
         String minDate = dateFormat.format(new Date());
         request.setAttribute("minDate", minDate);
         request.setAttribute("date", dateFormat.format(date));
@@ -143,7 +148,8 @@ public class BookingController extends HttpServlet {
                     break;
                 }
             }
-            if (isInSchedule && !isInBooking) {
+            boolean isOverCurrentDate = compareDates(slot.getStartDate(), new Date()) > 0;
+            if (isInSchedule && !isInBooking && isOverCurrentDate) {
                 result[count] = true;
             } else {
                 result[count] = false;
@@ -246,8 +252,21 @@ public class BookingController extends HttpServlet {
             HttpSession session = request.getSession();
             User customer = (User) session.getAttribute("user");
             Integer doctorId = doctorIdRaw == null || doctorIdRaw.length() == 0 ? null : Integer.parseInt(doctorIdRaw);
-            BookingDTO bookingDTO = new BookingDTO(0, doctorId, customer.getUserId(), 0, note, startDate, endDate , null , null);
+            BookingDTO bookingDTO = new BookingDTO(0, doctorId, customer.getUserId(), 0, note, startDate, endDate, null, null);
             int result = bookingDAO.insertBooking(bookingDTO);
+            if (result != 0) {
+                List<User> admins = userDAO.findAdmins();
+                NotificationDTO notificationDTO = new NotificationDTO();
+                notificationDTO.setContent(Const.NEW_BOOKING_REQUEST_MESSAGE);
+                notificationDTO.setLink(Const.DOCTOR_VIEW_APPOINTMENT_URL);
+                notificationDTO.setToUserId(doctorId);
+                notificationDAO.insertNotification(notificationDTO);
+                notificationDTO.setLink(Const.ADMIN_VIEW_ALL_APPOINTMENT_URL);
+                for (User admin : admins) {
+                    notificationDTO.setToUserId(admin.getUserId());
+                    notificationDAO.insertNotification(notificationDTO);
+                }
+            }
             response.getWriter().print(result);
             return;
         }

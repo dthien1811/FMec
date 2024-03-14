@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utils.Const;
 
 /**
  *
  * @author My Computer
  */
-@WebServlet(name = "DoctorAppointmentController", urlPatterns = {"/doctorAppointment"})
+@WebServlet(name = "DoctorAppointmentController", urlPatterns = {Const.DOCTOR_VIEW_APPOINTMENT_URL})
 public class DoctorAppointmentController extends HttpServlet {
 
     private final BookingDAO bookingDAO;

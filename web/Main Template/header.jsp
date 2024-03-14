@@ -108,6 +108,50 @@
                 display: block;
                 font-size: 15px;
             }
+
+            /* For WebKit browsers (Chrome, Safari) */
+            ::-webkit-scrollbar {
+                width: 12px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: #888;
+                border-radius: 6px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #555;
+            }
+
+            /* For Firefox */
+            ::-moz-scrollbar {
+                width: 12px;
+            }
+
+            ::-moz-scrollbar-thumb {
+                background-color: #888;
+                border-radius: 6px;
+            }
+
+            ::-moz-scrollbar-thumb:hover {
+                background-color: #555;
+            }
+
+            /* For Internet Explorer */
+            /* Note: This is not widely supported and may not work in all versions */
+            ::-ms-scrollbar {
+                width: 12px;
+            }
+
+            ::-ms-scrollbar-thumb {
+                background-color: #888;
+                border-radius: 6px;
+            }
+
+            ::-ms-scrollbar-thumb:hover {
+                background-color: #555;
+            }
+
         </style>
     </head>
     <body>
@@ -311,7 +355,12 @@
                     var notReadedNoti = notifications.filter(noti => {
                         return !noti.isReaded;
                     })
+                    if(notReadedNoti.length > 0)
                     $("#badge").append(notReadedNoti.length + "");
+                    else{
+                        $("#notification-list").append("<h3>There's no notification</h3>");
+                        return;
+                    }
                     for (let i = 0; i < notifications.length; i++) {
                         const notificationItemHTML = `
                                                     <div class="notification-item" onclick="readNotification(` + notifications[i].id + ",'" + notifications[i].link + `')">

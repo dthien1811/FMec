@@ -7,7 +7,10 @@ package controller.timetableregistration;
 
 import com.google.gson.Gson;
 import dal.DoctorScheduleDAO;
+import dal.NotificationDAO;
 import dal.TimeConfigDAO;
+import dal.UserDAO;
+import dto.NotificationDTO;
 import dto.TimeConfigDTO;
 import entity.DoctorSchedule;
 import entity.TimeConfig;
@@ -30,6 +33,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utils.Const;
 
 /**
  *
@@ -41,10 +45,14 @@ public class TimeTableRegistrationController extends HttpServlet {
     private final DoctorScheduleDAO doctorScheduleDAO;
     private final Gson gson;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final UserDAO userDAO;
+    private final NotificationDAO notificationDAO;
     public TimeTableRegistrationController(){
         timeConfigDAO = new TimeConfigDAO();
         doctorScheduleDAO = new DoctorScheduleDAO();
         gson = new Gson();
+        userDAO = new UserDAO();
+        notificationDAO = new NotificationDAO();
     }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -72,7 +80,7 @@ public class TimeTableRegistrationController extends HttpServlet {
             endDate.setTime(date);
             endDate.set(Calendar.HOUR_OF_DAY, timeConfig.getEndHour().getHour());
             endDate.set(Calendar.MINUTE, timeConfig.getEndHour().getMinute());
-            boolean isDuplicated = isDuplicateSchedule(schedulesByDate, startDate.getTime(), endDate.getTime());
+            boolean isDuplicated = isDuplicateSchedule(schedulesByDate, startDate.getTime(), endDate.getTime()) || startDate.getTime().compareTo(new Date()) <= 0;
             TimeConfigDTO dto = new TimeConfigDTO(timeConfig.getId(), timeConfig.getConfigName(), startDate.getTime() , endDate.getTime() , isDuplicated );
             dtos.add(dto);
         }
@@ -148,6 +156,16 @@ public class TimeTableRegistrationController extends HttpServlet {
             schedule.setEndDate(endDate);
             schedule.setDoctor(doctor);
             int result = doctorScheduleDAO.insertDoctorSchedule(schedule);
+            if(result != 0){
+                List<User> admins = userDAO.findAdmins();
+                NotificationDTO notificationDTO = new NotificationDTO();
+                notificationDTO.setContent(Const.NEW_DOCTOR_SCHEDULE_REQUEST_MESSAGE);
+                notificationDTO.setLink(Const.ADMIN_VIEW_ALL_APPOINTMENT_URL); // need to update
+                for (User admin : admins) {
+                    notificationDTO.setToUserId(admin.getUserId());
+                    notificationDAO.insertNotification(notificationDTO);
+                }
+            }
             response.getWriter().print(result);
             return;
         }

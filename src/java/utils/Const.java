@@ -28,6 +28,10 @@ public class Const {
     /* PUBLIC URL */
     public static final String LOGIN_URL = "/LoginServlet";
     
+    /* NOTIFICATION MESSAGE */
+    public static final String NEW_BOOKING_REQUEST_MESSAGE = "New pending booking request was send";
+    public static final String NEW_DOCTOR_SCHEDULE_REQUEST_MESSAGE = "New doctor schedule request was send";
+    
     public static final String[] ADMIN_URL = new String[]{ADMIN_CREATE_DOCTOR_URL , ADMIN_VIEW_ALL_APPOINTMENT_URL};
     public static final String[] DOCTOR_URL = new String[]{DOCTOR_VIEW_APPOINTMENT_URL , DOCTOR_TIME_TABLE_REGISTRATION_URL ,
     DOCTOR_START_EXAMINING_URL , DOCTOR_END_EXAMINING_URL};

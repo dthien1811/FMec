@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <style>
             /*CSS bieu tuong nguoi dung*/
             #user-icon:hover i {
@@ -23,31 +24,97 @@
                 background-color: #1A76D1; /* ??i màu n?n khi di chu?t qua */
                 color: #000; /* ??i màu ch? khi di chu?t qua */
             }
-            
+
             .btn:hover {
                 cursor: pointer !important;
             }
-        </style>
-        <script>
-            window.onload = function(){
-                var endPoint = document.getElementById("getStartEndTimeEndpoint").value;
-                $.ajax({
-                    type: "GET",
-                    url: endPoint,
-                    success: function (response) {
-                        console.log(response);
-                        const startDate = response.split("&")[0];
-                        const endDate = response.split("&")[1];
-                        console.log(startDate);
-                        $("#startDate").append(startDate + "");
-                        $("#endDate").append(endDate + "");
-                    }
-                });
+
+            .notification-badge {
+                position: relative;
+                display: inline-block;
             }
-        </script>
+
+            .badge {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: red;
+                color: white;
+                border-radius: 50%;
+                padding: 4px 6px;
+                font-size: 12px;
+            }
+            .notification-item {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                height: 60px;
+            }
+
+            .notification-item:hover{
+                opacity: 0.7;
+                cursor: pointer;
+            }
+
+            .notification-content {
+                flex-grow: 1;
+                padding: 0 10px;
+            }
+
+            .notification-message {
+                margin: 0;
+                font-size: 14px;
+                color: #666;
+                display: inline-block;
+            }
+
+            .notification-badge:hover{
+                opacity: 0.7;
+                cursor: pointer;
+            }
+
+            .notification-badge{
+
+            }
+
+            .notification-list{
+                display: none;
+                height: 200px;
+                overflow: auto;
+                position: absolute;
+                z-index: 2;
+                border-radius: 3px;
+                border : 1px solid #ccc;
+                animation-name: fadeIn;
+                animation-duration: 1s;
+                background: white;
+            }
+
+            @keyframes fadeIn{
+                from{
+                    opacity : 0;
+                }to{
+                    opacity : 1;
+                }
+            }
+            .bi{
+                display: inline-block;
+                font-size: 15px;
+                color : red;
+            }
+
+            .create-date{
+                clear: both;
+                display: block;
+                font-size: 15px;
+            }
+        </style>
     </head>
     <body>
+        <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}" />
         <input type="hidden" id="getStartEndTimeEndpoint" value="${pageContext.request.contextPath}/GetStartEndTimeController"/>
+        <input type="hidden" id="getNotificationsEndpoint" value="${pageContext.request.contextPath}/GetNotificationController"/>
+        <input type="hidden" id="updateNotificationsEndpoint" value="${pageContext.request.contextPath}/UpdateNotificationController"/>
         <!-- Preloader -->
         <div class="preloader">
             <div class="loader">
@@ -70,13 +137,19 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-md-5 col-12">
+
                         </div>
                         <div class="col-lg-6 col-md-7 col-12">
+                            <div class="notification-badge">
+                                <i class="fa fa-bell" style="font-size:24px;color: blue;"></i>
+                                <span class="badge" id="badge"></span>
+                            </div>
+                            <div class="notification-list" id="notification-list"></div>
                             <!-- Top Contact -->
                             <ul class="top-contact">
                                 <c:if test="${not empty sessionScope.user}" >
                                     <li><i class="fa fa-user"></i>Welcome : ${sessionScope.user.email}</li>
-                                </c:if>
+                                    </c:if>
                             </ul>
                             <!-- End Top Contact -->
                         </div>
@@ -205,6 +278,7 @@
             </div>
             <!--/ End Header Inner -->
         </header>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             document.getElementById("user-icon").addEventListener("click", function () {
                 var userOptions = document.getElementById("user-options");
@@ -214,6 +288,61 @@
                     userOptions.style.display = "none";
                 }
             });
+
+            var endPoint = document.getElementById("getStartEndTimeEndpoint").value;
+            var notificationEndpoint = document.getElementById("getNotificationsEndpoint").value;
+            $.ajax({
+                type: "GET",
+                url: endPoint,
+                success: function (response) {
+                    const startDate = response.split("&")[0];
+                    const endDate = response.split("&")[1];
+                    $("#startDate").append(startDate + "");
+                    $("#endDate").append(endDate + "");
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: notificationEndpoint,
+                success: function (response) {
+                    console.log(response);
+                    var notifications = JSON.parse(response);
+                    var notReadedNoti = notifications.filter(noti => {
+                        return !noti.isReaded;
+                    })
+                    $("#badge").append(notReadedNoti.length + "");
+                    for (let i = 0; i < notifications.length; i++) {
+                        const notificationItemHTML = `
+                                                    <div class="notification-item" onclick="readNotification(` + notifications[i].id + ",'" + notifications[i].link + `')">
+                                                      <div class="notification-content">` +
+                                (!notifications[i].isReaded ? '<i class="bi bi-dot"></i>' : '')
+                                + `<p class="notification-message">` + notifications[i].content + `</p>
+                                                      </div>` + '<span class="create-date">   ' + notifications[i].createdAt + '</span>' +
+                                `</div>`;
+                        $("#notification-list").append(notificationItemHTML);
+                    }
+                }
+            });
+            $(".notification-badge").on("click", function () {
+                console.log("Aaaaaa");
+                $("#notification-list").toggle();
+            });
+
+            function readNotification(id, link) {
+                var contextPath = document.getElementById("contextPath").value;
+                var endPoint = document.getElementById("updateNotificationsEndpoint").value;
+                $.ajax({
+                    type: "GET",
+                    url: endPoint,
+                    data: {
+                        id: id
+                    },
+                    success: function (response) {
+                        window.location.href = contextPath + link;
+                    }
+                });
+            }
         </script>
         <!-- End Header Area -->
     </body>

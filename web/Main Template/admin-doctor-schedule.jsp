@@ -65,33 +65,27 @@
         <script>
             window.onload = function () {
                 var table = $('#myTable').DataTable();
-                var jsonString = document.getElementById("bookings").value;
-                var bookings = JSON.parse(jsonString);
-                var endPoint = document.getElementById("bookingDetail").value;
-                var updateStatusBookingEndpoint = document.getElementById("updateBookingStatus").value;
-                for (var i = 0; i < bookings.length; i++) {
-                    var detailLink = '<a class="btn btn-default" style="color: white;" href="' + endPoint + "?id=" + bookings[i].id + '">Detail</a>';
-                    var approveForm = '<form method="POST" action="' + updateStatusBookingEndpoint + '">' +
-                            '<input type="hidden" name="id" value="' + bookings[i].id + '" />' +
+                var jsonString = document.getElementById("schedules").value;
+                var schedules = JSON.parse(jsonString);
+                console.log(schedules);
+                var updateDoctorScheduleStatusEndpoint = document.getElementById("updateDoctorScheduleStatus").value;
+                for (var i = 0; i < schedules.length; i++) {
+                    var approveForm = '<form method="POST" action="' + updateDoctorScheduleStatusEndpoint + '">' +
+                            '<input type="hidden" name="id" value="' + schedules[i].id + '" />' +
                             '<input type="hidden" value="2" name="status" />' +
                             '<button class="btn btn-success" type="submit">Approve</button>' +
                             '</form>';
-                    var cancelForm = '<form method="POST" action="' + updateStatusBookingEndpoint + '">' +
-                            '<input type="hidden" name="id" value="' + bookings[i].id + '" />' +
+                    var cancelForm = '<form method="POST" action="' + updateDoctorScheduleStatusEndpoint + '">' +
+                            '<input type="hidden" name="id" value="' + schedules[i].id + '" />' +
                             '<input type="hidden" value="1" name="status" />' +
                             '<button class="btn btn-success" type="submit">Cancel</button>' +
                             '</form>';
                     table.row.add([
-                        bookings[i].doctorName,
-                        bookings[i].customerName,
-                        bookings[i].startDate, // Name
-                        bookings[i].endDate,
-                        bookings[i].createDate,
-                        typeof bookings[i].realStartDate === 'undefined' ? "NOT YET" : bookings[i].realStartDate,
-                        typeof bookings[i].realEndDate === 'undefined' ? "NOT YET" : bookings[i].realEndDate,
-                        bookings[i].note,
-                        bookings[i].statusName,
-                        detailLink + ( bookings[i].statusName == 'PENDING' ? approveForm + cancelForm : "")
+                        schedules[i].doctor.name,
+                        schedules[i].startDate, 
+                        schedules[i].endDate,
+                        schedules[i].status === 0 ? 'PENDING' : schedules[i].status === 1 ? 'CANCELED' : 'APPROVED',
+                        schedules[i].status === 0 ? approveForm + cancelForm : ''
                     ]).draw();
                 }
             };
@@ -113,19 +107,18 @@
     </head>
     <body>
         <%@include file="header.jsp" %>
-        <input  type="hidden" value="${pageContext.request.contextPath}/bookingDetail" id="bookingDetail" />
-        <input  type="hidden" value="${pageContext.request.contextPath}/updateBookingStatus" id="updateBookingStatus" />
+        <input  type="hidden" value="${pageContext.request.contextPath}/updateDoctorScheduleStatus" id="updateDoctorScheduleStatus" />
         <!-- Breadcrumbs -->
         <div class="breadcrumbs overlay">
             <div class="container">
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Appointment</h2>
+                            <h2>Doctor Schedule</h2>
                             <ul class="bread-list">
                                 <li><a href="index.html">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Appointment</li>
+                                <li class="active">Doctor Schedule</li>
                             </ul>
                         </div>
                     </div>
@@ -136,18 +129,13 @@
 
         <!-- Start Team -->
         <section id="team" class="team section single-page">
-            <input type="hidden" value='${requestScope.bookings}' id="bookings"/>
+            <input type="hidden" value='${requestScope.schedules}' id="schedules"/>
             <table id="myTable">
                 <thead>
                     <tr>
                         <th>Doctor</th>
-                        <th>Customer</th>
                         <th>Start Time</th>
                         <th>End Time</th>
-                        <th>Book Time</th>
-                        <th>Real Start Time</th>
-                        <th>Real End Time</th>
-                        <th>Note</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>

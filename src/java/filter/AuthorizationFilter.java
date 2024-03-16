@@ -38,7 +38,10 @@ import utils.Const;
     Const.DOCTOR_START_EXAMINING_URL,
     Const.DOCTOR_END_EXAMINING_URL,
     Const.BOOKING_URL,
-    Const.CUSTOMER_VIEW_APPOINTMENT
+    Const.CUSTOMER_VIEW_APPOINTMENT,
+    Const.BOOKING_DETAIL,
+    Const.UPDATE_BOOKING_STATUS_URL,
+    Const.ADMIN_VIEW_DOCTOR_SCHEDULE_URL
 })
 public class AuthorizationFilter implements Filter {
 

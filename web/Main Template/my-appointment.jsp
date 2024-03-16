@@ -68,18 +68,32 @@
                 var calendar = document.getElementById('calendar');
                 var jsonString = document.getElementById("bookings").value;
                 var bookings = JSON.parse(jsonString);
+                var endPoint = document.getElementById("bookingDetail").value;
 
                 var dataMapping = bookings.map(booking => {
                     return {
                         title: booking.statusName,
                         start: new Date(booking.startDate),
                         end: new Date(booking.endDate),
-                        status: booking.statusName
+                        status: booking.statusName,
+                        extendedProps : {
+                            id : booking.id
+                        }
                     }
                 });
                 var calendar = new FullCalendar.Calendar(calendar, {
                     initialView: 'timeGridWeek',
                     events: dataMapping,
+                    eventClick: function (info) {
+                        if (info.event.extendedProps.status !== 'PENDING')
+                            return;
+                        window.location.href = endPoint + "?id=" + info.event.extendedProps.id;
+                    },
+                    eventMouseEnter: function (info) {
+                        if (info.event.extendedProps.status !== 'PENDING')
+                            return;
+                        info.el.className += ' activeEvent';
+                    },
                     eventDidMount: function (info) {
                         // Determine color based on status
                         var statusColor;
@@ -118,10 +132,15 @@
                 width: 90%;
                 height: 70vh;
             }
+            .activeEvent:hover{
+                opacity: 0.7;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
         <%@include file="header.jsp" %>
+        <input  type="hidden" value="${pageContext.request.contextPath}/bookingDetail" id="bookingDetail" />
 
         <!-- Breadcrumbs -->
         <div class="breadcrumbs overlay">

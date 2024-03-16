@@ -26,23 +26,33 @@ import java.util.logging.Logger;
  */
 public class BookingDAO extends DBContext {
 
-    public List<Booking> getDoctorBooking(int doctorId, Date date) {
+    public List<Booking> getDoctorAndPatientBooking(int doctorId, int patientId , Date date) {
         List<Booking> bookings = new ArrayList<>();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         try {
-            String sql = "SELECT * FROM Booking s WHERE s.doctor_id = ? "
+            String sql = "SELECT s.id , s.[start_date] , s.[end_date] FROM Booking s WHERE s.doctor_id = ? "
                     + "and DATEPART(year , s.start_date) = ? AND DATEPART(month , s.start_date) = ? AND "
-                    + "DATEPART(day , s.start_date) = ? AND s.status != ?";
-            connection = getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, doctorId);
+                    + "DATEPART(day , s.start_date) = ? AND s.status != ? ";
+            String patientSql = " SELECT s.id , s.[start_date] , s.[end_date] FROM Booking s WHERE s.customer_id = ? "
+                    + "and DATEPART(year , s.start_date) = ? AND DATEPART(month , s.start_date) = ? AND "
+                    + "DATEPART(day , s.start_date) = ? AND s.status != ? ";
+            String union = " UNION ALL ";
+            String finalSql = sql + union + patientSql;
             int year = localDate.getYear();
             int month = localDate.getMonthValue();
             int day = localDate.getDayOfMonth();
+            connection = getConnection();
+            statement = connection.prepareStatement(finalSql);
+            statement.setInt(1, doctorId);
             statement.setInt(2, year);
             statement.setInt(3, month);
             statement.setInt(4, day);
             statement.setInt(5, StatusEnum.BookingStatus.CANCELED.getValue());
+            statement.setInt(6, patientId);
+            statement.setInt(7, year);
+            statement.setInt(8, month);
+            statement.setInt(9, day);
+            statement.setInt(10, StatusEnum.BookingStatus.CANCELED.getValue());
             ResultSet resultSet = statement.executeQuery();
             Booking booking;
             while (resultSet.next()) {
@@ -110,10 +120,11 @@ public class BookingDAO extends DBContext {
         try {
             String sql = "SELECT * FROM Booking s "
                     + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
-                    + "  WHERE s.customer_id = ? ";
+                    + "  WHERE s.customer_id = ? AND s.[status] != ?";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, customerId);
+            statement.setInt(2, StatusEnum.BookingStatus.CANCELED.getValue());
             ResultSet resultSet = statement.executeQuery();
             MyAppointmentDTO booking;
             while (resultSet.next()) {
@@ -145,10 +156,11 @@ public class BookingDAO extends DBContext {
         try {
             String sql = "SELECT * FROM Booking s "
                     + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] "
-                    + "  WHERE s.doctor_id = ? ";
+                    + "  WHERE s.doctor_id = ? AND s.[status] != ?";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, doctorId);
+            statement.setInt(2, StatusEnum.BookingStatus.CANCELED.getValue());
             ResultSet resultSet = statement.executeQuery();
             DoctorAppointmentDTO booking;
             while (resultSet.next()) {
@@ -177,8 +189,9 @@ public class BookingDAO extends DBContext {
     
     public BookingDTO getBookingById(int id) {
         try {
-            String sql = "SELECT * FROM Booking s "
+            String sql = "SELECT s.[start_date] , s.[end_date] , s.[create_date] , customer.name , customer.[userId] as customerId , s.note , s.status , doctor.[userId] as doctorId FROM Booking s "
                     + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] "
+                    + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
                     + "  WHERE s.id = ? ";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
@@ -192,6 +205,8 @@ public class BookingDAO extends DBContext {
                 String customerName = resultSet.getString("name");
                 String note = resultSet.getString("note");
                 int status = resultSet.getInt("status");
+                int doctorId = resultSet.getInt("doctorId");
+                int customerId = resultSet.getInt("customerId");
                 String statusName = "";
                 for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
                     if(status == s.getValue()){
@@ -199,7 +214,7 @@ public class BookingDAO extends DBContext {
                         break;
                     }
                 }
-                return new BookingDTO(id, customerName, status , startDate, endDate , createDate , note);
+                return new BookingDTO(id, customerName, status , startDate, endDate , createDate , note , doctorId , customerId);
             }
         } catch (Exception ex) {
             Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -243,6 +258,20 @@ public class BookingDAO extends DBContext {
             statement.setInt(1, StatusEnum.BookingStatus.EXAMINING.getValue());
             statement.setTimestamp(2, new java.sql.Timestamp(new Date().getTime()));
             statement.setInt(3, bookingDTO.getId());
+            return statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public int updateBookingStatus(int bookingId , int status){
+        try {
+            String sql = "UPDATE [dbo].[Booking] SET [status] = ?  WHERE id = ?";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, status);
+            statement.setInt(2, bookingId);
             return statement.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);

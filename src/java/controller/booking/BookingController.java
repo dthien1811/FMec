@@ -95,6 +95,8 @@ public class BookingController extends HttpServlet {
             doctors = userDAO.findDoctorsByMajor(majorId);
         }
         if (doctorId != null) {
+            HttpSession session = request.getSession();
+            User patient = (User) session.getAttribute("user");
             User doctor = userDAO.getUserById(doctorId);
             double durationConfig = configDAO.getConfigValue(ConfigEnum.Config.TIME_DURATION.name());
             List<TimeConfig> timeConfigs = timeConfigDAO.getTimeConfigOrderByStartTimeAsc();
@@ -105,7 +107,7 @@ public class BookingController extends HttpServlet {
                 endTime = timeConfigs.get(timeConfigs.size() - 1).getEndHour();
             }
             List<SlotDTO> slots = generateListSlot(startTime, endTime, date, durationConfig);
-            List<Booking> bookings = bookingDAO.getDoctorBooking(doctorId, date);
+            List<Booking> bookings = bookingDAO.getDoctorAndPatientBooking(doctorId,patient.getUserId(),date);
             List<DoctorSchedule> schedules = doctorScheduleDAO.getDoctorSchedule(doctorId, date, StatusEnum.ScheduleStatus.APPROVED.getValue());
             Boolean[] availableSlots = returnAvailableSlots(slots, bookings, schedules);
             request.setAttribute("duration", durationConfig);

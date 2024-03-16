@@ -16,6 +16,7 @@ public class Const {
     /* ADMIN URL */
     public static final String ADMIN_CREATE_DOCTOR_URL = "/createDoctor";
     public static final String ADMIN_VIEW_ALL_APPOINTMENT_URL = "/viewAppointment";
+    public static final String ADMIN_VIEW_DOCTOR_SCHEDULE_URL = "/viewDoctorSchedule";
     /* DOCTOR URL */
     public static final String DOCTOR_VIEW_APPOINTMENT_URL = "/doctorAppointment";
     public static final String DOCTOR_TIME_TABLE_REGISTRATION_URL = "/timeTableRegistration";
@@ -28,14 +29,20 @@ public class Const {
     /* PUBLIC URL */
     public static final String LOGIN_URL = "/LoginServlet";
     
+    public static final String BOOKING_DETAIL = "/bookingDetail";
+    public static final String UPDATE_BOOKING_STATUS_URL = "/updateBookingStatus";
+    public static final String UPDATE_DOCTOR_SCHEDULE_STATUS_URL = "/updateDoctorScheduleStatus";
+    
     /* NOTIFICATION MESSAGE */
     public static final String NEW_BOOKING_REQUEST_MESSAGE = "New pending booking request was send";
     public static final String NEW_DOCTOR_SCHEDULE_REQUEST_MESSAGE = "New doctor schedule request was send";
+    public static final String UPDATE_BOOKING_REQUEST_MESSAGE = "There's new update on booking request at ";
+    public static final String UPDATE_DOCTOR_SCHEDULE_REQUEST_MESSAGE = "There's new update on schedule at ";
     
-    public static final String[] ADMIN_URL = new String[]{ADMIN_CREATE_DOCTOR_URL , ADMIN_VIEW_ALL_APPOINTMENT_URL};
+    public static final String[] ADMIN_URL = new String[]{ADMIN_CREATE_DOCTOR_URL , ADMIN_VIEW_ALL_APPOINTMENT_URL , BOOKING_DETAIL , UPDATE_BOOKING_STATUS_URL , UPDATE_DOCTOR_SCHEDULE_STATUS_URL , ADMIN_VIEW_DOCTOR_SCHEDULE_URL};
     public static final String[] DOCTOR_URL = new String[]{DOCTOR_VIEW_APPOINTMENT_URL , DOCTOR_TIME_TABLE_REGISTRATION_URL ,
     DOCTOR_START_EXAMINING_URL , DOCTOR_END_EXAMINING_URL};
-    public static final String[] CUSTOMER_URL = new String[]{BOOKING_URL , CUSTOMER_VIEW_APPOINTMENT};
+    public static final String[] CUSTOMER_URL = new String[]{BOOKING_URL , CUSTOMER_VIEW_APPOINTMENT , BOOKING_DETAIL , UPDATE_BOOKING_STATUS_URL};
     public static final HashMap<String , String[]> URL ;
     static {
         URL = new HashMap<>();

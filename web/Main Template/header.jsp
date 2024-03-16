@@ -48,7 +48,7 @@
                 display: flex;
                 align-items: center;
                 flex-direction: column;
-                height: 60px;
+                min-height: 60px;
             }
 
             .notification-item:hover{
@@ -99,7 +99,7 @@
             }
             .bi{
                 display: inline-block;
-                font-size: 15px;
+                font-size: 25px;
                 color : red;
             }
 
@@ -184,17 +184,18 @@
 
                         </div>
                         <div class="col-lg-6 col-md-7 col-12">
-                            <div class="notification-badge">
-                                <i class="fa fa-bell" style="font-size:24px;color: blue;"></i>
-                                <span class="badge" id="badge"></span>
-                            </div>
-                            <div class="notification-list" id="notification-list"></div>
-                            <!-- Top Contact -->
-                            <ul class="top-contact">
-                                <c:if test="${not empty sessionScope.user}" >
+                            <c:if test="${not empty sessionScope.user}" >
+                                <div class="notification-badge">
+                                    <i class="fa fa-bell" style="font-size:24px;color: blue;"></i>
+                                    <span class="badge" id="badge"></span>
+                                </div>
+                                <div class="notification-list" id="notification-list"></div>
+                                <!-- Top Contact -->
+                                <ul class="top-contact">
                                     <li><i class="fa fa-user"></i>Welcome : ${sessionScope.user.email}</li>
-                                    </c:if>
-                            </ul>
+                                </ul>
+                            </c:if>
+
                             <!-- End Top Contact -->
                         </div>
                     </div>
@@ -273,6 +274,7 @@
                                                     <li><a href="${pageContext.request.contextPath}/createDoctor">Doctor Management <i class="icofont-rounded-down"></i></a>
                                                     </li>
                                                     <li><a href="${pageContext.request.contextPath}/viewAppointment">Appointment <i class="icofont-rounded-down"></i></a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/viewDoctorSchedule">Doctor Schedule <i class="icofont-rounded-down"></i></a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -355,17 +357,14 @@
                     var notReadedNoti = notifications.filter(noti => {
                         return !noti.isReaded;
                     })
-                    if(notReadedNoti.length > 0)
-                    $("#badge").append(notReadedNoti.length + "");
-                    else{
-                        $("#notification-list").append("<h3>There's no notification</h3>");
-                        return;
-                    }
+                    if (notReadedNoti.length > 0)
+                        $("#badge").append(notReadedNoti.length + "");
+                    
                     for (let i = 0; i < notifications.length; i++) {
                         const notificationItemHTML = `
                                                     <div class="notification-item" onclick="readNotification(` + notifications[i].id + ",'" + notifications[i].link + `')">
                                                       <div class="notification-content">` +
-                                (!notifications[i].isReaded ? '<i class="bi bi-dot"></i>' : '')
+                                (!notifications[i].isReaded ? '<span class="bi bi-dot"></span>' : '')
                                 + `<p class="notification-message">` + notifications[i].content + `</p>
                                                       </div>` + '<span class="create-date">   ' + notifications[i].createdAt + '</span>' +
                                 `</div>`;
@@ -374,7 +373,6 @@
                 }
             });
             $(".notification-badge").on("click", function () {
-                console.log("Aaaaaa");
                 $("#notification-list").toggle();
             });
 

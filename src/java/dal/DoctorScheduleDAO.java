@@ -7,6 +7,7 @@ package dal;
 
 import Enums.StatusEnum;
 import entity.DoctorSchedule;
+import entity.User;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class DoctorScheduleDAO extends DBContext {
 
-    public List<DoctorSchedule> getDoctorSchedule(int doctorId, Date date , int statusValue) {
+    public List<DoctorSchedule> getDoctorSchedule(int doctorId, Date date, int statusValue) {
         List<DoctorSchedule> schedules = new ArrayList<>();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         try {
@@ -56,7 +57,52 @@ public class DoctorScheduleDAO extends DBContext {
         }
         return schedules;
     }
-    
+
+    public List<DoctorSchedule> getAllDoctorSchedule() {
+        List<DoctorSchedule> schedules = new ArrayList<>();
+        try {
+            String sql = "SELECT d.id , d.start_date , d.end_date , d.[status] , u.name FROM DoctorSchedule d LEFT JOIN [User] u on d.doctor_id = u.userId";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            DoctorSchedule doctorSchedule;
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Date startDate = resultSet.getTimestamp("start_date");
+                Date endDate = resultSet.getTimestamp("end_date");
+                int status = resultSet.getInt("status");
+                User doctor = new User();
+                doctor.setName(resultSet.getString("name"));
+                doctorSchedule = new DoctorSchedule();
+                doctorSchedule.setId(id);
+                doctorSchedule.setStartDate(startDate);
+                doctorSchedule.setEndDate(endDate);
+                doctorSchedule.setStatus(status);
+                doctorSchedule.setDoctor(doctor);
+                schedules.add(doctorSchedule);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return schedules;
+    }
+
+    public int updateScheduleStatus(int scheduleId, int status , int approverId) {
+        try {
+            String sql = "UPDATE [dbo].[DoctorSchedule]\n"
+                    + "   SET [status] = ? , [approver_id] = ? WHERE [id] = ?";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, status);
+            statement.setInt(2, approverId);
+            statement.setInt(3, scheduleId);
+            return statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
     public List<DoctorSchedule> getDoctorScheduleIsNotCanceled(int doctorId, Date date) {
         List<DoctorSchedule> schedules = new ArrayList<>();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -117,6 +163,33 @@ public class DoctorScheduleDAO extends DBContext {
             Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return schedules;
+    }
+    
+    public DoctorSchedule getDoctorScheduleById(int id) {
+        try {
+            String sql = "SELECT * FROM DoctorSchedule s WHERE s.id = ?";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            DoctorSchedule doctorSchedule;
+            while (resultSet.next()) {
+                Date startDate = resultSet.getTimestamp("start_date");
+                Date endDate = resultSet.getTimestamp("end_date");
+                User doctor = new User();
+                doctor.setUserId(resultSet.getInt("doctor_id"));
+                doctorSchedule = new DoctorSchedule();
+                doctorSchedule.setId(id);
+                doctorSchedule.setStartDate(startDate);
+                doctorSchedule.setEndDate(endDate);
+                doctorSchedule.setStatus(resultSet.getInt("status"));
+                doctorSchedule.setDoctor(doctor);
+                return doctorSchedule;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public int insertDoctorSchedule(DoctorSchedule schedule) {

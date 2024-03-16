@@ -117,7 +117,7 @@
                             break;
                         case 'APPROVED':
                             statusColor = 'blue';
-                            
+                            break;
                         default:
                             statusColor = 'red'; 
                     }

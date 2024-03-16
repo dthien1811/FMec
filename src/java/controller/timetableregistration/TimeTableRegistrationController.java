@@ -21,10 +21,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -41,37 +44,41 @@ import utils.Const;
  */
 @WebServlet(name = "TimeTableRegistrationController", urlPatterns = {"/timeTableRegistration"})
 public class TimeTableRegistrationController extends HttpServlet {
+
     private final TimeConfigDAO timeConfigDAO;
     private final DoctorScheduleDAO doctorScheduleDAO;
     private final Gson gson;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final UserDAO userDAO;
     private final NotificationDAO notificationDAO;
-    public TimeTableRegistrationController(){
+
+    public TimeTableRegistrationController() {
         timeConfigDAO = new TimeConfigDAO();
         doctorScheduleDAO = new DoctorScheduleDAO();
         gson = new Gson();
         userDAO = new UserDAO();
         notificationDAO = new NotificationDAO();
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String dateRaw = request.getParameter("date");
         Date date = new Date();
         try {
-            if(dateRaw != null)
-            date = dateFormat.parse(dateRaw);
+            if (dateRaw != null) {
+                date = dateFormat.parse(dateRaw);
+            }
         } catch (ParseException ex) {
             Logger.getLogger(TimeTableRegistrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
         HttpSession session = request.getSession();
         User doctor = (User) session.getAttribute("user");
-        
+
         List<TimeConfig> timeConfigs = timeConfigDAO.getTimeConfigOrderByStartTimeAsc();
         List<TimeConfigDTO> dtos = new ArrayList<>();
         List<DoctorSchedule> schedulesByDate = doctorScheduleDAO.getDoctorScheduleIsNotCanceled(doctor.getUserId(), date);
         List<DoctorSchedule> schedules = doctorScheduleDAO.getDoctorSchedule(doctor.getUserId());
-        for(TimeConfig timeConfig : timeConfigs){
+        for (TimeConfig timeConfig : timeConfigs) {
             Calendar startDate = Calendar.getInstance();
             startDate.setTime(date);
             startDate.set(Calendar.HOUR_OF_DAY, timeConfig.getStartHour().getHour());
@@ -81,7 +88,7 @@ public class TimeTableRegistrationController extends HttpServlet {
             endDate.set(Calendar.HOUR_OF_DAY, timeConfig.getEndHour().getHour());
             endDate.set(Calendar.MINUTE, timeConfig.getEndHour().getMinute());
             boolean isDuplicated = isDuplicateSchedule(schedulesByDate, startDate.getTime(), endDate.getTime()) || startDate.getTime().compareTo(new Date()) <= 0;
-            TimeConfigDTO dto = new TimeConfigDTO(timeConfig.getId(), timeConfig.getConfigName(), startDate.getTime() , endDate.getTime() , isDuplicated );
+            TimeConfigDTO dto = new TimeConfigDTO(timeConfig.getId(), timeConfig.getConfigName(), startDate.getTime(), endDate.getTime(), isDuplicated);
             dtos.add(dto);
         }
         request.setAttribute("slots", dtos);
@@ -90,18 +97,20 @@ public class TimeTableRegistrationController extends HttpServlet {
         request.setAttribute("minDate", minDate);
         request.setAttribute("doctorSchedules", gson.toJson(schedules));
         request.setAttribute("date", formattedDate);
-        
+
         request.getRequestDispatcher("Main Template/time-table-registration.jsp").forward(request, response);
     }
-    
-    boolean isDuplicateSchedule(List<DoctorSchedule> schedules , Date startDate , Date endDate){
-        if(schedules == null || schedules.isEmpty()) return false;
+
+    boolean isDuplicateSchedule(List<DoctorSchedule> schedules, Date startDate, Date endDate) {
+        if (schedules == null || schedules.isEmpty()) {
+            return false;
+        }
         for (DoctorSchedule doctorSchedule : schedules) {
-                if (startDate.compareTo(doctorSchedule.getEndDate()) < 0
-                        && endDate.compareTo(doctorSchedule.getStartDate()) > 0) {
-                    return true;
-                }
+            if (startDate.compareTo(doctorSchedule.getEndDate()) < 0
+                    && endDate.compareTo(doctorSchedule.getStartDate()) > 0) {
+                return true;
             }
+        }
         return false;
     }
 
@@ -131,36 +140,32 @@ public class TimeTableRegistrationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String format = "EEE MMM dd HH:mm:ss zzz yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        // Define the format pattern
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy");
 
         String startDateRaw = request.getParameter("startDate");
         String endDateRaw = request.getParameter("endDate");
-        Date startDate = null;
-        Date endDate = null;
+        LocalDateTime startDate = null;
+        LocalDateTime endDate = null;
         if (startDateRaw != null && endDateRaw != null) {
-            try {
-                startDate = sdf.parse(startDateRaw);
-                startDate.setMinutes(0);
-                endDate = sdf.parse(endDateRaw);
-                endDate.setMinutes(0);
-            } catch (ParseException ex) {
-                Logger.getLogger(TimeTableRegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                ZonedDateTime startDateZone = ZonedDateTime.parse(startDateRaw, formatter);
+                startDate = startDateZone.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+                ZonedDateTime endDateZone = ZonedDateTime.parse(endDateRaw, formatter);
+                endDate = endDateZone.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
         }
         if (startDate != null && endDate != null) {
             HttpSession session = request.getSession();
             User doctor = (User) session.getAttribute("user");
             DoctorSchedule schedule = new DoctorSchedule();
-            schedule.setStartDate(startDate);
-            schedule.setEndDate(endDate);
+            schedule.setStartDate(Date.from(startDate.atZone(ZoneId.systemDefault()).toInstant()));
+            schedule.setEndDate(Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant()));
             schedule.setDoctor(doctor);
             int result = doctorScheduleDAO.insertDoctorSchedule(schedule);
-            if(result != 0){
+            if (result != 0) {
                 List<User> admins = userDAO.findAdmins();
                 NotificationDTO notificationDTO = new NotificationDTO();
                 notificationDTO.setContent(Const.NEW_DOCTOR_SCHEDULE_REQUEST_MESSAGE);
-                notificationDTO.setLink(Const.ADMIN_VIEW_ALL_APPOINTMENT_URL); // need to update
+                notificationDTO.setLink(Const.ADMIN_VIEW_DOCTOR_SCHEDULE_URL);
                 for (User admin : admins) {
                     notificationDTO.setToUserId(admin.getUserId());
                     notificationDAO.insertNotification(notificationDTO);

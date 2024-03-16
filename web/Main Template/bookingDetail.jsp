@@ -157,6 +157,15 @@
                         </table>
                     </div>
                 </div>
+                <div class="row">
+                    <c:if test="${empty sessionScope.user or sessionScope.user.role eq 'Customer'}">
+                        <form style="text-align: center;" method="POST" action="${pageContext.request.contextPath}/updateBookingStatus">
+                            <input type="hidden" name="id" value="${requestScope.booking.id}" />
+                            <input type="hidden" value="1" name="status" />
+                            <button class="btn btn-danger" type="submit">Cancel</button>
+                        </form>
+                    </c:if>
+                </div>
             </div>
         </section>
         <!--/ End Team -->

@@ -3,46 +3,52 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.booking;
+package controller.admin;
 
-import dal.BookingDAO;
-import dal.BookingMedicineDAO;
-import dto.BookingDTO;
-import dto.BookingMedicineDTO;
+
+import dal.DoctorScheduleDAO;
+import dal.NotificationDAO;
+import dto.NotificationDTO;
+import entity.DoctorSchedule;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import utils.Const;
 
 /**
  *
  * @author My Computer
  */
-@WebServlet(name = "BookingDetailController", urlPatterns = {Const.BOOKING_DETAIL})
-public class BookingDetailController extends HttpServlet {
-    private final BookingDAO bookingDAO;
-    private final BookingMedicineDAO bookingMedicineDAO;
-    
-    public BookingDetailController(){
-        bookingDAO = new BookingDAO();
-        bookingMedicineDAO = new BookingMedicineDAO();
+@WebServlet(name = "UpdateDoctorScheduleStatusController", urlPatterns = {"/updateDoctorScheduleStatus"})
+public class UpdateDoctorScheduleStatusController extends HttpServlet {
+    private final DoctorScheduleDAO doctorScheduleDAO;
+    private final NotificationDAO notificationDAO;
+    public UpdateDoctorScheduleStatusController(){
+        this.doctorScheduleDAO = new DoctorScheduleDAO();
+        this.notificationDAO = new NotificationDAO();
     }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookingIdRaw = request.getParameter("id");
-        Integer bookingId = bookingIdRaw != null && !bookingIdRaw.isEmpty() ? Integer.parseInt(bookingIdRaw) : null;
-        if(bookingId != null){
-            List<BookingMedicineDTO> bookingMedicines = bookingMedicineDAO.getMedicineByBookingId(bookingId);
-            BookingDTO bookingDTO = bookingDAO.getBookingById(bookingId);
-            request.setAttribute("bookingMedicines", bookingMedicines);
-            request.setAttribute("booking", bookingDTO);
-        }
-        request.getRequestDispatcher("Main Template/bookingDetail.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int id = Integer.parseInt(request.getParameter("id"));
+        int status = Integer.parseInt(request.getParameter("status"));
+        DoctorSchedule doctorSchedule  = doctorScheduleDAO.getDoctorScheduleById(id);
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setContent(Const.UPDATE_DOCTOR_SCHEDULE_REQUEST_MESSAGE + doctorSchedule.getStartDate().toString());
+        notificationDTO.setLink(Const.DOCTOR_TIME_TABLE_REGISTRATION_URL);
+        notificationDTO.setToUserId(doctorSchedule.getDoctor().getUserId());
+        notificationDAO.insertNotification(notificationDTO);
+        String contextPath = request.getContextPath();
+        doctorScheduleDAO.updateScheduleStatus(id, status , user.getUserId());
+        response.sendRedirect(contextPath + Const.ADMIN_VIEW_DOCTOR_SCHEDULE_URL);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

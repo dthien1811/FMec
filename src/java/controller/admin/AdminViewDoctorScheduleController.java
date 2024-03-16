@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.booking;
+package controller.admin;
 
-import dal.BookingDAO;
-import dal.BookingMedicineDAO;
-import dto.BookingDTO;
-import dto.BookingMedicineDTO;
+import com.google.gson.Gson;
+import dal.DoctorScheduleDAO;
+import entity.DoctorSchedule;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -23,26 +22,22 @@ import utils.Const;
  *
  * @author My Computer
  */
-@WebServlet(name = "BookingDetailController", urlPatterns = {Const.BOOKING_DETAIL})
-public class BookingDetailController extends HttpServlet {
-    private final BookingDAO bookingDAO;
-    private final BookingMedicineDAO bookingMedicineDAO;
-    
-    public BookingDetailController(){
-        bookingDAO = new BookingDAO();
-        bookingMedicineDAO = new BookingMedicineDAO();
+@WebServlet(name = "AdminViewDoctorScheduleController", urlPatterns = {Const.ADMIN_VIEW_DOCTOR_SCHEDULE_URL})
+public class AdminViewDoctorScheduleController extends HttpServlet {
+
+    private final DoctorScheduleDAO doctorScheduleDAO;
+    private final Gson gson;
+
+    public AdminViewDoctorScheduleController() {
+        this.doctorScheduleDAO = new DoctorScheduleDAO();
+        this.gson = new Gson();
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookingIdRaw = request.getParameter("id");
-        Integer bookingId = bookingIdRaw != null && !bookingIdRaw.isEmpty() ? Integer.parseInt(bookingIdRaw) : null;
-        if(bookingId != null){
-            List<BookingMedicineDTO> bookingMedicines = bookingMedicineDAO.getMedicineByBookingId(bookingId);
-            BookingDTO bookingDTO = bookingDAO.getBookingById(bookingId);
-            request.setAttribute("bookingMedicines", bookingMedicines);
-            request.setAttribute("booking", bookingDTO);
-        }
-        request.getRequestDispatcher("Main Template/bookingDetail.jsp").forward(request, response);
+        List<DoctorSchedule> schedules = doctorScheduleDAO.getAllDoctorSchedule();
+        request.setAttribute("schedules", gson.toJson(schedules));
+        request.getRequestDispatcher("Main Template/admin-doctor-schedule.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -51,6 +51,18 @@ public class BookingDTO {
         this.createDate = createDate;
         this.note = note;
     }
+    
+    public BookingDTO(int id, String customerName, int status, Date startDate, Date endDate , Date createDate , String note , int doctorId , int customerId) {
+        this.id = id;
+        this.customerName = customerName;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createDate = createDate;
+        this.note = note;
+        this.doctorId = doctorId;
+        this.customerId = customerId;
+    }
 
     public String getStatusName() {
         return statusName;

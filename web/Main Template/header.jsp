@@ -76,6 +76,19 @@
             .notification-badge{
 
             }
+            
+            #dropdown-majors{
+                animation-name: dropDown;
+                animation-delay: 1s;
+            }
+            
+            @keyframes dropDown{
+                from{
+                    height : 0px;
+                }to{
+                    heiht : 100%;
+                }
+            }
 
             .notification-list{
                 display: none;
@@ -156,9 +169,11 @@
     </head>
     <body>
         <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}" />
+        <input type="hidden" id="bookingEndpoint" value="${pageContext.request.contextPath}/appointment" />
         <input type="hidden" id="getStartEndTimeEndpoint" value="${pageContext.request.contextPath}/GetStartEndTimeController"/>
         <input type="hidden" id="getNotificationsEndpoint" value="${pageContext.request.contextPath}/GetNotificationController"/>
         <input type="hidden" id="updateNotificationsEndpoint" value="${pageContext.request.contextPath}/UpdateNotificationController"/>
+        <input type="hidden" id="getMajors" value="${pageContext.request.contextPath}/GetMajorController"/>
         <!-- Preloader -->
         <div class="preloader">
             <div class="loader">
@@ -298,7 +313,10 @@
                                         <div class="main-menu">
                                             <nav class="navigation">
                                                 <ul class="nav menu">
-                                                    <li><a href="${pageContext.request.contextPath}/doctors">Doctors <i class="icofont-rounded-down"></i></a>
+                                                    <li id="doctorNav">
+                                                        <a href="${pageContext.request.contextPath}/doctors">Doctors <i class="icofont-rounded-down"></i></a>
+                                                        <ul class="dropdown" id="dropdown-majors">
+                                                        </ul>
                                                     </li>
                                                     <li><a href="#">Services <i class="icofont-rounded-down"></i></a></li>
                                                     <li><a href="${pageContext.request.contextPath}/BlogServlet">Blogs <i class="icofont-rounded-down"></i></a>
@@ -337,6 +355,8 @@
 
             var endPoint = document.getElementById("getStartEndTimeEndpoint").value;
             var notificationEndpoint = document.getElementById("getNotificationsEndpoint").value;
+            var majorsEndpoint = document.getElementById("getMajors").value;
+            var bookingEndpoint = document.getElementById("bookingEndpoint").value;
             $.ajax({
                 type: "GET",
                 url: endPoint,
@@ -346,6 +366,22 @@
                     $("#startDate").append(startDate + "");
                     $("#endDate").append(endDate + "");
                 }
+            });
+            
+            $("#doctorNav").on("hover" , function() {
+                $("#dropdown-majors").toggle();
+            })
+            
+            $.ajax({
+               type : "GET",
+               url: majorsEndpoint,
+               success: function (response){
+                   var majors = JSON.parse(response);
+                   majors.forEach(major => {
+                       var majorItemLink = '<li><a href="'+  bookingEndpoint + "?majorId=" + major.id  +'">'+ major.nameMajor +' </a></li>';
+                       $("#dropdown-majors").append(majorItemLink);
+                   })
+               }
             });
 
             $.ajax({

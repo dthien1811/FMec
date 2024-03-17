@@ -286,10 +286,11 @@
                                         <div class="main-menu">
                                             <nav class="navigation">
                                                 <ul class="nav menu">
-                                                    <li><a href="${pageContext.request.contextPath}/createDoctor">Doctor Management <i class="icofont-rounded-down"></i></a>
+                                                    <li><a href="${pageContext.request.contextPath}/createDoctor">Doctor Management </a>
                                                     </li>
-                                                    <li><a href="${pageContext.request.contextPath}/viewAppointment">Appointment <i class="icofont-rounded-down"></i></a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/viewDoctorSchedule">Doctor Schedule <i class="icofont-rounded-down"></i></a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/viewAppointment">Appointment </a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/viewDoctorSchedule">Doctor Schedule </a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard </a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -300,9 +301,9 @@
                                         <div class="main-menu">
                                             <nav class="navigation">
                                                 <ul class="nav menu">
-                                                    <li><a href="${pageContext.request.contextPath}/timeTableRegistration">Time table <i class="icofont-rounded-down"></i></a>
+                                                    <li><a href="${pageContext.request.contextPath}/timeTableRegistration">Time table </a>
                                                     </li>
-                                                    <li><a href="${pageContext.request.contextPath}/doctorAppointment">Appointment <i class="icofont-rounded-down"></i></a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/doctorAppointment">Appointment </a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -319,7 +320,7 @@
                                                         </ul>
                                                     </li>
                                                     <li><a href="#">Services <i class="icofont-rounded-down"></i></a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/BlogServlet">Blogs <i class="icofont-rounded-down"></i></a>
+                                                    <li><a href="${pageContext.request.contextPath}/BlogServlet">Blogs </a>
                                                     </li>
                                                     <li><a href="#">Appointment <i class="icofont-rounded-down"></i></a>
                                                         <ul class="dropdown">
@@ -388,7 +389,6 @@
                 type: "GET",
                 url: notificationEndpoint,
                 success: function (response) {
-                    console.log(response);
                     var notifications = JSON.parse(response);
                     var notReadedNoti = notifications.filter(noti => {
                         return !noti.isReaded;

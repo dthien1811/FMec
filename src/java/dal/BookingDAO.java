@@ -12,10 +12,12 @@ import dto.MyAppointmentDTO;
 import entity.Booking;
 import entity.User;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class BookingDAO extends DBContext {
 
-    public List<Booking> getDoctorAndPatientBooking(int doctorId, int patientId , Date date) {
+    public List<Booking> getDoctorAndPatientBooking(int doctorId, int patientId, Date date) {
         List<Booking> bookings = new ArrayList<>();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         try {
@@ -70,8 +72,8 @@ public class BookingDAO extends DBContext {
         }
         return bookings;
     }
-    
-    public List<BookingDTO> getAll(){
+
+    public List<BookingDTO> getAll() {
         List<BookingDTO> list = new ArrayList<>();
         try {
             String sql = "SELECT s.id , s.start_date , s.end_date , s.create_date , s.note , s.status , "
@@ -95,13 +97,13 @@ public class BookingDAO extends DBContext {
                 String note = resultSet.getString("note");
                 int status = resultSet.getInt("status");
                 String statusName = "";
-                for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
-                    if(status == s.getValue()){
+                for (StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()) {
+                    if (status == s.getValue()) {
                         statusName = s.name();
                         break;
                     }
                 }
-                booking = new BookingDTO(id, customerName, status , startDate, endDate , createDate , note);
+                booking = new BookingDTO(id, customerName, status, startDate, endDate, createDate, note);
                 booking.setStatusName(statusName);
                 booking.setTotalPrice(totalPrice);
                 booking.setRealStartDate(realStartDate);
@@ -114,7 +116,7 @@ public class BookingDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<MyAppointmentDTO> getPatientAppointment(int customerId) {
         List<MyAppointmentDTO> bookings = new ArrayList<>();
         try {
@@ -136,13 +138,13 @@ public class BookingDAO extends DBContext {
                 String note = resultSet.getString("note");
                 int status = resultSet.getInt("status");
                 String statusName = "";
-                for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
-                    if(status == s.getValue()){
+                for (StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()) {
+                    if (status == s.getValue()) {
                         statusName = s.name();
                         break;
                     }
                 }
-                booking = new MyAppointmentDTO(id, doctorName, statusName, note, startDate, endDate , createDate);
+                booking = new MyAppointmentDTO(id, doctorName, statusName, note, startDate, endDate, createDate);
                 bookings.add(booking);
             }
         } catch (Exception ex) {
@@ -150,7 +152,7 @@ public class BookingDAO extends DBContext {
         }
         return bookings;
     }
-    
+
     public List<DoctorAppointmentDTO> getDoctorAppointment(int doctorId) {
         List<DoctorAppointmentDTO> bookings = new ArrayList<>();
         try {
@@ -172,13 +174,13 @@ public class BookingDAO extends DBContext {
                 String note = resultSet.getString("note");
                 int status = resultSet.getInt("status");
                 String statusName = "";
-                for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
-                    if(status == s.getValue()){
+                for (StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()) {
+                    if (status == s.getValue()) {
                         statusName = s.name();
                         break;
                     }
                 }
-                booking = new DoctorAppointmentDTO(id, customerName, statusName, note, startDate, endDate , createDate , status);
+                booking = new DoctorAppointmentDTO(id, customerName, statusName, note, startDate, endDate, createDate, status);
                 bookings.add(booking);
             }
         } catch (Exception ex) {
@@ -186,7 +188,7 @@ public class BookingDAO extends DBContext {
         }
         return bookings;
     }
-    
+
     public BookingDTO getBookingById(int id) {
         try {
             String sql = "SELECT s.[start_date] , s.[end_date] , s.[create_date] , customer.name , customer.[userId] as customerId , s.note , s.status , doctor.[userId] as doctorId FROM Booking s "
@@ -208,13 +210,13 @@ public class BookingDAO extends DBContext {
                 int doctorId = resultSet.getInt("doctorId");
                 int customerId = resultSet.getInt("customerId");
                 String statusName = "";
-                for(StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()){
-                    if(status == s.getValue()){
+                for (StatusEnum.BookingStatus s : StatusEnum.BookingStatus.values()) {
+                    if (status == s.getValue()) {
                         statusName = s.name();
                         break;
                     }
                 }
-                return new BookingDTO(id, customerName, status , startDate, endDate , createDate , note , doctorId , customerId);
+                return new BookingDTO(id, customerName, status, startDate, endDate, createDate, note, doctorId, customerId);
             }
         } catch (Exception ex) {
             Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -240,7 +242,7 @@ public class BookingDAO extends DBContext {
             statement.setInt(2, bookingDTO.getCustomerId());
             statement.setInt(3, StatusEnum.BookingStatus.PENDING.getValue());
             statement.setString(4, bookingDTO.getNote());
-            statement.setTimestamp(5, new java.sql.Timestamp(bookingDTO.getStartDate().getTime()) );
+            statement.setTimestamp(5, new java.sql.Timestamp(bookingDTO.getStartDate().getTime()));
             statement.setTimestamp(6, new java.sql.Timestamp(bookingDTO.getEndDate().getTime()));
             statement.setTimestamp(7, new java.sql.Timestamp(new Date().getTime()));
             return statement.executeUpdate();
@@ -249,7 +251,7 @@ public class BookingDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public int updateBookingStartExamining(BookingDTO bookingDTO) {
         try {
             String sql = "UPDATE [dbo].[Booking] SET [status] = ? , [real_start_date] = ? WHERE id = ?";
@@ -264,8 +266,8 @@ public class BookingDAO extends DBContext {
         }
         return 0;
     }
-    
-    public int updateBookingStatus(int bookingId , int status){
+
+    public int updateBookingStatus(int bookingId, int status) {
         try {
             String sql = "UPDATE [dbo].[Booking] SET [status] = ?  WHERE id = ?";
             connection = getConnection();
@@ -278,7 +280,7 @@ public class BookingDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public int updateBookingEndExamining(BookingDTO bookingDTO) {
         try {
             String sql = "UPDATE [dbo].[Booking] SET [status] = ? , [real_end_date] = ? , [total_price] = ? WHERE id = ?";
@@ -294,4 +296,57 @@ public class BookingDAO extends DBContext {
         }
         return 0;
     }
+
+    public HashMap<Integer , Long> getRevenueByYear(int year) {
+        HashMap<Integer , Long> map = new HashMap<>();
+        try {
+            String sql = "select DATEPART(MONTH , b.create_date) as month , SUM(b.total_price) as totalRevenue from Booking b \n"
+                    + "WHERE DATEPART(year , b.create_date) = ?\n"
+                    + "GROUP BY DATEPART(MONTH , b.create_date)\n"
+                    + "ORDER BY DATEPART(MONTH , b.create_date)";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, year);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                long totalRevenue = rs.getInt("totalRevenue");
+                int month = rs.getInt("month");
+                map.put(month , totalRevenue);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return map;
+    }
+    
+    public HashMap<Integer , HashMap<Integer , Integer>> getNumberOfBookingRequestByStatusAndYear(int year) {
+        HashMap<Integer , HashMap<Integer , Integer>> result = new HashMap<>();
+        try {
+            String sql = "select DATEPART(MONTH , b.create_date) as month ,  b.[status] , COUNT(b.id) as numberOfBooking from Booking b \n"
+                    + "WHERE DATEPART(year , b.create_date) = ?\n"
+                    + "GROUP BY DATEPART(MONTH , b.create_date) , b.[status]\n"
+                    + "ORDER BY DATEPART(MONTH , b.create_date) , b.[status]";
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, year);
+            ResultSet rs = statement.executeQuery();
+            HashMap<Integer , Integer> map = null;
+            while(rs.next()){
+                int monthValue = rs.getInt("month");
+                boolean isContainInHash = result.containsKey(monthValue);
+                if(!isContainInHash){
+                    map = new HashMap<>();
+                    result.put(monthValue, map);
+                }
+                int status = rs.getInt("status");
+                int numberOfBooking = rs.getInt("numberOfBooking");
+                map.put(status , numberOfBooking);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    
 }

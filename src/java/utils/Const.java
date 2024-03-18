@@ -33,7 +33,8 @@ public class Const {
     
     /* PUBLIC URL */
     public static final String LOGIN_URL = "/LoginServlet";
-    
+    public static final String CONTACT_URL = "/contact";
+            
     public static final String BOOKING_DETAIL = "/bookingDetail";
     public static final String UPDATE_BOOKING_STATUS_URL = "/updateBookingStatus";
     public static final String UPDATE_DOCTOR_SCHEDULE_STATUS_URL = "/updateDoctorScheduleStatus";
@@ -43,6 +44,7 @@ public class Const {
     public static final String NEW_DOCTOR_SCHEDULE_REQUEST_MESSAGE = "New doctor schedule request was send";
     public static final String UPDATE_BOOKING_REQUEST_MESSAGE = "There's new update on booking request at ";
     public static final String UPDATE_DOCTOR_SCHEDULE_REQUEST_MESSAGE = "There's new update on schedule at ";
+    public static final String NEW_CONTACT_MESSAGE = "New contact from ";
     
     public static final String[] ADMIN_URL = new String[]{ADMIN_CREATE_DOCTOR_URL , ADMIN_VIEW_ALL_APPOINTMENT_URL , BOOKING_DETAIL ,
         UPDATE_BOOKING_STATUS_URL , UPDATE_DOCTOR_SCHEDULE_STATUS_URL , ADMIN_UPDATE_BLOG ,

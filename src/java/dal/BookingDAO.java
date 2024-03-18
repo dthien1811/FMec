@@ -198,7 +198,7 @@ public class BookingDAO extends DBContext {
 
     public BookingDTO getBookingById(int id) {
         try {
-            String sql = "SELECT s.[start_date] , s.[end_date] , s.[create_date] , customer.name , customer.[userId] as customerId , s.note , s.status , doctor.[userId] as doctorId FROM Booking s "
+            String sql = "SELECT s.[start_date] , s.[end_date] , s.[create_date] , customer.name , s.[real_start_date] ,  customer.[userId] as customerId , s.note , s.status , doctor.[userId] as doctorId FROM Booking s "
                     + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] "
                     + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
                     + "  WHERE s.id = ? ";
@@ -211,6 +211,7 @@ public class BookingDAO extends DBContext {
                 Date startDate = resultSet.getTimestamp("start_date");
                 Date endDate = resultSet.getTimestamp("end_date");
                 Date createDate = resultSet.getTimestamp("create_date");
+                Date realStartDate = resultSet.getTimestamp("real_start_date");
                 String customerName = resultSet.getString("name");
                 String note = resultSet.getString("note");
                 int status = resultSet.getInt("status");
@@ -223,7 +224,7 @@ public class BookingDAO extends DBContext {
                         break;
                     }
                 }
-                return new BookingDTO(id, customerName, status, startDate, endDate, createDate, note, doctorId, customerId);
+                return new BookingDTO(id, customerName, status, startDate, endDate, createDate, note, doctorId, customerId , realStartDate);
             }
         } catch (Exception ex) {
             Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);

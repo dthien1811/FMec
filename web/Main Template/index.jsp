@@ -100,7 +100,7 @@
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
                                     <div class="button">
                                         <a href="${pageContext.request.contextPath}/appointment" class="btn">Get Appointment</a>
-                                        <a href="${pageContext.request.contextPath}/Main Template/contact.html" class="btn primary">Contact Now</a>
+                                        <a href="${pageContext.request.contextPath}/contact" class="btn primary">Contact Now</a>
                                     </div>
                                 </div>
                             </div>

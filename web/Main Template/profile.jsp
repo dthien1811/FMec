@@ -100,7 +100,7 @@
                             <ul class="top-link">
                                 <li><a href="${pageContext.request.contextPath}/Main Template/about.html">About</a></li>
                                 <li><a href="${pageContext.request.contextPath}/doctors">Doctors</a></li>
-                                <li><a href="${pageContext.request.contextPath}/Main Template/contact.html">Contact</a></li>
+                                <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
                                 <li><a href="${pageContext.request.contextPath}/Main Template/faq.html">FAQ</a></li>
                             </ul>
                             <!-- End Contact -->
@@ -232,7 +232,7 @@
                                                     <li><a href="${pageContext.request.contextPath}/Main Template/blog-single.html">Blog Details</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="${pageContext.request.contextPath}/Main Template/contact.html">Contact Us</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/contact">Contact Us</a></li>
                                         </ul>
                                     </nav>
                                 </div>

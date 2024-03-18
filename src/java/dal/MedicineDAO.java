@@ -7,6 +7,7 @@ package dal;
 
 import entity.Medicine;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,7 +54,18 @@ public class MedicineDAO extends DBContext {
             }
             return 1;
         } catch (Exception ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(MedicineDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             Logger.getLogger(MedicineDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(MedicineDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return 0;
     }

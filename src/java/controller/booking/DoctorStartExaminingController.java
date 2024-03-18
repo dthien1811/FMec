@@ -54,19 +54,21 @@ public class DoctorStartExaminingController extends HttpServlet {
         String bookingIdRaw = request.getParameter("id");
         Integer bookingId = bookingIdRaw != null && !bookingIdRaw.isEmpty() ? Integer.parseInt(bookingIdRaw) : null;
         if(bookingId != null){
+            BookingDTO bookingDTO = bookingDAO.getBookingById(bookingId);
             List<Medicine> medicines = medicineDAO.getAll();
             List<BookingMedicineDTO> bookingMedicines = bookingMedicineDAO.getMedicineByBookingId(bookingId);
             BookingDTO startExamining = new BookingDTO();
             double defaultPrice = configDAO.getConfigValue(ConfigEnum.Config.DEFAULT_PRICE.toString());
             startExamining.setId(bookingId);
-            bookingDAO.updateBookingStartExamining(startExamining);
-            BookingDTO bookingDTO = bookingDAO.getBookingById(bookingId);
-            /* Send Notification */
-            NotificationDTO notificationDTO = new NotificationDTO();
-            notificationDTO.setContent(Const.UPDATE_BOOKING_REQUEST_MESSAGE + bookingDTO.getStartDate().toString());
-            notificationDTO.setLink(Const.CUSTOMER_VIEW_APPOINTMENT);
-            notificationDTO.setToUserId(bookingDTO.getCustomerId());
-            notificationDAO.insertNotification(notificationDTO);
+            if(bookingDTO.getRealStartDate() == null){
+                bookingDAO.updateBookingStartExamining(startExamining);
+                /* Send Notification */
+                NotificationDTO notificationDTO = new NotificationDTO();
+                notificationDTO.setContent(Const.UPDATE_BOOKING_REQUEST_MESSAGE + bookingDTO.getStartDate().toString());
+                notificationDTO.setLink(Const.CUSTOMER_VIEW_APPOINTMENT);
+                notificationDTO.setToUserId(bookingDTO.getCustomerId());
+                notificationDAO.insertNotification(notificationDTO);
+            }
             /* End Notification */
             request.setAttribute("medicines", gson.toJson(medicines));
             request.setAttribute("bookingMedicines", gson.toJson(bookingMedicines));

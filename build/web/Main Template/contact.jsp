@@ -1,4 +1,5 @@
 <!doctype html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html class="no-js" lang="zxx">
     <head>
         <!-- Meta Tags -->
@@ -19,42 +20,42 @@
 		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/bootstrap.min.css">
 		<!-- Nice Select CSS -->
-		<link rel="stylesheet" href="css/nice-select.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/nice-select.css">
 		<!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/font-awesome.min.css">
 		<!-- icofont CSS -->
-        <link rel="stylesheet" href="css/icofont.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/icofont.css">
 		<!-- Slicknav -->
-		<link rel="stylesheet" href="css/slicknav.min.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/slicknav.min.css">
 		<!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/owl-carousel.css">
 		<!-- Datepicker CSS -->
-		<link rel="stylesheet" href="css/datepicker.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/datepicker.css">
 		<!-- Animate CSS -->
-        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/animate.min.css">
 		<!-- Magnific Popup CSS -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/magnific-popup.css">
 		
 		<!-- Medipro CSS -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="css/responsive.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/normalize.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/responsive.css">
 		
 		<!-- Color CSS -->
-		<link rel="stylesheet" href="css/color/color1.css">
-		<!--<link rel="stylesheet" href="css/color/color2.css">-->
-		<!--<link rel="stylesheet" href="css/color/color3.css">-->
-		<!--<link rel="stylesheet" href="css/color/color4.css">-->
-		<!--<link rel="stylesheet" href="css/color/color5.css">-->
-		<!--<link rel="stylesheet" href="css/color/color6.css">-->
-		<!--<link rel="stylesheet" href="css/color/color7.css">-->
-		<!--<link rel="stylesheet" href="css/color/color8.css">-->
-		<!--<link rel="stylesheet" href="css/color/color9.css">-->
-		<!--<link rel="stylesheet" href="css/color/color10.css">-->
-		<!--<link rel="stylesheet" href="css/color/color11.css">-->
-		<!--<link rel="stylesheet" href="css/color/color12.css">-->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color1.css">
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color2.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color3.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color4.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color5.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color6.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color7.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color8.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color9.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color10.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color11.css">-->
+		<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color12.css">-->
 
 		<link rel="stylesheet" href="#" id="colors">
 		
@@ -76,131 +77,7 @@
             </div>
         </div>
         <!-- End Preloader -->
-		
-		<!-- Mediplus Color Plate -->
-		<div class="color-plate">
-			<a class="color-plate-icon"><i class="fa fa-cog fa-spin"></i></a>
-			<h4>Mediplus</h4>
-			<p>Here is some awesome color's available on Mediplus Template.</p>
-			<span class="color1"></span>
-			<span class="color2"></span>
-			<span class="color3"></span>
-			<span class="color4"></span>
-			<span class="color5"></span>
-			<span class="color6"></span>
-			<span class="color7"></span>
-			<span class="color8"></span>
-			<span class="color9"></span>
-			<span class="color10"></span>
-			<span class="color11"></span>
-			<span class="color12"></span>
-		</div>
-		<!-- /End Color Plate -->
-	
-		<!-- Header Area -->
-		<header class="header" >
-			<!-- Topbar -->
-			<div class="topbar">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6 col-md-5 col-12">
-							<!-- Contact -->
-							<ul class="top-link">
-								<li><a href="#">About</a></li>
-								<li><a href="#">Doctors</a></li>
-								<li><a href="#">Contact</a></li>
-								<li><a href="#">FAQ</a></li>
-							</ul>
-							<!-- End Contact -->
-						</div>
-						<div class="col-lg-6 col-md-7 col-12">
-							<!-- Top Contact -->
-							<ul class="top-contact">
-								<li><i class="fa fa-phone"></i>+880 1234 56789</li>
-								<li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">support@yourmail.com</a></li>
-							</ul>
-							<!-- End Top Contact -->
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- End Topbar -->
-			<!-- Header Inner -->
-			<div class="header-inner">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-12">
-								<!-- Start Logo -->
-								<div class="logo">
-									<a href="index.html"><img src="img/logo.png" alt="#"></a>
-								</div>
-								<!-- End Logo -->
-								<!-- Mobile Nav -->
-								<div class="mobile-nav"></div>
-								<!-- End Mobile Nav -->
-							</div>
-							<div class="col-lg-7 col-md-9 col-12">
-								<!-- Main Menu -->
-								<div class="main-menu">
-									<nav class="navigation">
-										<ul class="nav menu">
-											<li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="index.html">Default Homepage</a></li>
-													<li><a href="index2.html">Animation Homepage</a></li>
-												</ul>
-											</li>
-											<li><a href="#">Doctos <i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="${pageContext.request.contextPath}/doctors">Doctor</a></li>
-													<li><a href="${pageContext.request.contextPath}/doctorDetails">Doctor Details</a></li>
-												</ul>
-											</li>
-											<li><a href="#">Services <i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="service.html">Service</a></li>
-													<li><a href="service-details.html">Service Details</a></li>
-												</ul>
-											</li>
-											<li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="about.html">About Us</a></li>
-													<li><a href="${pageContext.request.contextPath}/appointment">Appointment</a></li>
-													<li><a href="time-table.html">Time Table</a></li>
-													<li><a href="testimonials.html">Testimonials</a></li>
-													<li><a href="pricing.html">Our Pricing</a></li>
-													<li><a href="register.html">Sign Up</a></li>
-													<li><a href="login.html">Login</a></li>
-													<li><a href="faq.html">Faq</a></li>
-													<li><a href="mail-success.html">Mail Success</a></li>
-													<li><a href="404.html">404 Error</a></li>
-												</ul>
-											</li>
-											<li><a href="#">Blogs <i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="blog-grid.html">Blog Grid</a></li>
-													<li><a href="blog-single.html">Blog Details</a></li>
-												</ul>
-											</li>
-											<li><a href="contact.html">Contact Us</a></li>
-										</ul>
-									</nav>
-								</div>
-								<!--/ End Main Menu -->
-							</div>
-							<div class="col-lg-2 col-12">
-								<div class="get-quote">
-									<a href="${pageContext.request.contextPath}/appointment" class="btn">Book Appointment</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ End Header Inner -->
-		</header>
-		<!-- End Header Area -->
+	<%@include file="header.jsp" %>
 	
 		<!-- Breadcrumbs -->
 		<div class="breadcrumbs overlay">
@@ -238,7 +115,7 @@
 								<h2>Contact With Us</h2>
 								<p>If you have any questions please fell free to contact with us.</p>
 								<!-- Form -->
-								<form class="form" method="post" action="mail/mail.php">
+								<form class="form" method="post" action="${pageContext.request.contextPath}/contact">
 									<div class="row">
 										<div class="col-lg-6">
 											<div class="form-group">
@@ -278,43 +155,6 @@
 								<!--/ End Form -->
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="contact-info">
-					<div class="row">
-						<!-- single-info -->
-						<div class="col-lg-4 col-12 ">
-							<div class="single-info">
-								<i class="icofont icofont-ui-call"></i>
-								<div class="content">
-									<h3>+(000) 1234 56789</h3>
-									<p>info@company.com</p>
-								</div>
-							</div>
-						</div>
-						<!--/End single-info -->
-						<!-- single-info -->
-						<div class="col-lg-4 col-12 ">
-							<div class="single-info">
-								<i class="icofont-google-map"></i>
-								<div class="content">
-									<h3>2 Fir e Brigade Road</h3>
-									<p>Chittagonj, Lakshmipur</p>
-								</div>
-							</div>
-						</div>
-						<!--/End single-info -->
-						<!-- single-info -->
-						<div class="col-lg-4 col-12 ">
-							<div class="single-info">
-								<i class="icofont icofont-wall-clock"></i>
-								<div class="content">
-									<h3>Mon - Sat: 8am - 5pm</h3>
-									<p>Sunday Closed</p>
-								</div>
-							</div>
-						</div>
-						<!--/End single-info -->
 					</div>
 				</div>
 			</div>
@@ -399,7 +239,7 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-12">
 							<div class="copyright-content">
-								<p>Â© Copyright 2018  |  All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
+								<p>© Copyright 2018  |  All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
 							</div>
 						</div>
 					</div>
@@ -410,50 +250,81 @@
 		<!--/ End Footer Area -->
 		
 		<!-- jquery Min JS -->
-        <script src="js/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.min.js"></script>
 		<!-- jquery Migrate JS -->
-		<script src="js/jquery-migrate-3.0.0.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/jquery-migrate-3.0.0.js"></script>
 		<!-- jquery Ui JS -->
-		<script src="js/jquery-ui.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/jquery-ui.min.js"></script>
 		<!-- Easing JS -->
-        <script src="js/easing.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/easing.js"></script>
 		<!-- Color JS -->
-		<script src="js/colors.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/colors.js"></script>
 		<!-- Popper JS -->
-		<script src="js/popper.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/popper.min.js"></script>
 		<!-- Bootstrap Datepicker JS -->
-		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/bootstrap-datepicker.js"></script>
 		<!-- Jquery Nav JS -->
-        <script src="js/jquery.nav.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.nav.js"></script>
 		<!-- Slicknav JS -->
-		<script src="js/slicknav.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/slicknav.min.js"></script>
 		<!-- ScrollUp JS -->
-        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/jquery.scrollUp.min.js"></script>
 		<!-- Niceselect JS -->
-		<script src="js/niceselect.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/niceselect.js"></script>
 		<!-- Tilt Jquery JS -->
-		<script src="js/tilt.jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/tilt.jquery.min.js"></script>
 		<!-- Owl Carousel JS -->
-        <script src="js/owl-carousel.js"></script>
+        <script src="${pageContext.request.contextPath}/Main Template/js/owl-carousel.js"></script>
 		<!-- counterup JS -->
-		<script src="js/jquery.counterup.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/jquery.counterup.min.js"></script>
 		<!-- Steller JS -->
-		<script src="js/steller.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/steller.js"></script>
 		<!-- Wow JS -->
-		<script src="js/wow.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/wow.min.js"></script>
 		<!-- Magnific Popup JS -->
-		<script src="js/jquery.magnific-popup.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/jquery.magnific-popup.min.js"></script>
 		<!-- Counter Up CDN JS -->
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-		<!-- Google Map API Key JS -->
-		<script src="https://maps.google.com/maps/api/js?key=AIzaSyDGqTyqoPIvYxhn_Sa7ZrK5bENUWhpCo0w"></script>
+                <!-- Load the Google Maps JavaScript API with your API key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGqTyqoPIvYxhn_Sa7ZrK5bENUWhpCo0w&callback=initMap" async defer></script>
+                <script>
+        function initMap() {
+            // Coordinates for FPT University Da Nang
+            const fptUniversityDaNang = { lat: 16.065437, lng: 108.220591 };
+
+            // Create a map centered at FPT University Da Nang
+            const map = new google.maps.Map(document.getElementById("myMap"), {
+                center: fptUniversityDaNang,
+                zoom: 16,
+            });
+
+            // Create a marker for FPT University Da Nang
+            const marker = new google.maps.marker.AdvancedMarkerElement({
+                position: fptUniversityDaNang,
+                map: map,
+                title: "FPT University Da Nang"
+            });
+
+            // Add an info window to the marker
+            const infowindow = new google.maps.InfoWindow({
+                content: "FPT University Da Nang"
+            });
+
+            // Open the info window when the marker is clicked
+            marker.addListener("click", () => {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+    
 		<!-- Gmaps JS -->
-		<script src="js/gmaps.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/gmaps.min.js"></script>
 		<!-- Map Active JS -->
-		<script src="js/map-active.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/map-active.js"></script>
 		<!-- Bootstrap JS -->
-		<script src="js/bootstrap.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
 		<!-- Main JS -->
-		<script src="js/main.js"></script>
+		<script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
+                
     </body>
 </html>

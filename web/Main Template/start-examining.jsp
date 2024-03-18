@@ -150,7 +150,6 @@
                     return m.medicineId === id;
                 })[0];
                 bookingMedicine.note = note;
-                console.log(bookingMedicine);
             }
 
             function deleteMedicine(medicineId) {
@@ -170,11 +169,18 @@
             }
 
             function addMedicine(medicineId) {
-                selectedMedicineId.add(medicineId);
-                console.log(selectedMedicineId);
                 var medicine = medicines.filter(m => {
                     return m.medicineId === medicineId;
                 })[0];
+                if(medicine.quantity < 1) {
+                    swal({
+                            title: 'Fail!',
+                            text: 'The medicine is out of quantity.',
+                            icon: 'error'
+                        })
+                    return;
+                }
+                selectedMedicineId.add(medicineId);
                 medicine.quantity = medicine.quantity - 1;
                 var bookingMedicine = bookingMedicines.filter(m => {
                     return m.medicineId === medicineId;

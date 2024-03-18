@@ -14,12 +14,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.servlet.annotation.WebServlet;
 
 
 /**
  *
  * @author Lenovo
  */
+@WebServlet(name = "BlogServlet", urlPatterns = {"/BlogServlet"})
 public class BlogServlet extends HttpServlet {
 
     

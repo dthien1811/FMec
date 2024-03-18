@@ -53,4 +53,6 @@ public class Const {
         URL.put(UserRoleEnum.UserRole.Customer.toString(), CUSTOMER_URL);
         URL.put(UserRoleEnum.UserRole.Professor.toString(), DOCTOR_URL);
     }
+    
+    public static final int TOP_FEEDBACK = 8;
 }

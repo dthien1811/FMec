@@ -476,6 +476,52 @@ public class UserDAO extends DBContext {
         return list;
     }
     
+    public List<DoctorCardDto> findTop4Doctors(){
+        List<DoctorCardDto> list = new ArrayList<>();
+        String role = UserRoleEnum.UserRole.Professor.toString();
+        String sql = "SELECT TOP 4 [userId]\n"
+                + "      ,[User].[name] as userName\n"
+                + "      ,[Major].[name] as majorName\n"
+                + "      ,[Major].[majorId] as majorId\n"
+                + "      ,[avatar]\n"
+                + "  FROM [dbo].[User] "
+                + " LEFT JOIN [Major] on [User].majorId = [Major].majorId "
+                + "where [role] = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, role);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
+                String avatar = resultSet.getString("avatar");
+                String doctorName = resultSet.getString("userName");
+                String majorName = resultSet.getString("majorName");
+                int majorId = resultSet.getInt("majorId");
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , 0);
+                doctorCardDto.setMajorId(majorId);
+                list.add(doctorCardDto);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return list;
+    }
+    
     public List<DoctorCardDto> findDoctors(){
         List<DoctorCardDto> list = new ArrayList<>();
         String role = UserRoleEnum.UserRole.Professor.toString();

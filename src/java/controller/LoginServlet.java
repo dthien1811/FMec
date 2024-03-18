@@ -82,20 +82,7 @@ public class LoginServlet extends HttpServlet {
         
         if (user != null) {
            session.setAttribute("user", user);
-             switch (user.getRole()) {
-                case "patient":                   
-                    request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
-                    break;
-                case "doctor":              
-                    request.getRequestDispatcher("Main Template/register.jsp").forward(request, response);
-                    break;
-                case "admin":                
-                    request.getRequestDispatcher("Main Template/forgotpassword.jsp").forward(request, response);
-                    break;
-                    default:
-                         request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
-                    break;
-            }
+           response.sendRedirect(request.getContextPath() + "/HomeServlet");
         }
            
 

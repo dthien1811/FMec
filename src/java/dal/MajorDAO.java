@@ -30,6 +30,8 @@ public class MajorDAO extends DBContext{
                 String name = resultSet.getString("name");
                 major = new Major();
                 major.setId(id);
+                major.setImageUrl(resultSet.getString("imageUrl"));
+                major.setDescription(resultSet.getString("description"));
                 major.setNameMajor(name);
                 result.add(major);
             }

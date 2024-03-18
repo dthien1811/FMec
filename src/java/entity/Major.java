@@ -12,6 +12,7 @@ public class Major {
     private int id ;
     private String nameMajor ;
     private String description ;
+    private String imageUrl;
 
     public Major() {
     }
@@ -45,6 +46,15 @@ public class Major {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
 
     @Override
     public String toString() {

@@ -319,7 +319,6 @@
                                                         <ul class="dropdown" id="dropdown-majors">
                                                         </ul>
                                                     </li>
-                                                    <li><a href="#">Services <i class="icofont-rounded-down"></i></a></li>
                                                     <li><a href="${pageContext.request.contextPath}/BlogServlet">Blogs </a>
                                                     </li>
                                                     <li><a href="#">Appointment <i class="icofont-rounded-down"></i></a>
@@ -389,6 +388,8 @@
                 type: "GET",
                 url: notificationEndpoint,
                 success: function (response) {
+                    if(response.length === 0 ) return;
+                    console.log(response);
                     var notifications = JSON.parse(response);
                     var notReadedNoti = notifications.filter(noti => {
                         return !noti.isReaded;

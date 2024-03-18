@@ -4,12 +4,20 @@
  */
 package controller;
 
+import dal.FeedbackDAO;
+import dal.MajorDAO;
+import dal.UserDAO;
+import dto.DoctorCardDto;
+import entity.Feedback;
+import entity.Major;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.Const;
 
 /**
  *
@@ -17,15 +25,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HomeServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private final FeedbackDAO feedbackDAO;
+    private final UserDAO userDAO;
+    private final MajorDAO majorDAO;
+    
+    public HomeServlet(){
+        this.feedbackDAO = new FeedbackDAO();
+        this.userDAO = new UserDAO();
+        this.majorDAO = new MajorDAO();
+    }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -55,6 +63,12 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Major> majors = majorDAO.getAll();
+        List<DoctorCardDto> doctors = userDAO.findTop4Doctors();
+        List<Feedback> feedbacks = feedbackDAO.getTop8LastFeedbacks();
+        request.setAttribute("majors", majors);
+        request.setAttribute("doctors", doctors);
+        request.setAttribute("feedbacks", feedbacks);
         request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
     }
 

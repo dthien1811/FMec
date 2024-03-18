@@ -26,6 +26,7 @@ public class Const {
     /* CUSTOMER URL */
     public static final String BOOKING_URL = "/appointment";
     public static final String CUSTOMER_VIEW_APPOINTMENT = "/myAppointment";
+    public static final String GIVE_FEEDBACK_URL = "/giveFeedback";
     
     /* PUBLIC URL */
     public static final String LOGIN_URL = "/LoginServlet";
@@ -44,7 +45,7 @@ public class Const {
         UPDATE_BOOKING_STATUS_URL , UPDATE_DOCTOR_SCHEDULE_STATUS_URL , ADMIN_VIEW_DOCTOR_SCHEDULE_URL , ADMIN_DASHBOARD};
     public static final String[] DOCTOR_URL = new String[]{DOCTOR_VIEW_APPOINTMENT_URL , DOCTOR_TIME_TABLE_REGISTRATION_URL ,
     DOCTOR_START_EXAMINING_URL , DOCTOR_END_EXAMINING_URL};
-    public static final String[] CUSTOMER_URL = new String[]{BOOKING_URL , CUSTOMER_VIEW_APPOINTMENT , BOOKING_DETAIL , UPDATE_BOOKING_STATUS_URL};
+    public static final String[] CUSTOMER_URL = new String[]{BOOKING_URL , CUSTOMER_VIEW_APPOINTMENT , BOOKING_DETAIL , UPDATE_BOOKING_STATUS_URL , GIVE_FEEDBACK_URL};
     public static final HashMap<String , String[]> URL ;
     static {
         URL = new HashMap<>();

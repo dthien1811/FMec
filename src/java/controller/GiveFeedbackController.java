@@ -1,20 +1,16 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package controller;
 
 import dal.FeedbackDAO;
-import dal.MajorDAO;
-import dal.UserDAO;
-import dto.DoctorCardDto;
-import dto.FeedbackDTO;
 import entity.Feedback;
-import entity.Major;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,34 +18,23 @@ import utils.Const;
 
 /**
  *
- * @author Lenovo
+ * @author My Computer
  */
-public class HomeServlet extends HttpServlet {
-
+@WebServlet(name = "GiveFeedbackController", urlPatterns = {Const.GIVE_FEEDBACK_URL})
+public class GiveFeedbackController extends HttpServlet {
     private final FeedbackDAO feedbackDAO;
-    private final UserDAO userDAO;
-    private final MajorDAO majorDAO;
     
-    public HomeServlet(){
+    public GiveFeedbackController(){
         this.feedbackDAO = new FeedbackDAO();
-        this.userDAO = new UserDAO();
-        this.majorDAO = new MajorDAO();
     }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet HomeServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String content = request.getParameter("content");
+        int vote = Integer.parseInt(request.getParameter("vote"));
+        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+        Feedback feedback = new Feedback(0, vote, content);
+        int result = feedbackDAO.insertFeedback(feedback, bookingId);
+        response.getWriter().print(result);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -64,13 +49,7 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Major> majors = majorDAO.getAll();
-        List<DoctorCardDto> doctors = userDAO.findTop4Doctors();
-        List<FeedbackDTO> feedbacks = feedbackDAO.getTop8LastFeedbacks();
-        request.setAttribute("majors", majors);
-        request.setAttribute("doctors", doctors);
-        request.setAttribute("feedbacks", feedbacks);
-        request.getRequestDispatcher("Main Template/index.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

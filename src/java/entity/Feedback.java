@@ -11,17 +11,15 @@ package entity;
  */
 public class Feedback {
     private int id;
-    private User patient;
-    private User doctor;
+    private int vote;
     private String content;
 
     public Feedback() {
     }
 
-    public Feedback(int id, User patient, User doctor, String content) {
+    public Feedback(int id, int vote, String content) {
         this.id = id;
-        this.patient = patient;
-        this.doctor = doctor;
+        this.vote = vote;
         this.content = content;
     }
     
@@ -35,22 +33,6 @@ public class Feedback {
         this.id = id;
     }
 
-    public User getPatient() {
-        return patient;
-    }
-
-    public void setPatient(User patient) {
-        this.patient = patient;
-    }
-
-    public User getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(User doctor) {
-        this.doctor = doctor;
-    }
-
     public String getContent() {
         return content;
     }
@@ -58,6 +40,16 @@ public class Feedback {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public int getVote() {
+        return vote;
+    }
+
+    public void setVote(int vote) {
+        this.vote = vote;
+    }
+    
+    
     
     
 }

@@ -5,9 +5,12 @@
  */
 package dal;
 
+import dto.FeedbackDTO;
 import entity.Feedback;
 import entity.User;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,24 +20,25 @@ import java.util.logging.Logger;
  *
  * @author My Computer
  */
-public class FeedbackDAO extends DBContext{
-    public List<Feedback> getTop8LastFeedbacks(){
-        List<Feedback> feedbacks = new ArrayList<>();
+public class FeedbackDAO extends DBContext {
+
+    public List<FeedbackDTO> getTop8LastFeedbacks() {
+        List<FeedbackDTO> feedbacks = new ArrayList<>();
         try {
             String sql = "SELECT TOP 8 * FROM Feedback "
-                    + "LEFT JOIN [User] patient on Feedback.benhnhanFeedbackId = patient.userId "
-                    + "ORDER BY feedbackId desc";
+                    + "LEFT JOIN [Booking] b on Feedback.[feedbackId] = b.[feedback_id] "
+                    + "LEFT JOIN [User] patient on b.[customer_id] = patient.userId "
+                    + "ORDER BY Feedback.[feedbackId] desc";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            Feedback feedback;
-            while(rs.next()){
-                feedback = new Feedback();
+            FeedbackDTO feedback;
+            while (rs.next()) {
+                feedback = new FeedbackDTO();
                 feedback.setId(rs.getInt("feedbackId"));
                 User patient = new User();
-                patient.setEmail(rs.getString("email"));
-                patient.setAvatar(rs.getString("avatar"));
-                feedback.setPatient(patient);
+                feedback.setCustomerEmail(rs.getString("email"));
+                feedback.setCustomerAvatar(rs.getString("avatar"));
                 feedback.setContent(rs.getString("content"));
                 feedbacks.add(feedback);
             }
@@ -43,30 +47,41 @@ public class FeedbackDAO extends DBContext{
         }
         return feedbacks;
     }
-    
-    public List<Feedback> getFeedbacksByDoctorId(int doctorId){
-        List<Feedback> feedbacks = new ArrayList<>();
+
+    public int insertFeedback(Feedback feedback, int bookingId) {
         try {
-            String sql = "SELECT * FROM Feedback "
-                    + "LEFT JOIN [User] patient on Feedback.benhnhanFeedbackId = patient.userId "
-                    + "WHERE Feedback.bacsiNhanFeedbackId = ? ";
+            String sql = "INSERT INTO [dbo].[Feedback]\n"
+                    + "           ([content]\n"
+                    + "           ,[vote])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
             connection = getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, doctorId);
-            ResultSet rs = statement.executeQuery();
-            Feedback feedback;
-            while(rs.next()){
-                feedback = new Feedback();
-                feedback.setId(rs.getInt("feedbackId"));
-                User patient = new User();
-                patient.setEmail(rs.getString("email"));
-                feedback.setPatient(patient);
-                feedback.setContent(rs.getString("content"));
-                feedbacks.add(feedback);
+            statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setString(1, feedback.getContent());
+            statement.setInt(2, feedback.getVote());
+            int result1 = statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            long generatedId = 0;
+            if (rs.next()) {
+                generatedId = rs.getLong(1);
             }
+            String updateBookingSql = "UPDATE [dbo].[Booking]\n"
+                    + "   SET [feedback_id] = ? WHERE [id] = ?";
+            statement = connection.prepareStatement(updateBookingSql);
+            statement.setLong(1, generatedId);
+            statement.setInt(2, bookingId);
+            int result2 = statement.executeUpdate();
+            return result1 != 0 && result2 != 0 ? 1 : 0;
         } catch (Exception ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return feedbacks;
+        return 0;
     }
+
 }

@@ -5,6 +5,7 @@
  */
 package dto;
 
+import entity.Feedback;
 import java.util.Date;
 
 /**
@@ -19,6 +20,7 @@ public class MyAppointmentDTO {
     private Date startDate;
     private Date endDate;
     private Date createDate;
+    private Feedback feedback;
 
     public MyAppointmentDTO() {
     }
@@ -89,6 +91,14 @@ public class MyAppointmentDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
     
     

@@ -12,8 +12,10 @@ import dal.BookingDAO;
 import dal.BookingMedicineDAO;
 import dal.ConfigDAO;
 import dal.MedicineDAO;
+import dal.NotificationDAO;
 import dto.BookingDTO;
 import dto.BookingMedicineDTO;
+import dto.NotificationDTO;
 import entity.Medicine;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.Const;
 
 /**
  *
@@ -35,6 +38,7 @@ public class DoctorStartExaminingController extends HttpServlet {
     private final BookingMedicineDAO bookingMedicineDAO;
     private final Gson gson;
     private final ConfigDAO configDAO;
+    private final NotificationDAO notificationDAO;
     
     public DoctorStartExaminingController(){
         medicineDAO = new MedicineDAO();
@@ -42,6 +46,7 @@ public class DoctorStartExaminingController extends HttpServlet {
         gson = new Gson();
         bookingMedicineDAO = new BookingMedicineDAO();
         configDAO = new ConfigDAO();
+        notificationDAO = new NotificationDAO();
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -56,6 +61,13 @@ public class DoctorStartExaminingController extends HttpServlet {
             startExamining.setId(bookingId);
             bookingDAO.updateBookingStartExamining(startExamining);
             BookingDTO bookingDTO = bookingDAO.getBookingById(bookingId);
+            /* Send Notification */
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent(Const.UPDATE_BOOKING_REQUEST_MESSAGE + bookingDTO.getStartDate().toString());
+            notificationDTO.setLink(Const.CUSTOMER_VIEW_APPOINTMENT);
+            notificationDTO.setToUserId(bookingDTO.getCustomerId());
+            notificationDAO.insertNotification(notificationDTO);
+            /* End Notification */
             request.setAttribute("medicines", gson.toJson(medicines));
             request.setAttribute("bookingMedicines", gson.toJson(bookingMedicines));
             request.setAttribute("booking", bookingDTO);

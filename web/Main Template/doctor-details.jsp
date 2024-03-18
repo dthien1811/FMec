@@ -63,6 +63,44 @@
                 text-align: center;
                 color: white;
             }
+
+            .certificates-list {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                justify-content: space-around;
+                margin: 20px auto;
+                max-width: 1000px;
+            }
+
+            .certificate {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                margin: 10px;
+                width: 300px;
+            }
+
+            .certificate-title {
+                font-size: 20px;
+                margin-top: 0;
+            }
+
+            .certificate-details {
+                list-style-type: none;
+                color: black;
+                padding: 0;
+            }
+
+            .certificate-details li {
+                margin-bottom: 10px;
+            }
+
+            .certificate-details li strong {
+                margin-right: 5px;
+            }
         </style>
     </head>
     <body>
@@ -111,13 +149,21 @@
                                     <p class="deg">${doctor.major}</p>
                                 </div>
                                 <br>
-                                <h2>Feedbacks</h2>
-                                <c:forEach items="${doctor.feedbacks}" var="feedback">
-                                    <div class="doctor-details-biography">
-                                        <h3>${feedback.patient.email}</h3>
-                                        <p>${feedback.content}</p>
-                                    </div>
-                                </c:forEach>
+                                <h2 class="certificate-title">Certificates</h2><br/>
+                                <div class="certificates-list">
+                                    <c:if test="${empty requestScope.doctor.certificates}">There's no certification</c:if>
+                                    <c:forEach items="${requestScope.doctor.certificates}" var="certificate">
+                                        <div class="certificate">
+                                            <h3>${certificate.certificate}</h3>
+                                            <ul class="certificate-details">
+                                                <li><strong>Experience:</strong> ${certificate.experience} years</li>
+                                                <li><strong>Major:</strong> ${certificate.major.nameMajor}</li>
+                                                <li><strong>University:</strong> University of ${certificate.university}</li>
+                                                <li><strong>Address:</strong> ${certificate.address}</li>
+                                            </ul>
+                                        </div>
+                                    </c:forEach>
+                                </div>
 
                             </div>
                         </div>

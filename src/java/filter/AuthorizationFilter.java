@@ -42,7 +42,8 @@ import utils.Const;
     Const.BOOKING_DETAIL,
     Const.UPDATE_BOOKING_STATUS_URL,
     Const.ADMIN_VIEW_DOCTOR_SCHEDULE_URL,
-    Const.ADMIN_DASHBOARD
+    Const.ADMIN_DASHBOARD,
+    Const.GIVE_FEEDBACK_URL
 })
 public class AuthorizationFilter implements Filter {
 

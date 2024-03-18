@@ -130,9 +130,9 @@
                         <c:forEach items="${requestScope.feedbacks}" var="feedback">
                             <!-- Start Single Testimonial -->
                             <div class="single-testimonial">
-                                <img src="${feedback.patient.avatar}" alt="#">
+                                <img src="${feedback.customerAvatar}" alt="#">
                                 <p>${feedback.content}</p>
-                                <h4 class="name">${feedback.patient.email}</h4>
+                                <h4 class="name">${feedback.customerEmail}</h4>
                             </div>
                             <!-- End Single Testimonial -->
                         </c:forEach>

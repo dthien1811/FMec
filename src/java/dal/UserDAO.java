@@ -7,7 +7,9 @@ package dal;
 import Enums.UserRoleEnum;
 import dto.DoctorCardDto;
 import dto.DoctorDetailDto;
+import entity.Certificate;
 import entity.Feedback;
+import entity.Major;
 import entity.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -292,7 +294,6 @@ public class UserDAO extends DBContext {
                 + "      [avatar] = ?"
                 + "      ,[name] = ?"
                 + "      ,[phone] = ?"
-                
                 + "      ,[address] = ?"
                 + " WHERE email = ?";
         try {
@@ -302,11 +303,11 @@ public class UserDAO extends DBContext {
             statement.setString(1, user.getAvatar());
 
             statement.setString(2, user.getName());
-            statement.setString(3, user.getPhone());          
+            statement.setString(3, user.getPhone());
             statement.setString(4, user.getAddress());
             statement.setString(5, user.getEmail());
             statement.executeUpdate();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -328,7 +329,8 @@ public class UserDAO extends DBContext {
         }
 
     }
-    public User getUserById(int userId){
+
+    public User getUserById(int userId) {
         String sql = "SELECT [userId]\n"
                 + "      ,[majorId]\n"
                 + "      ,[role]\n"
@@ -382,8 +384,8 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
-    public List<DoctorCardDto> findDoctorsBasicInformation(int offset , int fetch , String query){
+
+    public List<DoctorCardDto> findDoctorsBasicInformation(int offset, int fetch, String query) {
         List<DoctorCardDto> list = new ArrayList<>();
         String role = UserRoleEnum.UserRole.Professor.toString();
         String sql = "SELECT [userId]\n"
@@ -409,7 +411,7 @@ public class UserDAO extends DBContext {
                 String doctorName = resultSet.getString("userName");
                 String majorName = resultSet.getString("majorName");
                 int majorId = resultSet.getInt("majorId");
-                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , majorId);
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName, userId, avatar, majorId);
                 list.add(doctorCardDto);
             }
 
@@ -431,8 +433,8 @@ public class UserDAO extends DBContext {
         }
         return list;
     }
-    
-    public List<DoctorCardDto> findDoctorsByMajor(int majorId){
+
+    public List<DoctorCardDto> findDoctorsByMajor(int majorId) {
         List<DoctorCardDto> list = new ArrayList<>();
         String role = UserRoleEnum.UserRole.Professor.toString();
         String sql = "SELECT [userId]\n"
@@ -453,7 +455,7 @@ public class UserDAO extends DBContext {
                 String avatar = resultSet.getString("avatar");
                 String doctorName = resultSet.getString("userName");
                 String majorName = resultSet.getString("majorName");
-                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , majorId);
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName, userId, avatar, majorId);
                 list.add(doctorCardDto);
             }
 
@@ -475,8 +477,8 @@ public class UserDAO extends DBContext {
         }
         return list;
     }
-    
-    public List<DoctorCardDto> findTop4Doctors(){
+
+    public List<DoctorCardDto> findTop4Doctors() {
         List<DoctorCardDto> list = new ArrayList<>();
         String role = UserRoleEnum.UserRole.Professor.toString();
         String sql = "SELECT TOP 4 [userId]\n"
@@ -498,7 +500,7 @@ public class UserDAO extends DBContext {
                 String doctorName = resultSet.getString("userName");
                 String majorName = resultSet.getString("majorName");
                 int majorId = resultSet.getInt("majorId");
-                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , 0);
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName, userId, avatar, 0);
                 doctorCardDto.setMajorId(majorId);
                 list.add(doctorCardDto);
             }
@@ -521,8 +523,8 @@ public class UserDAO extends DBContext {
         }
         return list;
     }
-    
-    public List<DoctorCardDto> findDoctors(){
+
+    public List<DoctorCardDto> findDoctors() {
         List<DoctorCardDto> list = new ArrayList<>();
         String role = UserRoleEnum.UserRole.Professor.toString();
         String sql = "SELECT [userId]\n"
@@ -550,7 +552,7 @@ public class UserDAO extends DBContext {
                 String address = resultSet.getNString("address");
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
-                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName , userId , avatar , majorId);
+                DoctorCardDto doctorCardDto = new DoctorCardDto(doctorName, majorName, userId, avatar, majorId);
                 doctorCardDto.setAddress(address);
                 doctorCardDto.setPhone(phone);
                 doctorCardDto.setEmail(email);
@@ -575,8 +577,8 @@ public class UserDAO extends DBContext {
         }
         return list;
     }
-    
-    public List<User> findAdmins(){
+
+    public List<User> findAdmins() {
         List<User> list = new ArrayList<>();
         String role = UserRoleEnum.UserRole.Admin.toString();
         String sql = "SELECT [userId]\n"
@@ -617,8 +619,8 @@ public class UserDAO extends DBContext {
         }
         return list;
     }
-    
-    public int countDoctors(String query){
+
+    public int countDoctors(String query) {
         String role = UserRoleEnum.UserRole.Professor.toString();
         String sql = "SELECT COUNT([User].userId) as result "
                 + "  FROM [dbo].[User] "
@@ -654,19 +656,22 @@ public class UserDAO extends DBContext {
         }
         return result;
     }
-    
-    public DoctorDetailDto getDoctorById(int id){
+
+    public DoctorDetailDto getDoctorById(int id) {
         String sql = "SELECT doctor.[userId] as doctorId\n"
                 + "      ,doctor.[majorId] as doctorMajor\n"
                 + "      ,doctor.[avatar] as doctorAvatar\n"
                 + "      ,doctor.[name] as doctorName\n"
-                + "      ,f.[content]\n"
                 + "      ,m.[name] majorName\n"
-                + "      ,patient.[email] as patientEmail\n"
+                + "      ,c.[experience] experience\n"
+                + "      ,c.[university] university\n"
+                + "      ,c.[certificate] certificate\n"
+                + "      ,c.[address] address\n"
+                + "      ,certificateMajor.[name] certificateMajorName\n"
                 + "  FROM [dbo].[User] doctor"
-                + " LEFT JOIN [Feedback] f ON f.bacsiNhanFeedbackId = doctor.[userId] "
-                + " LEFT JOIN [User] patient ON f.benhnhanFeedbackId = patient.[userId] "
+                + " LEFT JOIN [Certificate] c ON c.[userId] = doctor.[userId] "
                 + " LEFT JOIN [Major] m ON doctor.[majorId] = m.[majorId] "
+                + " LEFT JOIN [Major] certificateMajor ON c.[majorId] = certificateMajor.[majorId] "
                 + "where doctor.[userId] = ? ";
         try {
             connection = getConnection();
@@ -677,34 +682,36 @@ public class UserDAO extends DBContext {
                 int doctorId = resultSet.getInt("doctorId");
                 int majorId = resultSet.getInt("doctorMajor");
                 String majorName = resultSet.getString("majorName");
-                String content = resultSet.getString("content");
                 String avatar = resultSet.getString("doctorAvatar");
                 String doctorName = resultSet.getString("doctorName");
-                String patientEmail = resultSet.getString("patientEmail");
                 DoctorDetailDto doctorDetailDto = new DoctorDetailDto();
                 doctorDetailDto.setAvatar(avatar);
                 doctorDetailDto.setDoctorId(doctorId);
                 doctorDetailDto.setDoctorName(doctorName);
                 doctorDetailDto.setMajor(majorName);
                 doctorDetailDto.setMajorId(majorId);
-                List<Feedback> feedbacks = new ArrayList<Feedback>();
-                Feedback feedback = new Feedback();
-                feedback.setContent(content);
-                User patient = new User();
-                patient.setEmail(patientEmail);
-                feedback.setPatient(patient);
-                feedbacks.add(feedback);
-                while(resultSet.next()){
-                    patientEmail = resultSet.getString("patientEmail");
-                    content = resultSet.getString("content");
-                    feedback = new Feedback();
-                    feedback.setContent(content);
-                    patient = new User();
-                    patient.setEmail(patientEmail);
-                    feedback.setPatient(patient);
-                    feedbacks.add(feedback);
+                List<Certificate> certificates = new ArrayList<Certificate>();
+                Certificate certificate = new Certificate();
+                Major cerficateMajor = new Major();
+                cerficateMajor.setNameMajor(resultSet.getString("certificateMajorName"));
+                certificate.setAddress(resultSet.getString("address"));
+                certificate.setCertificate(resultSet.getString("certificate"));
+                certificate.setExperience(resultSet.getInt("experience"));
+                certificate.setUniversity(resultSet.getString("university"));
+                certificate.setMajor(cerficateMajor);
+                certificates.add(certificate);
+                while (resultSet.next()) {
+                    certificate = new Certificate();
+                    cerficateMajor = new Major();
+                    cerficateMajor.setNameMajor(resultSet.getString("certificateMajorName"));
+                    certificate.setAddress(resultSet.getString("address"));
+                    certificate.setCertificate(resultSet.getString("certificate"));
+                    certificate.setExperience(resultSet.getInt("experience"));
+                    certificate.setUniversity(resultSet.getString("university"));
+                    certificate.setMajor(cerficateMajor);
+                    certificates.add(certificate);
                 }
-                doctorDetailDto.setFeedbacks(feedbacks);
+                doctorDetailDto.setCertificates(certificates);
                 return doctorDetailDto;
             }
 
@@ -729,7 +736,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public int createDdoctor(User userRegister) {
         String sql = "INSERT INTO [dbo].[User]\n"
                 + "           ( "
@@ -779,7 +786,5 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
-    
-    
-    
+
 }

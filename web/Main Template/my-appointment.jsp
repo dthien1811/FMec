@@ -15,7 +15,7 @@
 
         <!-- Favicon -->
         <link rel="icon" href="img/favicon.png">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
@@ -42,7 +42,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/normalize.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/responsive.css">
-
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
         <!-- Color CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color1.css">
         <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/color/color2.css">-->
@@ -63,61 +64,17 @@
 
         <link rel="stylesheet" href="#" id="colors">
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-        <script>
-            window.onload = function () {
-                var calendar = document.getElementById('calendar');
-                var jsonString = document.getElementById("bookings").value;
-                var bookings = JSON.parse(jsonString);
-                var endPoint = document.getElementById("bookingDetail").value;
-
-                var dataMapping = bookings.map(booking => {
-                    return {
-                        title: booking.statusName,
-                        start: new Date(booking.startDate),
-                        end: new Date(booking.endDate),
-                        status: booking.statusName,
-                        extendedProps : {
-                            id : booking.id
-                        }
-                    }
-                });
-                var calendar = new FullCalendar.Calendar(calendar, {
-                    initialView: 'timeGridWeek',
-                    events: dataMapping,
-                    eventClick: function (info) {
-                        if (info.event.extendedProps.status !== 'PENDING')
-                            return;
-                        window.location.href = endPoint + "?id=" + info.event.extendedProps.id;
-                    },
-                    eventMouseEnter: function (info) {
-                        if (info.event.extendedProps.status !== 'PENDING')
-                            return;
-                        info.el.className += ' activeEvent';
-                    },
-                    eventDidMount: function (info) {
-                        // Determine color based on status
-                        var statusColor;
-                        switch (info.event.extendedProps.status) {
-                            case 'EXAMINING':
-                                statusColor = 'green';
-                                break;
-                            case 'PENDING':
-                                statusColor = '#daf505';
-                                break;
-                            default:
-                                statusColor = 'blue'; // Default color
-                        }
-                        console.log(statusColor);
-                        info.el.style.backgroundColor = statusColor;
-                        info.el.style.borderColor = statusColor;
-                    }
-                });
-                calendar.render();
-            };
-        </script>
+        
         <style>
             #team{
                 display: flex;
+            }
+            .fa-star:hover{
+                cursor: pointer;
+            }
+
+            .checked{
+                color: yellow;
             }
 
             #myTable_wrapper{
@@ -141,6 +98,7 @@
     <body>
         <%@include file="header.jsp" %>
         <input  type="hidden" value="${pageContext.request.contextPath}/bookingDetail" id="bookingDetail" />
+        <input type="hidden" value="${pageContext.request.contextPath}/giveFeedback" id="feedbackEndpoint" />
 
         <!-- Breadcrumbs -->
         <div class="breadcrumbs overlay">
@@ -168,6 +126,40 @@
             <div id='calendar'></div>
         </section>
         <!--/ End Team -->
+
+        <!-- Modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="feedbackModel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Give Feedback</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="content">Content:</label>
+                            <textarea class="form-control" id="content"></textarea>
+                        </div>
+                        <div class="form-group" id="vote">
+                            <label>Vote: </label>
+                            <span class="fa fa-star" id="star-1" onmouseover="checkstar(1)"></span>
+                            <span class="fa fa-star" id="star-2" onmouseover="checkstar(2)"></span>
+                            <span class="fa fa-star" id="star-3" onmouseover="checkstar(3)"></span>
+                            <span class="fa fa-star" id="star-4" onmouseover="checkstar(4)"></span>
+                            <span class="fa fa-star" id="star-5" onmouseover="checkstar(5)"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer Area -->
         <footer id="footer" class="footer ">
@@ -291,6 +283,131 @@
         <script src="${pageContext.request.contextPath}/Main Template/js/bootstrap.min.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/Main Template/js/main.js"></script>
+        <!-- Sweet Alert -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            var stars = 0;
+            var bookingId = 0;
+            window.onload = function () {
+                var calendar = document.getElementById('calendar');
+                var jsonString = document.getElementById("bookings").value;
+                var bookings = JSON.parse(jsonString);
+                var endPoint = document.getElementById("bookingDetail").value;
+                var feedbackEndpoint = document.getElementById("feedbackEndpoint").value;
+                $("#btn-save").on('click', function () {
+                    var content = $("#content").val();
+                    $.ajax({
+                        type: "POST",
+                        url: feedbackEndpoint,
+                        data: {
+                            bookingId :  bookingId,
+                            content :  content,
+                            vote : stars
+                        },
+                        success: function (response) {
+                            var result = parseInt(response);
+                            if (result !== 0) {
+                                swal({
+                                    title: 'Success!',
+                                    text: 'Your feedback was saved.',
+                                    icon: 'success',
+                                    confirmButtonText: 'Okay'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
+                                return;
+                            }
+                            swal({
+                                title: 'Fail!',
+                                text: 'Something wrong happened!.',
+                                icon: 'error'
+                            })
+                        }
+                    });
+                })
+
+                var dataMapping = bookings.map(booking => {
+                    return {
+                        title: booking.statusName,
+                        start: new Date(booking.startDate),
+                        end: new Date(booking.endDate),
+                        status: booking.statusName,
+                        extendedProps: {
+                            id: booking.id,
+                            feedback: booking.feedback
+                        }
+                    }
+                });
+                var calendar = new FullCalendar.Calendar(calendar, {
+                    initialView: 'timeGridWeek',
+                    events: dataMapping,
+                    eventClick: function (info) {
+                        if (info.event.extendedProps.status !== 'PENDING' && info.event.extendedProps.status !== 'DONE')
+                            return;
+                        if (info.event.extendedProps.status === 'PENDING') {
+                            window.location.href = endPoint + "?id=" + info.event.extendedProps.id;
+                            return;
+                        }
+                        bookingId = info.event.extendedProps.id;
+                        $("#feedbackModel").modal('show');
+                        console.log(info.event.extendedProps.feedback);
+                        var isHavingFeedback = info.event.extendedProps.feedback.id !== 0;
+                        if (isHavingFeedback) {
+                            $("#btn-save").prop('disabled', true);
+                            $("#content").prop('disabled', true);
+                            for (let i = 1; i <= 5; i++) {
+                                if (i <= info.event.extendedProps.feedback.vote) {
+                                    $('#star-' + i).addClass("checked");
+                                } else {
+                                    $('#star-' + i).removeClass("checked");
+                                }
+                            }
+                            $("#content").val(info.event.extendedProps.feedback.content);
+                        } else {
+                            $("#btn-save").prop('disabled', false);
+                            $("#content").val('');
+                            $("#content").prop('disabled', false);
+                            for (let i = 1; i <= 5; i++) {
+                                $('#star-' + i).removeClass("checked");
+                            }
+                        }
+                    },
+                    eventMouseEnter: function (info) {
+                        if (info.event.extendedProps.status !== 'PENDING' && info.event.extendedProps.status !== 'DONE')
+                            return;
+                        info.el.className += ' activeEvent';
+                    },
+                    eventDidMount: function (info) {
+                        // Determine color based on status
+                        var statusColor;
+                        switch (info.event.extendedProps.status) {
+                            case 'EXAMINING':
+                                statusColor = 'green';
+                                break;
+                            case 'PENDING':
+                                statusColor = '#daf505';
+                                break;
+                            default:
+                                statusColor = 'blue'; // Default color
+                        }
+                        console.log(statusColor);
+                        info.el.style.backgroundColor = statusColor;
+                        info.el.style.borderColor = statusColor;
+                    }
+                });
+                calendar.render();
+            };
+            function checkstar(starValue) {
+                    stars = starValue;
+                    for (let i = 1; i <= 5; i++) {
+                        if (i <= starValue) {
+                            $('#star-' + i).addClass("checked");
+                        } else {
+                            $('#star-' + i).removeClass("checked");
+                        }
+                    }
+                }
+        </script>
         <!-- Include DataTables JS -->
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
     </body>

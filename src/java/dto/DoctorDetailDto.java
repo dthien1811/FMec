@@ -5,6 +5,7 @@
  */
 package dto;
 
+import entity.Certificate;
 import entity.Feedback;
 import java.util.List;
 
@@ -14,6 +15,16 @@ import java.util.List;
  */
 public class DoctorDetailDto extends DoctorCardDto{
     private List<Feedback> feedbacks;
+    private List<Certificate> certificates;
+
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<Certificate> certificates) {
+        this.certificates = certificates;
+    }
+    
 
     public List<Feedback> getFeedbacks() {
         return feedbacks;

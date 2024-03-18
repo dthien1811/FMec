@@ -389,7 +389,6 @@
                 url: notificationEndpoint,
                 success: function (response) {
                     if(response.length === 0 ) return;
-                    console.log(response);
                     var notifications = JSON.parse(response);
                     var notReadedNoti = notifications.filter(noti => {
                         return !noti.isReaded;

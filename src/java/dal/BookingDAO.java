@@ -10,6 +10,7 @@ import dto.BookingDTO;
 import dto.DoctorAppointmentDTO;
 import dto.MyAppointmentDTO;
 import entity.Booking;
+import entity.Feedback;
 import entity.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,6 +123,7 @@ public class BookingDAO extends DBContext {
         try {
             String sql = "SELECT * FROM Booking s "
                     + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
+                    + "LEFT JOIN [Feedback] f ON s.feedback_id = f.[feedbackId] "
                     + "  WHERE s.customer_id = ? AND s.[status] != ?";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
@@ -144,7 +146,12 @@ public class BookingDAO extends DBContext {
                         break;
                     }
                 }
+                Feedback feedback = new Feedback();
+                feedback.setContent(resultSet.getString("content"));
+                feedback.setId(resultSet.getInt("feedbackId"));
+                feedback.setVote(resultSet.getInt("vote"));
                 booking = new MyAppointmentDTO(id, doctorName, statusName, note, startDate, endDate, createDate);
+                booking.setFeedback(feedback);
                 bookings.add(booking);
             }
         } catch (Exception ex) {

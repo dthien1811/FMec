@@ -11,7 +11,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Blog</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+        <link rel="icon" href="img/favicon.png">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/bootstrap.min.css">
+        <!-- Nice Select CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/nice-select.css">
+        <!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/font-awesome.min.css">
+        <!-- icofont CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/icofont.css">
+        <!-- Slicknav -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/slicknav.min.css">
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/owl-carousel.css">
+        <!-- Datepicker CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/datepicker.css">
+        <!-- Animate CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/animate.min.css">
+        <!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/magnific-popup.css">
+
+        <!-- Medipro CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Main Template/css/responsive.css">
+        <link rel="stylesheet" href="styles.css">
     <style>
         body {
     font-family: Arial, sans-serif;
@@ -71,6 +99,7 @@ button:hover {
     </style>
 </head>
 <body>
+    <%@include file="Main Template/header.jsp" %>
     <div class="container">
         <header>
             <h1>Admin Blog</h1>

@@ -9,8 +9,10 @@ import com.google.gson.Gson;
 import dal.BookingDAO;
 import dal.BookingMedicineDAO;
 import dal.MedicineDAO;
+import dal.NotificationDAO;
 import dto.BookingDTO;
 import dto.BookingMedicineInsertDTO;
+import dto.NotificationDTO;
 import entity.Medicine;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -20,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.Const;
 
 /**
  *
@@ -32,17 +35,19 @@ public class DoctorEndExaminingController extends HttpServlet {
     private final BookingDAO bookingDAO;
     private final BookingMedicineDAO bookingMedicineDAO;
     private final Gson gson;
-    
-    public DoctorEndExaminingController(){
+    private final NotificationDAO notificationDAO;
+
+    public DoctorEndExaminingController() {
         this.medicineDAO = new MedicineDAO();
         this.bookingDAO = new BookingDAO();
         this.bookingMedicineDAO = new BookingMedicineDAO();
         gson = new Gson();
+        notificationDAO = new NotificationDAO();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
+        try {
             String bookingIdRaw = request.getParameter("bookingId");
             String totalPriceRaw = request.getParameter("totalPrice");
             String bookingMedicinesRaw = request.getParameter("bookingMedicines");
@@ -63,12 +68,20 @@ public class DoctorEndExaminingController extends HttpServlet {
                 int result2 = bookingDAO.updateBookingEndExamining(bookingDTO);
                 int result3 = bookingMedicineDAO.insertBookingMedicines(bookingMedicines);
                 if (result1 != 0 && result2 != 0 && result3 != 0) {
+                    bookingDTO = bookingDAO.getBookingById(bookingId);
+                    /* Send Notification */
+                    NotificationDTO notificationDTO = new NotificationDTO();
+                    notificationDTO.setContent(Const.UPDATE_BOOKING_REQUEST_MESSAGE + bookingDTO.getStartDate().toString());
+                    notificationDTO.setLink(Const.CUSTOMER_VIEW_APPOINTMENT);
+                    notificationDTO.setToUserId(bookingDTO.getCustomerId());
+                    notificationDAO.insertNotification(notificationDTO);
+                    /* End Notification */
                     response.getWriter().print(1);
                     return;
                 }
             }
-        }catch(Exception exception){
-            
+        } catch (Exception exception) {
+
         }
         response.getWriter().print(0);
     }

@@ -43,7 +43,10 @@ import utils.Const;
     Const.UPDATE_BOOKING_STATUS_URL,
     Const.ADMIN_VIEW_DOCTOR_SCHEDULE_URL,
     Const.ADMIN_DASHBOARD,
-    Const.GIVE_FEEDBACK_URL
+    Const.GIVE_FEEDBACK_URL,
+    Const.ADMIN_BLOG_URL,
+    Const.ADMIN_SHOW_BLOG_URL,
+    Const.ADMIN_UPDATE_BLOG
 })
 public class AuthorizationFilter implements Filter {
 

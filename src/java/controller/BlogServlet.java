@@ -15,13 +15,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.annotation.WebServlet;
+import utils.Const;
 
 
 /**
  *
  * @author Lenovo
  */
-@WebServlet(name = "BlogServlet", urlPatterns = {"/BlogServlet"})
+@WebServlet(name = "BlogServlet", urlPatterns = {Const.ADMIN_BLOG_URL})
 public class BlogServlet extends HttpServlet {
 
     

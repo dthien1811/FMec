@@ -288,6 +288,7 @@
                                                 <ul class="nav menu">
                                                     <li><a href="${pageContext.request.contextPath}/createDoctor">Doctor Management </a>
                                                     </li>
+                                                    <li><a href="${pageContext.request.contextPath}/showBlog">Blogs </a>
                                                     <li><a href="${pageContext.request.contextPath}/viewAppointment">Appointment </a></li>
                                                     <li><a href="${pageContext.request.contextPath}/viewDoctorSchedule">Doctor Schedule </a></li>
                                                     <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard </a></li>
@@ -319,7 +320,6 @@
                                                         <ul class="dropdown" id="dropdown-majors">
                                                         </ul>
                                                     </li>
-                                                    <li><a href="${pageContext.request.contextPath}/BlogServlet">Blogs </a>
                                                     </li>
                                                     <li><a href="#">Appointment <i class="icofont-rounded-down"></i></a>
                                                         <ul class="dropdown">

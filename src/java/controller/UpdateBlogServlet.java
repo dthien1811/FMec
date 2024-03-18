@@ -13,12 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
+import utils.Const;
 
 
 /**
  *
  * @author Lenovo
  */
+@WebServlet(name = "UpdateBlogServlet", urlPatterns = {Const.ADMIN_UPDATE_BLOG})
 public class UpdateBlogServlet extends HttpServlet {
 
   

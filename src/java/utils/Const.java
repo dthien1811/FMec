@@ -18,6 +18,9 @@ public class Const {
     public static final String ADMIN_VIEW_ALL_APPOINTMENT_URL = "/viewAppointment";
     public static final String ADMIN_VIEW_DOCTOR_SCHEDULE_URL = "/viewDoctorSchedule";
     public static final String ADMIN_DASHBOARD = "/dashboard";
+    public static final String ADMIN_BLOG_URL = "/BlogServlet";
+    public static final String ADMIN_SHOW_BLOG_URL = "/showBlog";
+    public static final String ADMIN_UPDATE_BLOG = "/update-blog";
     /* DOCTOR URL */
     public static final String DOCTOR_VIEW_APPOINTMENT_URL = "/doctorAppointment";
     public static final String DOCTOR_TIME_TABLE_REGISTRATION_URL = "/timeTableRegistration";
@@ -42,7 +45,8 @@ public class Const {
     public static final String UPDATE_DOCTOR_SCHEDULE_REQUEST_MESSAGE = "There's new update on schedule at ";
     
     public static final String[] ADMIN_URL = new String[]{ADMIN_CREATE_DOCTOR_URL , ADMIN_VIEW_ALL_APPOINTMENT_URL , BOOKING_DETAIL ,
-        UPDATE_BOOKING_STATUS_URL , UPDATE_DOCTOR_SCHEDULE_STATUS_URL , ADMIN_VIEW_DOCTOR_SCHEDULE_URL , ADMIN_DASHBOARD};
+        UPDATE_BOOKING_STATUS_URL , UPDATE_DOCTOR_SCHEDULE_STATUS_URL , ADMIN_UPDATE_BLOG ,
+        ADMIN_VIEW_DOCTOR_SCHEDULE_URL , ADMIN_DASHBOARD , ADMIN_BLOG_URL , ADMIN_SHOW_BLOG_URL};
     public static final String[] DOCTOR_URL = new String[]{DOCTOR_VIEW_APPOINTMENT_URL , DOCTOR_TIME_TABLE_REGISTRATION_URL ,
     DOCTOR_START_EXAMINING_URL , DOCTOR_END_EXAMINING_URL};
     public static final String[] CUSTOMER_URL = new String[]{BOOKING_URL , CUSTOMER_VIEW_APPOINTMENT , BOOKING_DETAIL , UPDATE_BOOKING_STATUS_URL , GIVE_FEEDBACK_URL};

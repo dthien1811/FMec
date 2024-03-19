@@ -49,6 +49,7 @@
                 align-items: center;
                 flex-direction: column;
                 min-height: 60px;
+                border-bottom: 1px solid black;
             }
 
             .notification-item:hover{
@@ -292,6 +293,7 @@
                                                     <li><a href="${pageContext.request.contextPath}/viewAppointment">Appointment </a></li>
                                                     <li><a href="${pageContext.request.contextPath}/viewDoctorSchedule">Doctor Schedule </a></li>
                                                     <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard </a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/viewFeedback"> Feedback </a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -305,6 +307,7 @@
                                                     <li><a href="${pageContext.request.contextPath}/timeTableRegistration">Time table </a>
                                                     </li>
                                                     <li><a href="${pageContext.request.contextPath}/doctorAppointment">Appointment </a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/blogList">Blogs</a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -328,6 +331,7 @@
                                                         </ul>
                                                     </li>
                                                     <li><a href="${pageContext.request.contextPath}/contact">Contact Us</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/blogList">Blogs</a></li>
                                                 </ul>
                                             </nav>
                                         </div>

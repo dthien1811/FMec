@@ -1,5 +1,6 @@
 <!doctype html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html class="no-js" lang="zxx">
@@ -202,7 +203,7 @@
             }
         </script>
     </head>
-    <body onload="paging('${pageContext.request.contextPath}/doctors');
+    <body onload="paging('${pageContext.request.contextPath}/blogList');
             activePage()">
         <input type="hidden" id="curentPage" value="${requestScope.pageNumber + 1}">
         <input type="hidden" id="totalPage" value="${requestScope.totalPage}">
@@ -214,11 +215,11 @@
                 <div class="bread-inner">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Meet Our Qualified Doctors</h2>
+                            <h2>Our blogs</h2>
                             <ul class="bread-list">
                                 <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
-                                <li class="active">Doctors</li>
+                                <li class="active">Blogs</li>
                             </ul>
                         </div>
                     </div>
@@ -231,8 +232,8 @@
         <section id="team" class="team section single-page">
             <div class="container">
                 <div class="search-container row">
-                    <form action="${pageContext.request.contextPath}/doctors?pageNumber=${requestScope.pageNumber}" method="GET">
-                        <input type="text" id="query" placeholder="Search by doctor's name or major..." class="search-input" value="${query}" name="query">
+                    <form action="${pageContext.request.contextPath}/blogList?pageNumber=${requestScope.pageNumber}" method="GET">
+                        <input type="text" id="query" placeholder="Search by blog's title or content..." class="search-input" value="${query}" name="query">
                         <button type="submit" class="search-button">
                             <i class="fa fa-search"></i>
                         </button>
@@ -241,21 +242,21 @@
                 <div class="row">
                     <fmt:setLocale value="vi_VN" />
                     <fmt:setBundle basename="java.text.resources.LocaleElements"/>
-                    <c:forEach items="${doctors}" var="doctor">
+                    <c:forEach items="${requestScope.blogs}" var="blog">
                         <div class="col-lg-4 col-md-6 col-12">
                             <!-- Single Team -->
                             <div class="single-team">
-                                <div class="t-head">
-                                    <img src="${doctor.avatar}" class="avatar" alt="${doctor.doctorName}">
-                                    <div class="t-icon">
-                                        <a href="${pageContext.request.contextPath}/appointment?doctorId=${doctor.doctorId}&majorId=${doctor.majorId}" class="btn">Get Appointment</a>
-                                    </div>
-                                </div>
                                 <div class="t-bottom">
-                                    <p>${doctor.major}</p>
-                                    <h2><a href="${pageContext.request.contextPath}/doctorDetails?doctorId=${doctor.doctorId}">${doctor.doctorName}</a></h2>
-                                    <p>Price</p>
-                                    <h4><fmt:formatNumber type="currency" value="${requestScope.defaultPrice}" currencyCode="VND" /> </h4>
+                                    <h2><a href="${pageContext.request.contextPath}/blogDetail?id=${blog.id}">${blog.title}</a></h2>
+                                    <p>${blog.author}</p>
+                                    <p>${blog.date}</p>
+                                    <h4>Content: </h4>
+                                    <c:if test="${fn:length(blog.content) > 150}">
+                                        <p> ${fn:substring(blog.content , 0 , 150)} ... </p>
+                                    </c:if>
+                                    <c:if test="${fn:length(blog.content) <= 150}">
+                                        <p> ${blog.content} </p>
+                                    </c:if>
                                 </div>
                             </div>
                             <!-- End Single Team -->

@@ -165,6 +165,7 @@ public class BookingDAO extends DBContext {
         try {
             String sql = "SELECT * FROM Booking s "
                     + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] "
+                    + "LEFT JOIN [Feedback] f ON s.feedback_id = f.[feedbackId] "
                     + "  WHERE s.doctor_id = ? AND s.[status] != ?";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
@@ -187,7 +188,12 @@ public class BookingDAO extends DBContext {
                         break;
                     }
                 }
+                Feedback feedback = new Feedback();
+                feedback.setContent(resultSet.getString("content"));
+                feedback.setId(resultSet.getInt("feedbackId"));
+                feedback.setVote(resultSet.getInt("vote"));
                 booking = new DoctorAppointmentDTO(id, customerName, statusName, note, startDate, endDate, createDate, status);
+                booking.setFeedback(feedback);
                 bookings.add(booking);
             }
         } catch (Exception ex) {
@@ -198,9 +204,11 @@ public class BookingDAO extends DBContext {
 
     public BookingDTO getBookingById(int id) {
         try {
-            String sql = "SELECT s.[start_date] , s.[end_date] , s.[create_date] , customer.name , s.[real_start_date] ,  customer.[userId] as customerId , s.note , s.status , doctor.[userId] as doctorId FROM Booking s "
+            String sql = "SELECT s.[start_date] , s.[end_date] , s.[create_date] , f.[content] , f.[feedbackId] , f.[vote],  "
+                    + " customer.name , s.[real_start_date] ,  customer.[userId] as customerId , s.note , s.status , doctor.[userId] as doctorId FROM Booking s "
                     + "LEFT JOIN [User] customer ON s.customer_id = customer.[userId] "
                     + "LEFT JOIN [User] doctor ON s.doctor_id = doctor.[userId] "
+                    + "LEFT JOIN [Feedback] f ON s.feedback_id = f.[feedbackId] "
                     + "  WHERE s.id = ? ";
             connection = getConnection();
             statement = connection.prepareStatement(sql);
@@ -224,7 +232,13 @@ public class BookingDAO extends DBContext {
                         break;
                     }
                 }
-                return new BookingDTO(id, customerName, status, startDate, endDate, createDate, note, doctorId, customerId , realStartDate);
+                Feedback feedback = new Feedback();
+                feedback.setContent(resultSet.getString("content"));
+                feedback.setId(resultSet.getInt("feedbackId"));
+                feedback.setVote(resultSet.getInt("vote"));
+                booking = new BookingDTO(id, customerName, status, startDate, endDate, createDate, note, doctorId, customerId , realStartDate); 
+                booking.setFeedback(feedback);
+                return booking;
             }
         } catch (Exception ex) {
             Logger.getLogger(DoctorScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);

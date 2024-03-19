@@ -108,7 +108,7 @@
                         <div class="col-12">
                             <h2>My Appointment</h2>
                             <ul class="bread-list">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
                                 <li class="active">My Appointment</li>
                             </ul>
@@ -327,8 +327,9 @@
                 })
 
                 var dataMapping = bookings.map(booking => {
+                    var isHavingFeedback = booking.feedback.id !== 0;
                     return {
-                        title: booking.statusName,
+                        title: booking.statusName + ( isHavingFeedback ? '    V' : ''),
                         start: new Date(booking.startDate),
                         end: new Date(booking.endDate),
                         status: booking.statusName,
@@ -349,21 +350,11 @@
                             return;
                         }
                         bookingId = info.event.extendedProps.id;
-                        $("#feedbackModel").modal('show');
-                        console.log(info.event.extendedProps.feedback);
                         var isHavingFeedback = info.event.extendedProps.feedback.id !== 0;
                         if (isHavingFeedback) {
-                            $("#btn-save").prop('disabled', true);
-                            $("#content").prop('disabled', true);
-                            for (let i = 1; i <= 5; i++) {
-                                if (i <= info.event.extendedProps.feedback.vote) {
-                                    $('#star-' + i).addClass("checked");
-                                } else {
-                                    $('#star-' + i).removeClass("checked");
-                                }
-                            }
-                            $("#content").val(info.event.extendedProps.feedback.content);
+                            window.location.href = endPoint + "?id=" + info.event.extendedProps.id;
                         } else {
+                            $("#feedbackModel").modal('show');
                             $("#btn-save").prop('disabled', false);
                             $("#content").val('');
                             $("#content").prop('disabled', false);

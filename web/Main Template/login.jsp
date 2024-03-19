@@ -71,7 +71,7 @@
                         <div class="col-12">
                             <h2>Login</h2>
                             <ul class="bread-list">
-                                <li><a href="${pageContext.request.contextPath}/Main Template/index.html">Home</a></li>
+                                <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
                                 <li class="active">Login</li>
                             </ul>

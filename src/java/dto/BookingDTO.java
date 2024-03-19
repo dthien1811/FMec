@@ -5,6 +5,7 @@
  */
 package dto;
 
+import entity.Feedback;
 import java.util.Date;
 
 /**
@@ -25,6 +26,7 @@ public class BookingDTO {
     private Date createDate;
     private Date realStartDate;
     private Date realEndDate;
+    private Feedback feedback;
     private double totalPrice;
 
     public BookingDTO() {
@@ -189,6 +191,14 @@ public class BookingDTO {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
     
     

@@ -5,6 +5,8 @@
  */
 package dto;
 
+import java.util.Date;
+
 /**
  *
  * @author My Computer
@@ -14,7 +16,9 @@ public class FeedbackDTO {
     private int vote;
     private String content;
     private String customerEmail;
+    private String doctorEmail;
     private String customerAvatar;
+    private Date createDate;
 
     public FeedbackDTO() {
     }
@@ -68,6 +72,24 @@ public class FeedbackDTO {
     public void setCustomerAvatar(String customerAvatar) {
         this.customerAvatar = customerAvatar;
     }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
+    
+    
     
     
 }

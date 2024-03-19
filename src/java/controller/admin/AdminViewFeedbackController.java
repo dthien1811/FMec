@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.doctordetails;
+package controller.admin;
 
+import com.google.gson.Gson;
 import dal.FeedbackDAO;
-import dal.UserDAO;
-import dto.DoctorDetailDto;
 import dto.FeedbackDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,31 +16,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.Const;
 
 /**
  *
  * @author My Computer
  */
-@WebServlet(name = "DoctorDetailController", urlPatterns = {"/doctorDetails"})
-public class DoctorDetailController extends HttpServlet {
-    private final UserDAO userDAO;
-    private final FeedbackDAO feedbackDAO;
+@WebServlet(name = "AdminViewFeedbackController", urlPatterns = {Const.ADMIN_VIEW_LIST_FEEDBACK_URL})
+public class AdminViewFeedbackController extends HttpServlet {
+    private FeedbackDAO feedbackDAO;
+    private Gson gson;
     
-    
-    public DoctorDetailController(){
-        this.userDAO = new UserDAO();
+    public AdminViewFeedbackController(){
         this.feedbackDAO = new FeedbackDAO();
+        this.gson = new Gson();
     }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer doctorId = request.getParameter("doctorId") == null ? null : Integer.parseInt(request.getParameter("doctorId"));
-        if(doctorId != null){
-            DoctorDetailDto doctorDetailDto = userDAO.getDoctorById(doctorId);
-            List<FeedbackDTO> feedbacks = feedbackDAO.getTop5LastFeedbacksByDoctorId(doctorId);
-            request.setAttribute("doctor", doctorDetailDto);
-            request.setAttribute("feedbacks", feedbacks);
-        }
-        request.getRequestDispatcher("Main Template/doctor-details.jsp").forward(request, response);
+        List<FeedbackDTO> feedbacks = feedbackDAO.getAll();
+        request.setAttribute("feedbacks", gson.toJson(feedbacks));
+        request.getRequestDispatcher("Main Template/admin-feedback.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

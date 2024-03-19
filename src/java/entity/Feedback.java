@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author My Computer
@@ -13,6 +15,7 @@ public class Feedback {
     private int id;
     private int vote;
     private String content;
+    private Date createDate;
 
     public Feedback() {
     }
@@ -47,6 +50,14 @@ public class Feedback {
 
     public void setVote(int vote) {
         this.vote = vote;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
     
     

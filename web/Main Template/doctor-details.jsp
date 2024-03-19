@@ -15,7 +15,7 @@
 
         <!-- Favicon -->
         <link rel="icon" href="img/favicon.png">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
@@ -101,6 +101,46 @@
             .certificate-details li strong {
                 margin-right: 5px;
             }
+            
+            .checked{
+                color: yellow;
+            }
+            
+            .avatar{
+                width: 90px;
+                height: 70px;
+                border-radius: 100%;
+                object-fit: contain;
+            }
+            
+            .feedback-list{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            
+            .feedback-item{
+                border : 1px solid black;
+                border-radius: 2px;
+            }
+            
+            .feedback-header{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .feedback-body{
+                
+            }
+            
+            .feedback-header-left{
+                
+            }
+            
+            .feedback-header-right{
+                
+            }
         </style>
     </head>
     <body>
@@ -115,7 +155,7 @@
                         <div class="col-12">
                             <h2>Doctor Details</h2>
                             <ul class="bread-list">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
                                 <li class="active">Doctor Details</li>
                             </ul>
@@ -151,7 +191,7 @@
                                 <br>
                                 <h2 class="certificate-title">Certificates</h2><br/>
                                 <div class="certificates-list">
-                                    <c:if test="${empty requestScope.doctor.certificates}">There's no certification</c:if>
+                                    <c:if test="${empty requestScope.doctor.certificates}"><p>There's no certification</p></c:if>
                                     <c:forEach items="${requestScope.doctor.certificates}" var="certificate">
                                         <div class="certificate">
                                             <h3>${certificate.certificate}</h3>
@@ -169,6 +209,33 @@
                         </div>
                     </div>
                 </div>
+                                    <div class="row feedback-list">
+                                    <h2>Feedbacks</h2>
+                                    <c:if test="${empty requestScope.feedbacks}">There's no feedback</c:if>
+                                    <c:forEach items="${requestScope.feedbacks}" var="feedback">
+                                        <div class="feedback-item">
+                                            <div class="feedback-header">
+                                                <div class="feedback-header-left">
+                                                    <img src="${feedback.customerAvatar}" alt="avatar of customer" class="avatar"/>
+                                                    <span>${feedback.customerEmail}</span>
+                                                </div>
+                                                <div class="feedback-header-right">
+                                                    <label>Vote: </label>
+                                                    <span class="fa fa-star ${feedback.vote >= 1 ? 'checked' : ''}" id="star-1"></span>
+                                                    <span class="fa fa-star ${feedback.vote >= 2 ? 'checked' : ''}" id="star-2"></span>
+                                                    <span class="fa fa-star ${feedback.vote >= 3 ? 'checked' : ''}" id="star-3"></span>
+                                                    <span class="fa fa-star ${feedback.vote >= 4 ? 'checked' : ''}" id="star-4"></span>
+                                                    <span class="fa fa-star ${feedback.vote >= 5 ? 'checked' : ''}" id="star-5"></span>
+                                                    <p>Create date : ${feedback.createDate}</p>
+                                                </div>
+                                            </div>
+                                            <div class="feedback-body">
+                                                <label for="content">Content:</label>
+                                                <textarea class="form-control" id="content" disabled>${feedback.content}</textarea>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                    </div>
             </div>
         </div>
         <!-- End Doctor Details -->

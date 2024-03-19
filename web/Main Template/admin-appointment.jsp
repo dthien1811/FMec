@@ -123,7 +123,7 @@
                         <div class="col-12">
                             <h2>Appointment</h2>
                             <ul class="bread-list">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
                                 <li class="active">Appointment</li>
                             </ul>

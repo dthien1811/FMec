@@ -136,7 +136,7 @@
                                         <ul class="nav menu">
                                             <li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="index.html">Home Page 1</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/HomeServlet">Home Page 1</a></li>
                                                     <li><a href="index2.html">Home Page 2</a></li>
                                                 </ul>
                                             </li>

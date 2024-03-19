@@ -120,7 +120,7 @@
 										<ul class="nav menu">
 											<li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
-													<li><a href="index.html">Default Homepage</a></li>
+													<li><a href="${pageContext.request.contextPath}/HomeServlet">Default Homepage</a></li>
 													<li><a href="index2.html">Animation Homepage</a></li>
 												</ul>
 											</li>

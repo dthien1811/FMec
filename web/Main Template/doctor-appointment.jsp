@@ -63,11 +63,14 @@
 
         <link rel="stylesheet" href="#" id="colors">
     <input type="hidden" value="${pageContext.request.contextPath}/startExamining" id="endPointStartExamining"/>
+    <input type="hidden" value="${pageContext.request.contextPath}/bookingDetail" id="bookingDetailUrl"/>
+    
     <script>
         window.onload = function () {
             var calendar = document.getElementById("calendar");
             var jsonString = document.getElementById("bookings").value;
             var endPoint = document.getElementById("endPointStartExamining").value;
+            var bookingDetailEndpoint = document.getElementById("bookingDetailUrl").value;
             var bookings = JSON.parse(jsonString);
 
             /* for (var i = 0; i < bookings.length; i++) {
@@ -83,13 +86,15 @@
              } */
 
             var dataMapping = bookings.map(booking => {
+                var isHavingFeedback = booking.feedback.id !== 0;
                 return {
-                    title: booking.statusName,
+                    title: booking.statusName + (isHavingFeedback ? '    V' : ''),
                     start: new Date(booking.startDate),
                     end: new Date(booking.endDate),
                     status: booking.statusName,
                     extendedProps: {
-                        id : booking.id
+                        id : booking.id,
+                        feedback : booking.feedback
                     }
                 };
             });
@@ -97,11 +102,15 @@
                 initialView: 'timeGridWeek',
                 events: dataMapping,
                 eventClick: function (info) {
-                    if(info.event.extendedProps.status !== 'EXAMINING' && info.event.extendedProps.status !== 'APPROVED') return;
+                    if(info.event.extendedProps.status !== 'EXAMINING' && info.event.extendedProps.status !== 'APPROVED' && info.event.extendedProps.status !== 'DONE') return;
+                    if(info.event.extendedProps.status === 'DONE'){
+                        window.location.href = bookingDetailEndpoint+"?id="+info.event.extendedProps.id;
+                        return;
+                    }
                     window.location.href = endPoint+"?id="+info.event.extendedProps.id;
                 },
                 eventMouseEnter: function(info){
-                    if(info.event.extendedProps.status !== 'EXAMINING' && info.event.extendedProps.status !== 'APPROVED') return;
+                    if(info.event.extendedProps.status !== 'EXAMINING' && info.event.extendedProps.status !== 'APPROVED' && info.event.extendedProps.status !== 'DONE') return;
                     info.el.className += ' activeEvent';
                 },
                 eventDidMount: function (info) {
@@ -182,7 +191,7 @@
                     <div class="col-12">
                         <h2>My Appointment</h2>
                         <ul class="bread-list">
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                             <li><i class="icofont-simple-right"></i></li>
                             <li class="active">My Appointment</li>
                         </ul>

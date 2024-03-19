@@ -46,7 +46,8 @@ import utils.Const;
     Const.GIVE_FEEDBACK_URL,
     Const.ADMIN_BLOG_URL,
     Const.ADMIN_SHOW_BLOG_URL,
-    Const.ADMIN_UPDATE_BLOG
+    Const.ADMIN_UPDATE_BLOG,
+    Const.ADMIN_VIEW_LIST_FEEDBACK_URL
 })
 public class AuthorizationFilter implements Filter {
 

@@ -125,7 +125,7 @@
                             <div class="col-lg-3 col-md-3 col-12">
                                 <!-- Start Logo -->
                                 <div class="logo">
-                                    <a href="index.html"><img src="${pageContext.request.contextPath}/Main Template/img/logo.png" alt="#"></a>
+                                    <a href="${pageContext.request.contextPath}/HomeServlet"><img src="${pageContext.request.contextPath}/Main Template/img/logo.png" alt="#"></a>
                                 </div>
                                 <!-- End Logo -->
                                 <!-- Mobile Nav -->
@@ -139,7 +139,7 @@
                                         <ul class="nav menu">
                                             <li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="index.html">Home Page 1</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/HomeServlet">Home Page 1</a></li>
                                                     <li><a href="index2.html">Home Page 2</a></li>
                                                 </ul>
                                             </li>
@@ -202,7 +202,7 @@
                         <div class="col-12">
                             <h2>Time Table</h2>
                             <ul class="bread-list">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
                                 <li class="active">Time Table</li>
                             </ul>

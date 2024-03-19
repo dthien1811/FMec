@@ -3,45 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.doctordetails;
+package controller;
 
-import dal.FeedbackDAO;
-import dal.UserDAO;
-import dto.DoctorDetailDto;
-import dto.FeedbackDTO;
+import dal.BlogDAO;
+import entity.Blog;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.Const;
 
 /**
  *
  * @author My Computer
  */
-@WebServlet(name = "DoctorDetailController", urlPatterns = {"/doctorDetails"})
-public class DoctorDetailController extends HttpServlet {
-    private final UserDAO userDAO;
-    private final FeedbackDAO feedbackDAO;
+@WebServlet(name = "BlogDetailController", urlPatterns = {Const.BLOG_DETAIL_URL})
+public class BlogDetailController extends HttpServlet {
+    private BlogDAO blogDAO;
     
-    
-    public DoctorDetailController(){
-        this.userDAO = new UserDAO();
-        this.feedbackDAO = new FeedbackDAO();
+    public BlogDetailController(){
+        this.blogDAO = new BlogDAO();
     }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer doctorId = request.getParameter("doctorId") == null ? null : Integer.parseInt(request.getParameter("doctorId"));
-        if(doctorId != null){
-            DoctorDetailDto doctorDetailDto = userDAO.getDoctorById(doctorId);
-            List<FeedbackDTO> feedbacks = feedbackDAO.getTop5LastFeedbacksByDoctorId(doctorId);
-            request.setAttribute("doctor", doctorDetailDto);
-            request.setAttribute("feedbacks", feedbacks);
-        }
-        request.getRequestDispatcher("Main Template/doctor-details.jsp").forward(request, response);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Blog blog = blogDAO.findbyId(id);
+        request.setAttribute("blog", blog);
+        request.getRequestDispatcher("Main Template/blogDetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

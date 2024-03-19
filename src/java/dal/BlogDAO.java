@@ -219,4 +219,79 @@ public class BlogDAO extends DBContext {
         }
         return list.isEmpty() ? null : list.get(0);
     }
+    
+    public int countBlogs(String query){
+        String sql = "SELECT COUNT(b.[id]) as result "
+                + "  FROM [dbo].[Blog] b "
+                + " WHERE b.[content] like ? or b.[title] like ? ";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + query + "%");
+            statement.setString(2, "%" + query + "%");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("result");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return 0;
+    }
+    
+    public List<Blog> findBlogsPaging(int offset, int fetch, String query) {
+        List<Blog> list = new ArrayList<>();
+        String sql = "SELECT * "
+                + "  FROM [dbo].[Blog] b "
+                + " WHERE (b.[content] like ? or b.[title] like ?) ORDER BY b.[date] desc OFFSET ? rows FETCH next ? rows only ";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + query + "%");
+            statement.setString(2, "%" + query + "%");
+            statement.setInt(3, offset);
+            statement.setInt(4, fetch);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String content = resultSet.getNString("content");
+                String title = resultSet.getNString("title");
+                String author = resultSet.getString("author");
+                String createDate = resultSet.getString("date");
+                int blogId = resultSet.getInt("id");
+                Blog blog = new Blog(blogId, 0, title, content, createDate, author);
+                list.add(blog);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return list;
+    }
 }

@@ -148,7 +148,7 @@
                                         <ul class="nav menu">
                                             <li class="active"><a href="#">Home <i class="icofont-rounded-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="${pageContext.request.contextPath}/Main Template/index.html">Default Homepage</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/HomeServlet">Default Homepage</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/Main Template/index2.html">Animation Homepage</a></li>
                                                 </ul>
                                             </li>
@@ -211,7 +211,7 @@
                         <div class="col-12">
                             <h2>Add</h2>
                             <ul class="bread-list">
-                                <li><a href="${pageContext.request.contextPath}/Main Template/index.html">Home</a></li>
+                                <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
                                 <li><i class="icofont-simple-right"></i></li>
                                 <li class="active">Add</li>
                             </ul>

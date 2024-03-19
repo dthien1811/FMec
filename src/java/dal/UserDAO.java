@@ -667,6 +667,7 @@ public class UserDAO extends DBContext {
                 + "      ,c.[university] university\n"
                 + "      ,c.[certificate] certificate\n"
                 + "      ,c.[address] address\n"
+                + "      ,c.[certificationId]\n"
                 + "      ,certificateMajor.[name] certificateMajorName\n"
                 + "  FROM [dbo].[User] doctor"
                 + " LEFT JOIN [Certificate] c ON c.[userId] = doctor.[userId] "
@@ -691,6 +692,11 @@ public class UserDAO extends DBContext {
                 doctorDetailDto.setMajor(majorName);
                 doctorDetailDto.setMajorId(majorId);
                 List<Certificate> certificates = new ArrayList<Certificate>();
+                int certificateId = resultSet.getInt("certificationId");
+                if(certificateId == 0){
+                    doctorDetailDto.setCertificates(certificates);
+                    return doctorDetailDto;
+                }
                 Certificate certificate = new Certificate();
                 Major cerficateMajor = new Major();
                 cerficateMajor.setNameMajor(resultSet.getString("certificateMajorName"));

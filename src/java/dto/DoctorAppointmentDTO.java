@@ -5,6 +5,7 @@
  */
 package dto;
 
+import entity.Feedback;
 import java.util.Date;
 
 /**
@@ -20,6 +21,7 @@ public class DoctorAppointmentDTO {
     private Date startDate;
     private Date endDate;
     private Date createDate;
+    private Feedback feedback;
 
     public DoctorAppointmentDTO() {
     }
@@ -99,6 +101,14 @@ public class DoctorAppointmentDTO {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
     
     

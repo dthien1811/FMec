@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.doctordetails;
+package controller;
 
-import dal.FeedbackDAO;
-import dal.UserDAO;
-import dto.DoctorDetailDto;
-import dto.FeedbackDTO;
+import dal.BlogDAO;
+import entity.Blog;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -17,31 +15,37 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.Const;
 
 /**
  *
  * @author My Computer
  */
-@WebServlet(name = "DoctorDetailController", urlPatterns = {"/doctorDetails"})
-public class DoctorDetailController extends HttpServlet {
-    private final UserDAO userDAO;
-    private final FeedbackDAO feedbackDAO;
+@WebServlet(name = "BlogListController", urlPatterns = {Const.BLOG_LIST_URL})
+public class BlogListController extends HttpServlet {
+    private final int BLOGSPERPAGE = 6;
+    private BlogDAO blogDAO;
     
-    
-    public DoctorDetailController(){
-        this.userDAO = new UserDAO();
-        this.feedbackDAO = new FeedbackDAO();
+    public BlogListController(){
+        this.blogDAO = new BlogDAO();
     }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer doctorId = request.getParameter("doctorId") == null ? null : Integer.parseInt(request.getParameter("doctorId"));
-        if(doctorId != null){
-            DoctorDetailDto doctorDetailDto = userDAO.getDoctorById(doctorId);
-            List<FeedbackDTO> feedbacks = feedbackDAO.getTop5LastFeedbacksByDoctorId(doctorId);
-            request.setAttribute("doctor", doctorDetailDto);
-            request.setAttribute("feedbacks", feedbacks);
-        }
-        request.getRequestDispatcher("Main Template/doctor-details.jsp").forward(request, response);
+        int pageNumber = (request.getParameter("pageNumber") == null) ? 0 : Integer.parseInt(request.getParameter("pageNumber"));
+        int totalPage = 1;
+        String query = request.getParameter("query") == null ? "" : request.getParameter("query");
+        int totalBlogs = blogDAO.countBlogs(query);
+        int pageRemain = ((totalBlogs % BLOGSPERPAGE) > 0) ? 1 : 0;
+        totalPage = (totalBlogs / BLOGSPERPAGE) + pageRemain;
+        int offset = pageNumber * BLOGSPERPAGE;
+        int fetch = BLOGSPERPAGE;
+        List<Blog> blogs = blogDAO.findBlogsPaging(offset , fetch , query);
+        request.setAttribute("totalPage", totalPage);
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("query", query);
+        request.setAttribute("blogs", blogs);
+        request.getRequestDispatcher("Main Template/blogs.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
